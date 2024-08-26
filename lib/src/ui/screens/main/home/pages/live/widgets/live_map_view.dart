@@ -37,7 +37,7 @@ class LiveMapView extends StatefulWidget {
 }
 
 class _LiveMapViewState extends State<LiveMapView>
-    with TickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, WidgetsBindingObserver {
   Map<MarkerId, CarlertMarker> markers = {};
   final controller = Completer<GoogleMapController>();
 
@@ -48,6 +48,9 @@ class _LiveMapViewState extends State<LiveMapView>
   late ClusterManager _clusterManager;
 
   Set<CarlertMarker> clusterMarkers = Set();
+
+
+  StreamSubscription<LatLng>? dataSubscription;
 
   @override
   void initState() {
@@ -62,11 +65,12 @@ class _LiveMapViewState extends State<LiveMapView>
 
     if (inactiveIcon == BitmapDescriptor.defaultMarker) {
       const MarkerView().toBitmapDescriptor().then((icon) {
-        log("inactive icon from svg fetched");
+       // log("inactive icon from svg fetched");
         inactiveIcon = icon;
       });
     }
 
+    WidgetsBinding.instance.addObserver(this);
     super.initState();
   }
 
@@ -76,10 +80,10 @@ class _LiveMapViewState extends State<LiveMapView>
   }
 
   void _updateMarkers(Set<Marker> markers) {
-    log('ClusterManager: updateMarkers: Updated ${markers.length} markers');
+   // log('ClusterManager: updateMarkers: Updated ${markers.length} markers');
     Set<CarlertMarker> carlertMarkers = {};
     markers.forEach((marker) {
-      log("ClusterManager: marker id -> ${marker.markerId.value}");
+    //  log("ClusterManager: marker id -> ${marker.markerId.value}");
       if (marker.markerId.value.contains("-")) {
         var ids = marker.markerId.value.split("-");
         ids.forEach((id){
@@ -116,7 +120,7 @@ class _LiveMapViewState extends State<LiveMapView>
           style: _mapStyle,
           initialCameraPosition: kSantoDomingo,
           onMapCreated: (gController) {
-            log("On map created");
+          //  log("On map created");
             loadJsonFromAssets("assets/map/trip.json", "m1");
             Future.delayed(const Duration(seconds: 10), () {
               loadJsonFromAssets("assets/map/trip.json", "m2");
@@ -188,12 +192,13 @@ class _LiveMapViewState extends State<LiveMapView>
     _markerAnimation.dispose();
     markers.clear();
     _clusterManager.setItems([]);
+    dataSubscription?.cancel();
     super.dispose();
   }
 
   void loadJsonFromAssets(String filePath, String markerId) {
     List<LatLng> trip = [];
-    log("TripData : loadJsonFromAssets() ");
+   // log("TripData : loadJsonFromAssets() ");
     rootBundle.loadString(filePath).then((value) {
       //log("TripData : String data -> $value ");
       var jsonTrip = jsonDecode(value) as List<dynamic>;
@@ -207,15 +212,30 @@ class _LiveMapViewState extends State<LiveMapView>
               const Duration(milliseconds: 700), (count) => trip[count])
           .take(trip.length);
 
-      stream.forEach((value) {
-        newLocationUpdate(value, MarkerId(markerId));
+      dataSubscription = stream.listen((latLang) {
+        newLocationUpdate(latLang, MarkerId(markerId));
       });
+
+      // stream.forEach((value) {
+      //   newLocationUpdate(value, MarkerId(markerId));
+      // });
       // Future.delayed(const Duration(seconds: 5),(){
       // stream.forEach((value) => newLocationUpdate(value, const MarkerId("m2")));
       // });
     }).catchError((e) {
-      log("TripData : error ${e.toString()}");
+     // log("TripData : error ${e.toString()}");
     });
+  }
+
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if(state == AppLifecycleState.paused){
+
+    }
+    if(state == AppLifecycleState.resumed){
+
+    }
   }
 
   Future<Marker> Function(Cluster<CarlertMarker>) get _markerBuilder =>
@@ -226,13 +246,13 @@ class _LiveMapViewState extends State<LiveMapView>
         markerIdValue+="${marker.markerId.value}-";
         });
         markerIdValue = markerIdValue.substring(0,markerIdValue.length-1);
-        log("ClusterBuilder: marker id value is -> $markerIdValue");
+      //  log("ClusterBuilder: marker id value is -> $markerIdValue");
         return Marker(
           markerId: MarkerId( cluster.getId()),
           infoWindow: InfoWindow(title: markerIdValue),
           position: cluster.location,
           onTap: () {
-            log('---- $cluster');
+         //   log('---- $cluster');
             for (var p in cluster.items) {
               print(p);
             }

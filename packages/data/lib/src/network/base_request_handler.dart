@@ -8,7 +8,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import '../const/consts.dart';
 import '../sealed/network_result.dart';
-import 'package:http_status/http_status.dart';
 
 mixin BaseRequestHandler {
   Stream<NetworkResult<T>> handleApi<T extends Object>({
@@ -17,7 +16,7 @@ mixin BaseRequestHandler {
     Map<String, dynamic> formData = const {},
   }) async* {
     debugPrint("handle api called");
-    yield NetworkLoading();
+    yield const NetworkLoading();
     try {
       var url = Uri.https(baseUrl, endPoint, formData);
       final response = await methodFunction(url);
@@ -28,10 +27,7 @@ mixin BaseRequestHandler {
       BaseResponse res = BaseResponse.fromJson(jsonResponse);
       if (res.status) {
         //HttpStatus.fromCode(response.statusCode).isSuccessfulHttpStatusCode
-        if (res.data == null) {
-          // check if data incoming is null then set message as data
-          res.data = res.messages;
-        }
+        res.data ??= res.messages;
         yield NetworkSuccess(data: res);
       } else {
         yield NetworkError(message: res.messages);
@@ -41,7 +37,7 @@ mixin BaseRequestHandler {
     } on Exception catch (e) {
       yield NetworkError(message: e.toString());
     } catch (e) {
-      yield NetworkError(
+      yield const NetworkError(
           message: "Unknown issue found when requesting data"); //
     }
   }
@@ -62,10 +58,7 @@ mixin BaseRequestHandler {
       BaseResponse res = BaseResponse.fromJson(jsonResponse);
       if (res.status) {
         //HttpStatus.fromCode(response.statusCode).isSuccessfulHttpStatusCode
-        if (res.data == null) {
-          // check if data incoming is null then set message as data
-          res.data = res.messages;
-        }
+        res.data ??= res.messages;
         return NetworkSuccess(data: res);
       } else {
         return NetworkError(message: res.messages);
@@ -75,7 +68,7 @@ mixin BaseRequestHandler {
     } on Exception catch (e) {
       return NetworkError(message: e.toString());
     } catch (e) {
-      return NetworkError(
+      return const NetworkError(
           message: "Unknown issue found when requesting data"); //
     }
   }

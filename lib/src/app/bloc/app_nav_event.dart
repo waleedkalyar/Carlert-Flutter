@@ -37,6 +37,14 @@ final class NavToHomeScreen extends AppNavEvent {
   List<Object> get props => [];
 }
 
+final class NavToTripHistoryScreen extends AppNavEvent {
+  const NavToTripHistoryScreen();
+
+  @override
+  List<Object> get props => [];
+}
+
+
 final class LogoutOutUser  extends AppNavEvent{
 
   const LogoutOutUser();

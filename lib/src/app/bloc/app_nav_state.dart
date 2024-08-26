@@ -24,3 +24,31 @@ final class HomeScreenState extends AppNavState {
   @override
   List<Object> get props => [];
 }
+
+final class TripHistoryScreenState extends AppNavState {
+  const TripHistoryScreenState();
+
+  @override
+  List<Object> get props => [];
+}
+
+final class GeoFencingScreenState extends AppNavState {
+  const GeoFencingScreenState();
+
+  @override
+  List<Object> get props => [];
+}
+
+final class ServiceRequestsScreenState extends AppNavState {
+  const ServiceRequestsScreenState();
+
+  @override
+  List<Object> get props => [];
+}
+
+final class KilometersScreenState extends AppNavState {
+  const KilometersScreenState();
+
+  @override
+  List<Object> get props => [];
+}

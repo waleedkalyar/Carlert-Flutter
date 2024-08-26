@@ -52,6 +52,7 @@ dependencies:
   flutter_svg: ^2.0.10+1
   widget_to_marker: ^1.0.5
   google_maps_cluster_manager_2: ^3.2.0
+  boxicons: ^2.1.3
 #  google_maps_cluster_manager:
 #    git:
 #      url: https://github.com/MacDeveloper1/google_maps_cluster_manager.git

@@ -18,6 +18,7 @@ class AppNavBloc extends Bloc<AppNavEvent, AppNavState> {
             : const HomeScreenState()) {
     on<NavToVerifyOtpScreen>(_onNavigateToVerifyOtpScreen);
     on<NavToHomeScreen>(_onNavigateToHomeScreen);
+    on<NavToTripHistoryScreen>(_onNavigateToTripHistoryScreen);
     on<_AppUserChanged>(_onAppUserChanged);
     on<LogoutOutUser>(_logoutUser);
     _currentUserListener =
@@ -32,6 +33,11 @@ class AppNavBloc extends Bloc<AppNavEvent, AppNavState> {
   FutureOr<void> _onNavigateToHomeScreen(
       NavToHomeScreen event, Emitter<AppNavState> emit) {
     emit(const HomeScreenState());
+  }
+
+  FutureOr<void> _onNavigateToTripHistoryScreen(
+      NavToTripHistoryScreen event, Emitter<AppNavState> emit) {
+    emit(const TripHistoryScreenState());
   }
 
   FutureOr<void> _onAppUserChanged(

@@ -1,0 +1,11 @@
+<svg width="40" height="40" xmlns="http://www.w3.org/2000/svg">
+    <g paint-order="stroke fill markers">
+        <circle cx="20" cy="-20" r="16.835" transform="scale(1 -1)" fill="#fff" stroke="#000"
+            stroke-width="3" stroke-linejoin="bevel" />
+        <text style="-inkscape-font-specification:Sans;text-align:center" x="19.306" y="23.521"
+            font-weight="400" font-size="9.674" font-family="Sans" letter-spacing=".34"
+            text-anchor="middle" fill="#1A1A1A" stroke-width="2" stroke-linejoin="round">
+            <tspan style="text-align:center" x="19.475" y="23.521" font-weight="600">Start</tspan>
+        </text>
+    </g>
+</svg>

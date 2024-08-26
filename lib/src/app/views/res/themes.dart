@@ -20,23 +20,23 @@ var appLightTheme = ThemeData(
     cursorColor: appBlack,
   ),
   primaryTextTheme: TextTheme(
-    displaySmall: GoogleFonts.akshar(
+    displaySmall: GoogleFonts.lato(
         color: appBlack, fontSize: 10, fontWeight: FontWeight.w400),
-    displayMedium: GoogleFonts.akshar(
+    displayMedium: GoogleFonts.lato(
         color: appBlack, fontSize: 12, fontWeight: FontWeight.w600),
-    displayLarge: GoogleFonts.akshar(
+    displayLarge: GoogleFonts.lato(
         color: appBlack, fontSize: 16, fontWeight: FontWeight.w600),
-    headlineLarge: GoogleFonts.akshar(
+    headlineLarge: GoogleFonts.lato(
         color: appBlack, fontSize: 24, fontWeight: FontWeight.w700),
-    headlineMedium: GoogleFonts.akshar(
+    headlineMedium: GoogleFonts.lato(
         color: appBlack, fontSize: 18, fontWeight: FontWeight.w600),
-    headlineSmall: GoogleFonts.akshar(
+    headlineSmall: GoogleFonts.lato(
         color: appBlack, fontSize: 15, fontWeight: FontWeight.w400),
-    bodyLarge: GoogleFonts.akshar(
+    bodyLarge: GoogleFonts.lato(
         color: appBlack, fontSize: 24, fontWeight: FontWeight.w600),
-    bodyMedium: GoogleFonts.akshar(
+    bodyMedium: GoogleFonts.lato(
         color: appBlack, fontSize: 20, fontWeight: FontWeight.w500),
-    bodySmall: GoogleFonts.akshar(
+    bodySmall: GoogleFonts.lato(
         color: appBlack, fontSize: 16, fontWeight: FontWeight.w400),
   ),
   buttonTheme: const ButtonThemeData(
@@ -60,23 +60,23 @@ var appDarkTheme = ThemeData(
     cursorColor: appWhite,
   ),
   primaryTextTheme: TextTheme(
-    displaySmall: GoogleFonts.akshar(
+    displaySmall: GoogleFonts.lato(
         color: appWhite, fontSize: 10, fontWeight: FontWeight.w400),
-    displayMedium: GoogleFonts.akshar(
+    displayMedium: GoogleFonts.lato(
         color: appWhite, fontSize: 12, fontWeight: FontWeight.w600),
-    displayLarge: GoogleFonts.akshar(
+    displayLarge: GoogleFonts.lato(
         color: appWhite, fontSize: 16, fontWeight: FontWeight.w600),
-    headlineLarge: GoogleFonts.akshar(
+    headlineLarge: GoogleFonts.lato(
         color: appWhite, fontSize: 24, fontWeight: FontWeight.w700),
-    headlineMedium: GoogleFonts.akshar(
+    headlineMedium: GoogleFonts.lato(
         color: appWhite, fontSize: 18, fontWeight: FontWeight.w600),
-    headlineSmall: GoogleFonts.akshar(
+    headlineSmall: GoogleFonts.lato(
         color: appWhite, fontSize: 15, fontWeight: FontWeight.w400),
-    bodyLarge: GoogleFonts.akshar(
+    bodyLarge: GoogleFonts.lato(
         color: appWhite, fontSize: 24, fontWeight: FontWeight.w600),
-    bodyMedium: GoogleFonts.akshar(
+    bodyMedium: GoogleFonts.lato(
         color: appWhite, fontSize: 20, fontWeight: FontWeight.w500),
-    bodySmall: GoogleFonts.akshar(
+    bodySmall: GoogleFonts.lato(
         color: appWhite, fontSize: 16, fontWeight: FontWeight.w400),
   ),
   buttonTheme: const ButtonThemeData(
