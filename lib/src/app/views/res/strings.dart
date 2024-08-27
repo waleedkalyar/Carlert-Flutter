@@ -11,6 +11,7 @@ const String revolutionise = "Revolutionise!";
 
 const String tripHistory = "Trips History";
 const String geoFencing = "Geofencing";
+const String addGeoFencing = "Add Geofencing";
 const String serviceRequests = "Service Requests";
 const String kilometers = "Kilometers";
 const String fuel = "Fuel";

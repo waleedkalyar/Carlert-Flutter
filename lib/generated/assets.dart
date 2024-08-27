@@ -15,6 +15,8 @@ class Assets {
       'assets/icons/live_map_active_car_icon.svg';
   static const String iconsLiveMapIdleCarIcon =
       'assets/icons/live_map_idle_car_icon.svg';
+  static const String liveMapActiveCarIconNoShadow =
+      'assets/icons/live_map_active_car_icon_no_shadow.svg';
   static const String iconsLiveMapInactiveCarIcon =
       'assets/icons/live_map_inactive_car_icon.svg';
   static const String imagesCarImage = 'assets/images/car_image.png';

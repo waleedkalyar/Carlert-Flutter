@@ -53,6 +53,7 @@ dependencies:
   widget_to_marker: ^1.0.5
   google_maps_cluster_manager_2: ^3.2.0
   boxicons: ^2.1.3
+  geolocator: ^13.0.1
 #  google_maps_cluster_manager:
 #    git:
 #      url: https://github.com/MacDeveloper1/google_maps_cluster_manager.git
@@ -90,6 +91,8 @@ flutter:
     - assets/map/trip.json
     - assets/icons/live_map_inactive_car_icon.svg
     - assets/icons/
+    - assets/icons/live_map_active_car_icon_no_shadow.svg
+    - assets/map/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

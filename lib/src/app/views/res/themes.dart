@@ -1,7 +1,6 @@
 // Developed By Muhammad Waleed.. Senior Android and Flutter developer..
 // waleedkalyar48@gmail.com/
 
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -84,5 +83,6 @@ var appDarkTheme = ThemeData(
       buttonColor: appGray,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(8))),
-      disabledColor: appGray),
+      disabledColor: appGray,
+  ),
 );

@@ -2,7 +2,10 @@ import 'package:carlet_flutter/src/app/views/res/colors.dart';
 import 'package:carlet_flutter/src/ui/dialogs/waiting_dialog.dart';
 import 'package:carlet_flutter/src/ui/screens/main/home/pages/live/carlert_marker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animarker/helpers/math_util.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'dart:math' as Math;
 
 extension ToModels on Marker {
   CarlertMarker toCarlertMarker() {
@@ -12,6 +15,44 @@ extension ToModels on Marker {
       icon: icon,
     );
   }
+}
+
+//VVIP distance measurement
+extension ToDistancePosition on LatLng {
+  LatLng toNorthPosition(double northDistanceKm) {
+    double rEarth = 6378;
+    var pi = Math.pi;
+    var newLatitude = latitude + (northDistanceKm / rEarth) * (180 / pi);
+    return LatLng(newLatitude, longitude);
+  }
+
+  LatLng toEastPosition(double eastDistanceKm) {
+    double rEarth = 6378;
+    var pi = Math.pi;
+    var newLongitude = longitude +
+        (eastDistanceKm / rEarth) * (180 / pi) / Math.cos(latitude * pi / 180);
+    return LatLng(latitude, newLongitude);
+  }
+
+  LatLng toSouthPosition(double southDistanceKm) {
+    double rEarth = 6378;
+    var pi = Math.pi;
+    var newLatitude = latitude - (southDistanceKm / rEarth) * (180 / pi);
+    return LatLng(newLatitude, longitude);
+  }
+
+  LatLng toWestPosition(double westDistanceKm) {
+    double rEarth = 6378;
+    var pi = Math.pi;
+    var newLongitude = longitude -
+        (westDistanceKm / rEarth) * (180 / pi) / Math.cos(latitude * pi / 180);
+    return LatLng(latitude, newLongitude);
+  }
+
+  double toDistanceInMeters(LatLng latLang2){
+     return Geolocator.distanceBetween(latitude, longitude, latLang2.latitude, latLang2.longitude);
+  }
+
 }
 
 extension EmptySpace on num {

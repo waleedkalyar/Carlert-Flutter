@@ -17,7 +17,7 @@ class LivePage extends StatelessWidget {
       backgroundColor: appGrayBackground,
         body: Padding(
         padding: 0.allPadding,
-        child: const LiveMapView())
+        child:  Container())//LiveMapView())
     );
   }
 }

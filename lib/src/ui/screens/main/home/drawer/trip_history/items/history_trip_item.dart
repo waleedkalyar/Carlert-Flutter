@@ -1,9 +1,6 @@
 import 'package:boxicons/boxicons.dart';
 import 'package:carlet_flutter/src/app/views/res/colors.dart';
-import 'package:carlet_flutter/src/ui/dialogs/select_car_bottom_sheet.dart';
-import 'package:carlet_flutter/src/ui/screens/main/home/drawer/trip_history/trip_history_page.dart';
 import 'package:carlet_flutter/src/utils/extensions.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../history_map/trip_history_map_view.dart';
@@ -24,6 +21,7 @@ class HistoryTripItem extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.only(top: 5),
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+
         decoration: BoxDecoration(
             shape: BoxShape.rectangle,
             color: appWhite,
