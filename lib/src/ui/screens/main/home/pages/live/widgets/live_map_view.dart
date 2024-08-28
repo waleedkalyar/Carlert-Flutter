@@ -18,7 +18,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_animarker/flutter_map_marker_animation.dart';
 import 'package:flutter_animarker/helpers/extensions.dart';
 import 'package:flutter_animarker/helpers/google_map_helper.dart';
-import 'package:google_maps_cluster_manager_2/google_maps_cluster_manager_2.dart';
+import 'package:google_maps_cluster_manager_2/src/cluster_manager.dart' as cluster_manager_2;
+import 'package:google_maps_cluster_manager_2/src/cluster.dart' as cluster_manager_2;
+import 'package:google_maps_flutter_platform_interface/src/types/cluster_manager.dart' as cluster_manager_platform;
+
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:widget_to_marker/widget_to_marker.dart';
 
@@ -45,7 +48,7 @@ class _LiveMapViewState extends State<LiveMapView>
 
   BitmapDescriptor inactiveIcon = BitmapDescriptor.defaultMarker;
 
-  late ClusterManager _clusterManager;
+  late cluster_manager_2.ClusterManager _clusterManager;
 
   Set<CarlertMarker> clusterMarkers = Set();
 
@@ -74,8 +77,8 @@ class _LiveMapViewState extends State<LiveMapView>
     super.initState();
   }
 
-  ClusterManager _initClusterManager() {
-    return ClusterManager<CarlertMarker>(markers.values.toSet(), _updateMarkers,
+  cluster_manager_2.ClusterManager _initClusterManager() {
+    return cluster_manager_2.ClusterManager<CarlertMarker>(markers.values.toSet(), _updateMarkers,
         markerBuilder: _markerBuilder);
   }
 
@@ -238,7 +241,7 @@ class _LiveMapViewState extends State<LiveMapView>
     }
   }
 
-  Future<Marker> Function(Cluster<CarlertMarker>) get _markerBuilder =>
+  Future<Marker> Function(cluster_manager_2.Cluster<CarlertMarker>) get _markerBuilder =>
       (cluster) async {
 
         var markerIdValue  = "";

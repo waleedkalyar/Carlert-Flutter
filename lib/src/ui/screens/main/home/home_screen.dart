@@ -43,11 +43,12 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final scaffoldKey = GlobalKey<ScaffoldState>();
     return SafeArea(
+      top: false,
       child: Scaffold(
         key: scaffoldKey,
         extendBodyBehindAppBar: _currentIndex == 2,
         drawer: Container(
-          margin: const EdgeInsets.only(bottom: 72, top: 12),
+          margin: const EdgeInsets.only(bottom: 72, top: 56),
           child: Drawer(
             backgroundColor: appWhite,
             child: ListView(

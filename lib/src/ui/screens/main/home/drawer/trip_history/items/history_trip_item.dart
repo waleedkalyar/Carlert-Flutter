@@ -36,15 +36,15 @@ class HistoryTripItem extends StatelessWidget {
                 RichText(
                     text: TextSpan(
                         children: [
-                  const WidgetSpan(child: Icon(Icons.signal_cellular_alt)),
+                  const WidgetSpan(child: Icon(Icons.signal_cellular_alt, size: 18,)),
                   WidgetSpan(child: 6.width),
                   TextSpan(
                       text: "Top Speed: 101",
-                      style: Theme.of(context).primaryTextTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold)),
+                      style: Theme.of(context).primaryTextTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold, fontSize: 14)),
                   WidgetSpan(child: 3.width),
                   TextSpan(
                       text: "Km/h",
-                      style: Theme.of(context).primaryTextTheme.bodySmall?.copyWith(color: appGray, fontSize: 12)),
+                      style: Theme.of(context).primaryTextTheme.bodySmall?.copyWith(color: appGray, fontSize: 10)),
                 ])),
                 Container(
                   width: 100,
@@ -60,27 +60,27 @@ class HistoryTripItem extends StatelessWidget {
             RichText(
                 text: TextSpan(
                     children: [
-                      const WidgetSpan(child: Icon(Boxicons.bx_ruler), alignment: PlaceholderAlignment.middle),
+                      const WidgetSpan(child: Icon(Boxicons.bx_ruler, size: 18,), alignment: PlaceholderAlignment.middle,),
                       WidgetSpan(child: 6.width),
                       TextSpan(
                           text: "Distance: 38.69",
-                          style: Theme.of(context).primaryTextTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold)),
+                          style: Theme.of(context).primaryTextTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold, fontSize: 14)),
                       WidgetSpan(child: 3.width),
                       TextSpan(
                           text: "Km/h",
-                          style: Theme.of(context).primaryTextTheme.bodySmall?.copyWith(color: appGray, fontSize: 12)),
+                          style: Theme.of(context).primaryTextTheme.bodySmall?.copyWith(color: appGray, fontSize: 10)),
                     ])),
             7.height,
             RichText(
                 text: TextSpan(
                     children: [
-                      const WidgetSpan(child: Icon(Boxicons.bx_time_five), alignment: PlaceholderAlignment.middle),
+                      const WidgetSpan(child: Icon(Boxicons.bx_time_five, size: 18,), alignment: PlaceholderAlignment.middle),
                       WidgetSpan(child: 6.width),
                       TextSpan(
                           text: "Duration: 32:40",
-                          style: Theme.of(context).primaryTextTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold)),
+                          style: Theme.of(context).primaryTextTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold, fontSize: 14)),
                     ])),
-            12.height,
+            8.height,
             Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -89,21 +89,21 @@ class HistoryTripItem extends StatelessWidget {
                 children: [
                   Text(
                       "Trip Started",
-                      style: Theme.of(context).primaryTextTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold)),
+                      style: Theme.of(context).primaryTextTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold, fontSize: 14)),
                   Text(
                       "Time: 05:45",
-                      style: Theme.of(context).primaryTextTheme.bodyMedium?.copyWith(color: appGrayDark)),
+                      style: Theme.of(context).primaryTextTheme.bodyMedium?.copyWith(color: appGrayDark, fontSize: 12)),
                 ],
               ),
-              20.width,
+              15.width,
               Column(
                 children: [
                   Text(
                       "Trip Ended",
-                      style: Theme.of(context).primaryTextTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold)),
+                      style: Theme.of(context).primaryTextTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold, fontSize: 14)),
                   Text(
                       "Time: 06:17",
-                      style: Theme.of(context).primaryTextTheme.bodyMedium?.copyWith(color: appGrayDark)),
+                      style: Theme.of(context).primaryTextTheme.bodyMedium?.copyWith(color: appGrayDark, fontSize: 12)),
                 ],
               )
             ],)

@@ -6,7 +6,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'package:google_maps_cluster_manager_2/google_maps_cluster_manager_2.dart';
+import 'package:google_maps_cluster_manager_2/src/cluster_manager.dart' as cluster_manager_2;
+import 'package:google_maps_cluster_manager_2/src/cluster.dart' as cluster_manager_2;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../models/place.dart';
@@ -19,7 +20,7 @@ class LiveMapClusterView extends StatefulWidget {
 }
 
 class _LiveMapClusterViewState extends State<LiveMapClusterView> {
-  late ClusterManager _manager;
+  late cluster_manager_2.ClusterManager _manager;
 
   Completer<GoogleMapController> _controller = Completer();
 
@@ -62,8 +63,8 @@ class _LiveMapClusterViewState extends State<LiveMapClusterView> {
     super.initState();
   }
 
-  ClusterManager _initClusterManager() {
-    return ClusterManager<Place>(items, _updateMarkers,
+  cluster_manager_2.ClusterManager _initClusterManager() {
+    return cluster_manager_2.ClusterManager<Place>(items, _updateMarkers,
         markerBuilder: _markerBuilder);
   }
 
@@ -94,7 +95,7 @@ class _LiveMapClusterViewState extends State<LiveMapClusterView> {
 
 
 
-  Future<Marker> Function(Cluster<Place>) get _markerBuilder =>
+  Future<Marker> Function(cluster_manager_2.Cluster<Place>) get _markerBuilder =>
           (cluster) async {
         return Marker(
           markerId: MarkerId(cluster.getId()),

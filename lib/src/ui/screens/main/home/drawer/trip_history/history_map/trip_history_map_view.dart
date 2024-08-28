@@ -32,9 +32,9 @@ class TripHistoryMapView extends StatelessWidget {
                           .openAppDrawerTooltip,
                       icon: const Icon(Icons.arrow_back, size: 20,)))),
           Positioned(
-              bottom: 36,
-              left: 24,
-              right: 24,
+              bottom: 24,
+              left: 16,
+              right: 16,
               child: ExpansionTile(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(6)),
@@ -64,7 +64,7 @@ class TripHistoryMapView extends StatelessWidget {
                             .bodyMedium
                             ?.copyWith(
                                 color: appWhite,
-                                fontSize: 15,
+                                fontSize: 14,
                                 fontWeight: FontWeight.bold),
                       ),
                     ],
@@ -80,6 +80,7 @@ class TripHistoryMapView extends StatelessWidget {
                   Column(
                     children: [
                       ListTile(
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 12,vertical: 0),
                         leading: const Icon(
                           Boxicons.bx_network_chart,
                           size: 20,
@@ -96,14 +97,15 @@ class TripHistoryMapView extends StatelessWidget {
                               style: Theme.of(context)
                                   .primaryTextTheme
                                   .bodySmall
-                                  ?.copyWith(color: appGrayDark)),
+                                  ?.copyWith(color: appGrayDark, fontSize: 14)),
                           TextSpan(
                               text: "SMCB00001",
                               style:
-                                  Theme.of(context).primaryTextTheme.bodySmall),
+                                  Theme.of(context).primaryTextTheme.bodySmall?.copyWith(fontSize: 14)),
                         ])),
                       ),
                       ListTile(
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 12,vertical: 0),
                         leading: const Icon(
                           Boxicons.bx_time_five,
                           size: 20,
@@ -120,14 +122,15 @@ class TripHistoryMapView extends StatelessWidget {
                               style: Theme.of(context)
                                   .primaryTextTheme
                                   .bodySmall
-                                  ?.copyWith(color: appGrayDark)),
+                                  ?.copyWith(color: appGrayDark, fontSize: 14)),
                           TextSpan(
                               text: "01:37:20",
                               style:
-                                  Theme.of(context).primaryTextTheme.bodySmall),
+                                  Theme.of(context).primaryTextTheme.bodySmall?.copyWith(fontSize: 14)),
                         ])),
                       ),
                       ListTile(
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 12,vertical: 0),
                         leading: const Icon(
                           Boxicons.bx_ruler,
                           size: 20,
@@ -144,11 +147,11 @@ class TripHistoryMapView extends StatelessWidget {
                               style: Theme.of(context)
                                   .primaryTextTheme
                                   .bodySmall
-                                  ?.copyWith(color: appGrayDark)),
+                                  ?.copyWith(color: appGrayDark, fontSize: 14)),
                           TextSpan(
                               text: "82.09 Km",
                               style:
-                                  Theme.of(context).primaryTextTheme.bodySmall),
+                                  Theme.of(context).primaryTextTheme.bodySmall?.copyWith(fontSize: 14)),
                         ])),
                       ),
                       ListTile(
@@ -162,7 +165,7 @@ class TripHistoryMapView extends StatelessWidget {
                         ),
                         title: Text(
                           "Mitsubishi Attrage (2019)",
-                          style: Theme.of(context).primaryTextTheme.bodyMedium,
+                          style: Theme.of(context).primaryTextTheme.bodyMedium?.copyWith(fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                         subtitle: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -203,7 +206,7 @@ class TripHistoryMapView extends StatelessWidget {
                         ),
                         title: Text(
                           "Sashit Shrestha",
-                          style: Theme.of(context).primaryTextTheme.bodyMedium,
+                          style: Theme.of(context).primaryTextTheme.bodyMedium?.copyWith(fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                         subtitle: Column(
                           mainAxisAlignment: MainAxisAlignment.start,

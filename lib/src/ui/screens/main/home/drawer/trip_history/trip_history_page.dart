@@ -14,46 +14,49 @@ class TripHistoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: appGrayBackground,
-      appBar: AppBar(
-        leading: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Container(
-            decoration:
-                const BoxDecoration(shape: BoxShape.circle, color: appBlack),
-            child: IconButton(
-              padding: const EdgeInsets.all(0),
-              icon: const Icon(
-                Icons.arrow_back,
-                color: appWhite,
+    return SafeArea(
+      top: false,
+      child: Scaffold(
+        backgroundColor: appGrayBackground,
+        appBar: AppBar(
+          leading: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Container(
+              decoration:
+                  const BoxDecoration(shape: BoxShape.circle, color: appBlack),
+              child: IconButton(
+                padding: const EdgeInsets.all(0),
+                icon: const Icon(
+                  Icons.arrow_back,
+                  color: appWhite,
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
               ),
-              onPressed: () {
-                Navigator.pop(context);
-              },
             ),
           ),
+          centerTitle: true,
+          backgroundColor: appGrayBackground,
+          title: Text(
+            tripHistory,
+            style: Theme.of(context)
+                .primaryTextTheme
+                .titleMedium
+                ?.copyWith(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
         ),
-        centerTitle: true,
-        backgroundColor: appGrayBackground,
-        title: Text(
-          tripHistory,
-          style: Theme.of(context)
-              .primaryTextTheme
-              .titleMedium
-              ?.copyWith(fontSize: 18, fontWeight: FontWeight.bold),
-        ),
-      ),
-      body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12),
-        child: ListView.builder(
-          itemBuilder: (ctx, index) {
-            return Container(
-              margin: const EdgeInsets.symmetric(vertical: 5),
-              child: const HistoryDateItem(),
-            );
-          },
-          itemCount: 6,
+        body: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          child: ListView.builder(
+            itemBuilder: (ctx, index) {
+              return Container(
+                margin: const EdgeInsets.symmetric(vertical: 5),
+                child: const HistoryDateItem(),
+              );
+            },
+            itemCount: 6,
+          ),
         ),
       ),
     );

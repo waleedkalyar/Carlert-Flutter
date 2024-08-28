@@ -1,9 +1,12 @@
 import 'dart:async';
 
+import 'package:boxicons/boxicons.dart';
 import 'package:carlet_flutter/src/app/views/res/colors.dart';
 import 'package:carlet_flutter/src/ui/dialogs/select_car_bottom_sheet.dart';
 import 'package:carlet_flutter/src/utils/extensions.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:widget_to_marker/widget_to_marker.dart';
 
@@ -14,8 +17,9 @@ class DrawingMapView extends StatefulWidget {
   State<DrawingMapView> createState() => _DrawingMapViewState();
 }
 
-class _DrawingMapViewState extends State<DrawingMapView> {
+class _DrawingMapViewState extends State<DrawingMapView>  with WidgetsBindingObserver{
   static final Completer<GoogleMapController> _controller = Completer();
+  var _mapStyle = "";
 
   final Map<MarkerId, Marker> helperMarkers = {};
 
@@ -35,7 +39,14 @@ class _DrawingMapViewState extends State<DrawingMapView> {
 
   @override
   void initState() {
+    rootBundle.loadString("assets/map/map_style.json").then((value) {
+      // debugPrint("Map style -> $value");
+      _mapStyle = value;
+    }).catchError((e) {
+      debugPrint("Map style -> $e");
+    });
     initDotIcon();
+    WidgetsBinding.instance.addObserver(this);
     super.initState();
   }
 
@@ -49,6 +60,7 @@ class _DrawingMapViewState extends State<DrawingMapView> {
           markers: helperMarkers.values.toSet(),
           polygons: polygons.toSet(),
           circles: circles.toSet(),
+          style: _mapStyle,
           onTap: (latLang) {
             if (circleMode) {
               setState(() {
@@ -57,38 +69,79 @@ class _DrawingMapViewState extends State<DrawingMapView> {
               });
             } else {
               setState(() {
-              //  helperMarkerFromLatLang(latLang);
+                //  helperMarkerFromLatLang(latLang);
                 updateMarker(MarkerId(DateTime.now().toString()), latLang);
                 checkAndUpdatePolygon();
               });
             }
           },
         ),
+        Positioned(
+            left: 12,
+            top: 0,
+            child: Row(
+              children: [
+                ElevatedButton.icon(
+                  onPressed: () {
+                    circleMode = false;
+                    clearMap();
+                  },
+                  label:  Icon(
+                    CupertinoIcons.hexagon,
+                    color: circleMode ? appBlack : appWhite,
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    elevation: 0,
+                      shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(topLeft: Radius.circular(2),bottomLeft: Radius.circular(2))),
+                      backgroundColor: circleMode ? appWhite : appGreen),
+                ),
+                ElevatedButton.icon(
+                  onPressed: () {
+                    setState(() {
+                      circleMode = true;
+                      clearMap();
+                    });
+                  },
+                  label:  Icon(
+                    CupertinoIcons.circle,
+                    color: circleMode ? appWhite : appBlack,
+                  ),
+                  style: ElevatedButton.styleFrom(
+                      elevation: 0,
+                      shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(topRight: Radius.circular(2), bottomRight: Radius.circular(2))),
+                      backgroundColor: circleMode ? appGreen : appWhite),
+                ),
+              ],
+            )),
+        Positioned(
+          right: 12,
+          top: 0,
+          child: ElevatedButton.icon(
+          onPressed: () {
+              clearMap();
+          },
+          label: const Icon(
+            Icons.delete,
+            color: appRed,
+          ),
+          style: ElevatedButton.styleFrom(
+              elevation: 0,
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(topRight: Radius.circular(2), bottomRight: Radius.circular(2))),
+              backgroundColor: appWhite),
+        ),)
       ],
     );
   }
 
-  helperMarkerFromLatLang(LatLng latLang) {
-    MarkerId markerId = MarkerId(DateTime.now().toString());
-    Marker marker = Marker(
-        markerId: markerId,
-        position: latLang,
-        anchor: const Offset(0.5, 0.5),
-        icon: dotIcon ?? BitmapDescriptor.defaultMarker,
-        draggable: true,
-        onDragEnd: (latLang) {
-          setState(() {
-            if (markerId.value != "radius") {
-              updateMarker(markerId, latLang);
-            }
-            if (circleMode) {
-              checkAndUpdateCircle(latLang, markerId.value == "radius");
-            } else {
-              checkAndUpdatePolygon();
-            }
-          });
-        });
-    helperMarkers[markerId] = marker;
+  void clearMap() {
+    setState(() {
+      helperMarkers.clear();
+      polygons.clear();
+      circles.clear();
+    });
   }
 
   initDotIcon() {
@@ -122,6 +175,7 @@ class _DrawingMapViewState extends State<DrawingMapView> {
     if (isRadiusDrag) {
       LatLng center = circles.first.center;
       double radius = center.toDistanceInMeters(latLang);
+      defaultRadius = radius;
       circles.clear();
       circles.add(Circle(
           circleId: const CircleId("circle"),
@@ -154,14 +208,13 @@ class _DrawingMapViewState extends State<DrawingMapView> {
         icon: dotIcon ?? BitmapDescriptor.defaultMarker,
         anchor: const Offset(0.5, 0.5),
         draggable: true,
-        onDragEnd: (latLang) {
+        onDrag: (latLang) {
           setState(() {
             if (circleMode) {
               checkAndUpdateCircle(latLang, markerId.value == "radius");
             } else {
-                updateMarker(markerId, latLang);
-                checkAndUpdatePolygon();
-
+              updateMarker(markerId, latLang);
+              checkAndUpdatePolygon();
             }
           });
         });

@@ -9,11 +9,12 @@ import 'package:carlet_flutter/src/ui/screens/main/home/pages/live/carlert_marke
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_maps_cluster_manager_2/google_maps_cluster_manager_2.dart';
+import 'package:google_maps_cluster_manager_2/src/cluster_manager.dart' as cluster_manager_2;
+import 'package:google_maps_cluster_manager_2/src/cluster.dart' as cluster_manager_2;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MapHelper {
-  static Future<CarlertMarker> Function(Cluster) get markerBuilder => (cluster) async {
+  static Future<CarlertMarker> Function(cluster_manager_2.Cluster) get markerBuilder => (cluster) async {
         return CarlertMarker(
           markerId: MarkerId(cluster.getId()),
           position: cluster.location,

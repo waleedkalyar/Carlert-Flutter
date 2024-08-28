@@ -33,13 +33,13 @@ class NotificationItem extends StatelessWidget {
                     child: Image.asset("assets/images/img_car_logo.png", width: 28, height: 28,),
                   ),
                   title: RichText(text: TextSpan(children: [
-                    TextSpan(text: "Change Break Pad", style: Theme.of(context).primaryTextTheme.bodyMedium?.copyWith(fontSize: 19)),
+                    TextSpan(text: "Change Break Pad", style: Theme.of(context).primaryTextTheme.bodyMedium?.copyWith(fontSize: 16)),
                     WidgetSpan(child: Padding(padding: 5.horizontalPadding,)),
                     const WidgetSpan(child: Icon(Icons.circle, size: 4, color: appGray,), alignment: PlaceholderAlignment.middle),
                     WidgetSpan(child: Padding(padding: 1.horizontalPadding,)),
                     TextSpan(text: "12 minutes ago", style: Theme.of(context).primaryTextTheme.bodySmall?.copyWith(fontSize: 10, color: appGray)),
                   ])),
-                  subtitle: Text("Change Break Pad", style: Theme.of(context).primaryTextTheme.bodySmall?.copyWith(fontWeight: FontWeight.normal, color: appGrayDark, fontSize: 13),),
+                  subtitle: Text("Change Break Pad", style: Theme.of(context).primaryTextTheme.bodySmall?.copyWith(fontWeight: FontWeight.normal, color: appGrayDark, fontSize: 12),),
                 ),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),

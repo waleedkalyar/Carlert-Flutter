@@ -1,5 +1,6 @@
 import 'package:carlet_flutter/generated/assets.dart';
 import 'package:carlet_flutter/src/app/views/res/colors.dart';
+import 'package:carlet_flutter/src/ui/screens/main/home/drawer/geofence/detail/geofence_detail_screen.dart';
 import 'package:carlet_flutter/src/utils/extensions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,112 +13,64 @@ class ItemGeofence extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
-      decoration: BoxDecoration(
-          boxShadow:  const [
-            BoxShadow(
-              color: appGrayLight,
-              blurRadius: 1.5,
-              spreadRadius: 0.0,
-              offset: Offset(1.5, 1.5), // shadow direction: bottom right
-            )
-          ],
-          color: appWhite, borderRadius: BorderRadius.circular(8)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          ListTile(
-            minLeadingWidth: 0,
-            leading: Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(boxShadow: const [
+        BoxShadow(
+          color: appGrayLight,
+          blurRadius: 1.5,
+          spreadRadius: 0.0,
+          offset: Offset(1.5, 1.5), // shadow direction: bottom right
+        )
+      ], color: appWhite, borderRadius: BorderRadius.circular(8)),
+      child: Column(children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+
+          Container(
               padding: const EdgeInsets.all(2),
-                decoration: BoxDecoration(
+              decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  border: Border.all(color: appBlack, width: 2)
-                ),
-                child: const Icon(CupertinoIcons.map_pin_ellipse, size: 20,)),
-            title: Text(
+                  border: Border.all(color: appBlack, width: 2)),
+              child: const Icon(
+                CupertinoIcons.map_pin_ellipse,
+                size: 20,
+              )),
+          8.width,
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+            Text(
               "GeoFence 231",
               style: Theme.of(context).primaryTextTheme.bodySmall,
             ),
-            isThreeLine: false,
-            subtitle: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                5.height,
-                Chip(
-                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  labelPadding: const EdgeInsets.all(0),
-                  elevation: 0,
-                  label: Text(
-                    "Type:Circle",
-                    style: Theme.of(context)
-                        .primaryTextTheme
-                        .bodySmall
-                        ?.copyWith(
-                            color: appWhite,
-                            fontSize: 11,
-                            fontWeight: FontWeight.bold),
-                  ),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16)),
-                  side: const BorderSide(width: 0, color: appTransparent),
-                  surfaceTintColor: appBlack,
-                  backgroundColor: appBlack,
-                ),
-                8.height,
-                Row(
-                  children: [
-                    Chip(
-                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      labelPadding: const EdgeInsets.all(0),
-                      elevation: 0,
-                      label: Text(
-                        "Fleet No: XC123",
-                        style: Theme.of(context)
-                            .primaryTextTheme
-                            .bodySmall
-                            ?.copyWith(
-                                color: appBlack,
-                                fontSize: 11,
-                                fontWeight: FontWeight.bold),
-                      ),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16)),
-                      side: const BorderSide(width: 0, color: appTransparent),
-                      surfaceTintColor: appGrayBackground,
-                      backgroundColor: appGrayBackground,
-                    ),
-                    7.width,
-                    Chip(
-                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      labelPadding: const EdgeInsets.all(0),
-                      elevation: 0,
-                      label: Text(
-                        "Plate No: J 13521",
-                        style: Theme.of(context)
-                            .primaryTextTheme
-                            .bodySmall
-                            ?.copyWith(
-                                color: appBlack,
-                                fontSize: 11,
-                                fontWeight: FontWeight.bold),
-                      ),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16)),
-                      side: const BorderSide(width: 0, color: appTransparent),
-                      surfaceTintColor: appGrayBackground,
-                      backgroundColor: appGrayBackground,
-                    ),
-                  ],
-                )
-              ],
+            5.height,
+            Container(
+              padding:
+              const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
+              decoration: BoxDecoration(
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.circular(16),
+                color: appBlack,
+              ),
+              child: Text(
+                "Type:Circle",
+                style: Theme.of(context)
+                    .primaryTextTheme
+                    .bodySmall
+                    ?.copyWith(
+                    color: appWhite,
+                    fontSize: 11,
+                    fontWeight: FontWeight.bold),
+              ),
             ),
-            trailing: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                18.height,
+          ],),
+
+            Expanded(
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Column(children: [
                 Stack(
                   children: [
                     Container(
@@ -157,23 +110,87 @@ class ItemGeofence extends StatelessWidget {
                       .bodySmall
                       ?.copyWith(fontSize: 9),
                 )
-              ],
+                          ],),
+              ),
+            )
+        ],),
+        15.height,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+          Row(
+            children: [
+            Container(
+              padding:
+              const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+              decoration: BoxDecoration(
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.circular(16),
+                color: appGrayBackground,
+              ),
+              child: Text(
+                "Fleet No: XC123",
+                style: Theme.of(context)
+                    .primaryTextTheme
+                    .bodySmall
+                    ?.copyWith(
+                    color: appBlack,
+                    fontSize: 11,
+                    fontWeight: FontWeight.bold),
+              ),
             ),
-          ),
-          InkWell(
-            onTap: () {},
+            7.width,
+            Container(
+              padding:
+              const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+              decoration: BoxDecoration(
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.circular(16),
+                color: appGrayBackground,
+              ),
+              child: Text(
+                "Plate No: J 13521",
+                style: Theme.of(context)
+                    .primaryTextTheme
+                    .bodySmall
+                    ?.copyWith(
+                    color: appBlack,
+                    fontSize: 11,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],),
+
+        ],),
+        12.height,
+        Align(
+          alignment: Alignment.centerRight,
+          child: InkWell(
+            onTap: () {
+              print("fence detail tapped");
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (ctx) => const GeofenceDetailScreen()));
+            },
             child: Container(
-              margin: const EdgeInsets.only(bottom: 12, right: 12, top: 5),
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                margin: const EdgeInsets.only(bottom: 0, right: 0, top: 0),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
                     shape: BoxShape.rectangle,
                     color: appTransparent,
                     borderRadius: const BorderRadius.all(Radius.circular(6)),
                     border: Border.all(color: appGreen, width: 2)),
-                child:  Text("View In Map", style: Theme.of(context).primaryTextTheme.bodyMedium?.copyWith(fontSize: 14),)),
+                child: Text(
+                  "View In Map",
+                  style: Theme.of(context)
+                      .primaryTextTheme
+                      .bodyMedium
+                      ?.copyWith(fontSize: 14),
+                )),
           ),
-        ],
-      ),
+        ),
+      ],),
     );
   }
 }

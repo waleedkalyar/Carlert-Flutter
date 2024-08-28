@@ -25,14 +25,14 @@ class ServiceItem extends StatelessWidget {
                 style: Theme.of(context)
                     .primaryTextTheme
                     .bodyMedium
-                    ?.copyWith(fontSize: 18),
+                    ?.copyWith(fontSize: 14),
               ),
               Text(
                 "66566 KM",
                 style: Theme.of(context)
                     .primaryTextTheme
                     .bodySmall
-                    ?.copyWith(fontSize: 18, color: appGrayDark),
+                    ?.copyWith(fontSize: 14, color: appGrayDark),
               )
             ],
           ),
@@ -45,14 +45,14 @@ class ServiceItem extends StatelessWidget {
                 style: Theme.of(context)
                     .primaryTextTheme
                     .bodyMedium
-                    ?.copyWith(fontSize: 18),
+                    ?.copyWith(fontSize: 14),
               ),
               Text(
                 "Change air Filter",
                 style: Theme.of(context)
                     .primaryTextTheme
                     .bodySmall
-                    ?.copyWith(fontSize: 18, color: appGrayDark),
+                    ?.copyWith(fontSize: 14, color: appGrayDark),
               )
             ],
           ),
@@ -65,14 +65,14 @@ class ServiceItem extends StatelessWidget {
                 style: Theme.of(context)
                     .primaryTextTheme
                     .bodyMedium
-                    ?.copyWith(fontSize: 18),
+                    ?.copyWith(fontSize: 14),
               ),
               Text(
                 "* Change Ac Filter",
                 style: Theme.of(context)
                     .primaryTextTheme
                     .bodySmall
-                    ?.copyWith(fontSize: 18, color: appGrayDark),
+                    ?.copyWith(fontSize: 14, color: appGrayDark),
               )
             ],
           ),
@@ -86,7 +86,7 @@ class ServiceItem extends StatelessWidget {
                   .primaryTextTheme
                   .headlineMedium
                   ?.copyWith(
-                      color: Theme.of(context).primaryColor, fontSize: 16),
+                      color: Theme.of(context).primaryColor, fontSize: 15),
             ),
           )
         ],

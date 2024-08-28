@@ -18,3 +18,6 @@ const String fuel = "Fuel";
 const String expanses = "Expanses";
 const String susanAI = "Susan AI";
 
+const String geoNotifyMsg = "The vehicle driver and the fleet manager will be notified that the vehicle has entered or exited a predefined geographical area.";
+const String immobilizeMsg = "When a vehicle is immobilized, the car's security system activates a mechanism to prevent the engine from starting. This is typically a safety feature designed to avoid vehicle ignition.";
+

@@ -23,7 +23,7 @@ class _HistoryDateItemState extends State<HistoryDateItem> {
         style: Theme.of(context)
             .primaryTextTheme
             .bodyMedium
-            ?.copyWith(color: appWhite, fontSize: 16),
+            ?.copyWith(color: appWhite, fontSize: 14),
       ),
       showTrailingIcon: true,
       maintainState: true,

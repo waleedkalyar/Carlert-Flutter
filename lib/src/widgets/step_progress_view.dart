@@ -53,8 +53,8 @@ class StepProgressView extends StatelessWidget {
 
       list.add(
         Container(
-          width: 20.0,
-          height: 20.0,
+          width: 24.0,
+          height: 24.0,
           padding: EdgeInsets.all(0),
           decoration: new BoxDecoration(
             /* color: circleColor,*/
@@ -67,7 +67,7 @@ class StepProgressView extends StatelessWidget {
           child: Icon(
             Icons.circle,
             color: iconColor,
-            size: 12.0,
+            size: 14.0,
           ),
         ),
       );
@@ -88,7 +88,14 @@ class StepProgressView extends StatelessWidget {
   List<Widget> _titleViews() {
     var list = <Widget>[];
     _titles.asMap().forEach((i, text) {
-      list.add(Text(text, style: const TextStyle(color: appBlack)));
+      var circleColor =
+      (i == 0 || _curStep > i + 1) ? _activeColor : _inactiveColor;
+      var lineColor = _curStep > i + 1 ? _activeColor : _inactiveColor;
+      var iconColor =
+      (i == 0 || _curStep > i + 1) ? _activeColor : _inactiveColor;
+
+
+      list.add(Text(text, style:  TextStyle(color: iconColor)));
     });
     return list;
   }
