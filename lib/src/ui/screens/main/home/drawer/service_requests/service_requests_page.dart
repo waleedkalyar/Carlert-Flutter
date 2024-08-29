@@ -1,6 +1,7 @@
 
 import 'package:carlet_flutter/src/app/views/res/colors.dart';
 import 'package:carlet_flutter/src/app/views/res/strings.dart';
+import 'package:carlet_flutter/src/ui/screens/main/home/drawer/service_requests/requests_body_container_view.dart';
 import 'package:flutter/material.dart';
 
 class ServiceRequestsPage extends StatelessWidget {
@@ -9,7 +10,7 @@ class ServiceRequestsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
-      backgroundColor: appWhite,
+      backgroundColor: appGrayBackground,
       appBar: AppBar(
         leading: Padding(
           padding: const EdgeInsets.all(10.0),
@@ -29,7 +30,7 @@ class ServiceRequestsPage extends StatelessWidget {
           ),
         ),
         centerTitle: true,
-        backgroundColor: appWhite,
+        backgroundColor: appGrayBackground,
         title: Text(
           serviceRequests,
           style: Theme.of(context)
@@ -38,6 +39,7 @@ class ServiceRequestsPage extends StatelessWidget {
               ?.copyWith(fontSize: 18, fontWeight: FontWeight.bold),
         ),
       ),
+      body: const RequestsBodyContainerView(),
     );
   }
 }

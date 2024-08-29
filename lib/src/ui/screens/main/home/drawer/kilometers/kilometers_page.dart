@@ -1,6 +1,8 @@
 
 import 'package:carlet_flutter/src/app/views/res/colors.dart';
 import 'package:carlet_flutter/src/app/views/res/strings.dart';
+import 'package:carlet_flutter/src/widgets/app_raw_input_with_dropdown_option.dart';
+import 'package:carlet_flutter/src/widgets/app_search_filter_bar.dart';
 import 'package:flutter/material.dart';
 
 class KilometersPage extends StatelessWidget {
@@ -9,7 +11,7 @@ class KilometersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
-      backgroundColor: appWhite,
+      backgroundColor: appGrayBackground,
       appBar: AppBar(
         leading: Padding(
           padding: const EdgeInsets.all(10.0),
@@ -29,13 +31,22 @@ class KilometersPage extends StatelessWidget {
           ),
         ),
         centerTitle: true,
-        backgroundColor: appWhite,
+        backgroundColor: appGrayBackground,
         title: Text(
           kilometers,
           style: Theme.of(context)
               .primaryTextTheme
               .titleMedium
               ?.copyWith(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+      ),
+      body: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        child: Column(
+          children: [
+            AppSearchFilterBar(),
+
+          ],
         ),
       ),
     );
