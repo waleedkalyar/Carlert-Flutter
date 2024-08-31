@@ -131,7 +131,7 @@ class _AppTextInputState extends State<AppTextInputField> {
             labelText: widget.floatHint ? widget.hint : null,
             hintText: !widget.floatHint ? widget.hint : null,
             labelStyle: Theme.of(context).primaryTextTheme.labelMedium,
-            hintStyle: const TextStyle(color: appGray),
+            hintStyle:  TextStyle(color: appGray.withOpacity(0.8), fontSize: 14, fontWeight: FontWeight.normal),
             focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.all(
                     Radius.circular(widget.borderRadius ?? 8.0)),

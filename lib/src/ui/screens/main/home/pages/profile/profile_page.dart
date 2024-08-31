@@ -2,6 +2,7 @@ import 'package:carlet_flutter/src/app/bloc/app_nav_bloc.dart';
 import 'package:carlet_flutter/src/app/views/res/colors.dart';
 import 'package:carlet_flutter/src/utils/extensions.dart';
 import 'package:carlet_flutter/src/widgets/app_filled_button.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,14 +21,10 @@ class ProfilePage extends StatelessWidget {
               tileColor: Theme.of(context).primaryColor,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(6)),
-              leading: CircleAvatar(
-                maxRadius: 18,
-                backgroundColor: Theme.of(context).primaryColorDark,
-                child: Icon(
-                  Icons.person,
-                  color: Theme.of(context).primaryColor,
-                  size: 18,
-                ),
+              leading: Icon(
+                CupertinoIcons.person_alt,
+                color: Theme.of(context).primaryColorDark,
+                size: 24,
               ),
               title: Text(
                 "Carlert Admin",
@@ -43,7 +40,7 @@ class ProfilePage extends StatelessWidget {
                 children: [
                   ListTile(
                     leading: Icon(
-                      Icons.phone_iphone_outlined,
+                      CupertinoIcons.phone_fill,
                       color: Theme.of(context).primaryColorDark,
                     ),
                     title: Text(
@@ -63,7 +60,7 @@ class ProfilePage extends StatelessWidget {
                   ),
                   ListTile(
                     leading: Icon(
-                      Icons.email_rounded,
+                      CupertinoIcons.mail_solid,
                       color: Theme.of(context).primaryColorDark,
                     ),
                     title: Text(
@@ -82,14 +79,10 @@ class ProfilePage extends StatelessWidget {
                     ),
                   ),
                   ListTile(
-                    leading: CircleAvatar(
-                      maxRadius: 18,
-                      backgroundColor: Theme.of(context).primaryColorDark,
-                      child: Icon(
-                        Icons.group,
-                        color: Theme.of(context).primaryColor,
-                        size: 18,
-                      ),
+                    leading: Icon(
+                      CupertinoIcons.group_solid,
+                      color: Theme.of(context).primaryColorDark,
+                      size: 24,
                     ),
                     title: Text(
                       "User Group",
@@ -99,7 +92,7 @@ class ProfilePage extends StatelessWidget {
                           ?.copyWith(fontSize: 16),
                     ),
                     subtitle: Text(
-                      "driver",
+                      "Fleet Manager",
                       style: Theme.of(context)
                           .primaryTextTheme
                           .bodySmall

@@ -28,4 +28,5 @@ class Assets {
   static const String icEnd = 'assets/icons/ic_end.svg';
   static const String icCar = 'assets/icons/ic_car.svg';
   static const String icDriver = 'assets/icons/ic_driver.svg';
+  static const String aiLoading = 'assets/images/ai_loading.gif';
 }

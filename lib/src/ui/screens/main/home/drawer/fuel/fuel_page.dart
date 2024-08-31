@@ -1,6 +1,9 @@
 
 import 'package:carlet_flutter/src/app/views/res/colors.dart';
 import 'package:carlet_flutter/src/app/views/res/strings.dart';
+import 'package:carlet_flutter/src/ui/screens/main/home/drawer/fuel/items/item_fuel.dart';
+import 'package:carlet_flutter/src/utils/extensions.dart';
+import 'package:carlet_flutter/src/widgets/app_search_filter_bar.dart';
 import 'package:flutter/material.dart';
 
 class FuelPage extends StatelessWidget {
@@ -9,8 +12,9 @@ class FuelPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
-      backgroundColor: appWhite,
+      backgroundColor: appGrayBackground,
       appBar: AppBar(
+        surfaceTintColor: appTransparent,
         leading: Padding(
           padding: const EdgeInsets.all(10.0),
           child: Container(
@@ -29,13 +33,32 @@ class FuelPage extends StatelessWidget {
           ),
         ),
         centerTitle: true,
-        backgroundColor: appWhite,
+        backgroundColor: appGrayBackground,
         title: Text(
           fuel,
           style: Theme.of(context)
               .primaryTextTheme
               .titleMedium
               ?.copyWith(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+      ),
+      body: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        color: appGrayBackground,
+        child: Column(
+          children: [
+            const AppSearchFilterBar(),
+            12.height,
+            Expanded(
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemBuilder: (ctx, index) {
+                  return const ItemFuel();
+                },
+                itemCount: 12,
+              ),
+            )
+          ],
         ),
       ),
     );

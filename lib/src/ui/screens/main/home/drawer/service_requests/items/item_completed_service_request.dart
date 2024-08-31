@@ -21,7 +21,7 @@ class ItemCompletedServiceRequest extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(children: [
-            const CircleAvatar(radius: 20, backgroundColor: appGrayLight,child: Icon(Icons.pending_actions_rounded, color: appBlack,),),
+            const CircleAvatar(radius: 20, backgroundColor: appGrayLight,child: Icon(Icons.task_outlined, color: appBlack,),),
             5.width,
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,

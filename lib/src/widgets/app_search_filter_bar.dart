@@ -16,7 +16,13 @@ class _SearchFilterBarState extends State<AppSearchFilterBar> {
   SearchMenu selectedMenu = SearchMenu.SEARCH_BY_GROUP;
 
   late String _selectedValue;
-  List<String> listOfValue = ['1', '2', '3', '4', '5'];
+  List<String> listOfValue = [
+    'Service My Car',
+    'Gladari Cars',
+    'Sharjha Taxi',
+    'Ajman Transport',
+    'Others'
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -25,82 +31,106 @@ class _SearchFilterBarState extends State<AppSearchFilterBar> {
         Expanded(
             child: !shouldEnable(selectedMenu)
                 ? TextFormField(
-                    readOnly: shouldEnable(selectedMenu),
-                    decoration: InputDecoration(
-                      isDense: true,
-                      prefixIcon: const Icon(
-                        CupertinoIcons.search,
-                        size: 20,
-                      ),
-                      prefixIconColor: appBlack,
-                      fillColor: appWhite,
-                      focusColor: appWhite,
-                      filled: true,
-                      hintText: selectedMenu.name,
-                      hintStyle: Theme.of(context)
-                          .primaryTextTheme
-                          .titleSmall
-                          ?.copyWith(color: appGray),
-                      border: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(8)),
-                        borderSide: BorderSide(color: appWhite, width: 0.5),
-                      ),
-                      focusedBorder: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(8)),
-                        borderSide: BorderSide(color: appWhite, width: 0.5),
-                      ),
-                      enabledBorder: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(8)),
-                        borderSide: BorderSide(color: appWhite, width: 0.5),
-                      ),
-                      disabledBorder: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(8)),
-                        borderSide: BorderSide(color: appWhite, width: 0.5),
-                      ),
-                    ),
-                  )
+              readOnly: selectedMenu == SearchMenu.SEARCH_BY_DATE_RANGE,
+              decoration: InputDecoration(
+                isDense: true,
+                prefixIcon:
+                selectedMenu != SearchMenu.SEARCH_BY_DATE_RANGE
+                    ? const Icon(
+                  CupertinoIcons.search,
+                  size: 20,
+                )
+                    : null,
+                suffixIcon:
+                selectedMenu == SearchMenu.SEARCH_BY_DATE_RANGE
+                    ? IconButton(
+                  onPressed: () {
+                    showRangePicker();
+                  },
+                  icon: const Icon(
+                    CupertinoIcons.calendar,
+                    size: 20,
+                  ),
+                )
+                    : null,
+                prefixIconColor: appBlack,
+                fillColor: appWhite,
+                focusColor: appWhite,
+                filled: true,
+                hintText: selectedMenu.name,
+                hintStyle: Theme.of(context)
+                    .primaryTextTheme
+                    .titleSmall
+                    ?.copyWith(color: appGray),
+                border: const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                  borderSide: BorderSide(color: appWhite, width: 0.5),
+                ),
+                focusedBorder: const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                  borderSide: BorderSide(color: appWhite, width: 0.5),
+                ),
+                enabledBorder: const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                  borderSide: BorderSide(color: appWhite, width: 0.5),
+                ),
+                disabledBorder: const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                  borderSide: BorderSide(color: appWhite, width: 0.5),
+                ),
+              ),
+            )
                 : DropdownButtonFormField(
               dropdownColor: appWhite,
-                    items: listOfValue.map((String value) {
-                      return DropdownMenuItem(
-                        value: value,
-                        child: Text(value, style: Theme.of(context).primaryTextTheme.bodySmall,),
-                      );
-                    }).toList(),
-                    hint: Align(alignment: Alignment.centerLeft, child: Text(selectedMenu.name, style: Theme.of(context)
-                        .primaryTextTheme
-                        .titleSmall
-                        ?.copyWith(color: appGray),),),
-                    isDense: true,
-                    onChanged: (value) {},
-                    decoration: const InputDecoration(
-                      isDense: true,
-                      prefixIcon: Icon(
-                        CupertinoIcons.search,
-                        size: 20,
-                      ),
-                      prefixIconColor: appBlack,
-                      fillColor: appWhite,
-                      focusColor: appWhite,
-                      filled: true,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(8)),
-                        borderSide: BorderSide(color: appWhite, width: 0.5),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(8)),
-                        borderSide: BorderSide(color: appWhite, width: 0.5),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(8)),
-                        borderSide: BorderSide(color: appWhite, width: 0.5),
-                      ),
-                      disabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(8)),
-                        borderSide: BorderSide(color: appWhite, width: 0.5),
-                      ),
-                    ),
-                  )),
+              items: listOfValue.map((String value) {
+                return DropdownMenuItem(
+                  value: value,
+                  child: Text(
+                    value,
+                    style: Theme.of(context).primaryTextTheme.bodySmall,
+                  ),
+                );
+              }).toList(),
+              hint: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  selectedMenu.name,
+                  style: Theme.of(context)
+                      .primaryTextTheme
+                      .titleSmall
+                      ?.copyWith(color: appGray),
+                ),
+              ),
+              isDense: true,
+              onChanged: (value) {},
+              decoration: const InputDecoration(
+                isDense: true,
+                prefixIcon: Icon(
+                  CupertinoIcons.search,
+                  size: 20,
+                ),
+                prefixIconColor: appBlack,
+                fillColor: appWhite,
+                focusColor: appWhite,
+                filled: true,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                  borderSide: BorderSide(color: appWhite, width: 0.5),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                  borderSide: BorderSide(color: appWhite, width: 0.5),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                  borderSide: BorderSide(color: appWhite, width: 0.5),
+                ),
+                disabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                  borderSide: BorderSide(color: appWhite, width: 0.5),
+                ),
+              ),
+            )),
         12.width,
         PopupMenuButton<SearchMenu>(
           onSelected: (SearchMenu menuItem) {
@@ -169,8 +199,18 @@ class _SearchFilterBarState extends State<AppSearchFilterBar> {
   }
 
   bool shouldEnable(SearchMenu menuItem) {
-    return (menuItem == SearchMenu.SEARCH_BY_GROUP ||
-        menuItem == SearchMenu.SEARCH_BY_DATE_RANGE);
+    return (menuItem == SearchMenu.SEARCH_BY_GROUP);
+  }
+
+  void showRangePicker()  {
+    showDateRangePicker(
+      context: context,
+      useRootNavigator: false,
+      currentDate: DateTime.now(),
+      helpText: 'Select Range', firstDate: DateTime(2023,03,25), lastDate: DateTime(2025,08,31),
+    ).then((dataRange){
+
+    });
   }
 }
 

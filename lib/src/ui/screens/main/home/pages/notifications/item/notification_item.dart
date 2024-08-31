@@ -1,6 +1,8 @@
+import 'package:carlet_flutter/generated/assets.dart';
 import 'package:carlet_flutter/src/app/views/res/colors.dart';
 import 'package:carlet_flutter/src/utils/extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class NotificationItem extends StatelessWidget {
   const NotificationItem({Key? key}) : super(key: key);
@@ -27,11 +29,7 @@ class NotificationItem extends StatelessWidget {
               children: [
                 ListTile(
                   contentPadding: const EdgeInsets.only(left: 12),
-                  leading: CircleAvatar(
-                    radius: 22,
-                    backgroundColor: appGrayLight,
-                    child: Image.asset("assets/images/img_car_logo.png", width: 28, height: 28,),
-                  ),
+                  leading: SvgPicture.asset(Assets.liveMapActiveCarIconNoShadow, width: 28, height: 28,),
                   title: RichText(text: TextSpan(children: [
                     TextSpan(text: "Change Break Pad", style: Theme.of(context).primaryTextTheme.bodyMedium?.copyWith(fontSize: 16)),
                     WidgetSpan(child: Padding(padding: 5.horizontalPadding,)),

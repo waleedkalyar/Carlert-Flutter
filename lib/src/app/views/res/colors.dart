@@ -9,11 +9,12 @@ const appGray =  Color(0xFF7C7C7C);
 const appGrayShimmer =  Color(0xFFC8C8C8);
 const appGrayDark =  Color(0xFF363636);
 const appGrayLight =  Color(0xFFE2E2E2);
-const appGrayBackground =  Color(0xFFE8E7E7);
+const appGrayBackground =  Color(0xFFF3F4F6);
 const appGreen =  Color(0xFF27A175);
 const appRed =  Color(0xFFFF7676);
 const appYellow =  Color(0xFFCB9A72);
 const appBlue =  Color(0xFF69809A);
+const appBlueDark =  Color(0xFF516377);
 const appTransparent =  Colors.transparent;
 
 const appGrayGradient1 = Color(0xFF303030);
