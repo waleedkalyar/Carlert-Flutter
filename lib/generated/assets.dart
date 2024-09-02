@@ -7,26 +7,31 @@ class Assets {
   static const String assetsCarBlue = 'assets/car_blue.glb';
   static const String assetsCarModel = 'assets/car_model.mtl';
   static const String assetsCarTwo = 'assets/car_two.glb';
-  static const String assetsIconsLiveMapInactiveCarIcon =
-      'assets/icons/live_map_inactive_car_icon.svg';
+  static const String assetsIconsLiveMapActiveCarIconNoShadow = 'assets/icons/live_map_active_car_icon_no_shadow.svg';
+  static const String assetsIconsLiveMapInactiveCarIcon = 'assets/icons/live_map_inactive_car_icon.svg';
   static const String assetsMapMapStyle = 'assets/map/map_style.json';
   static const String assetsMapTrip = 'assets/map/trip.json';
-  static const String iconsLiveMapActiveCarIcon =
-      'assets/icons/live_map_active_car_icon.svg';
-  static const String iconsLiveMapIdleCarIcon =
-      'assets/icons/live_map_idle_car_icon.svg';
-  static const String liveMapActiveCarIconNoShadow =
-      'assets/icons/live_map_active_car_icon_no_shadow.svg';
-  static const String iconsLiveMapInactiveCarIcon =
-      'assets/icons/live_map_inactive_car_icon.svg';
+  static const String iconsIcCar = 'assets/icons/ic_car.svg';
+  static const String iconsIcDriver = 'assets/icons/ic_driver.svg';
+  static const String iconsIcEnd = 'assets/icons/ic_end.svg';
+  static const String iconsIcStart = 'assets/icons/ic_start.svg';
+  static const String iconsLiveMapActiveCarIcon = 'assets/icons/live_map_active_car_icon.svg';
+  static const String iconsLiveMapActiveCarIconNoShadow = 'assets/icons/live_map_active_car_icon_no_shadow.svg';
+  static const String iconsLiveMapIdleCarIcon = 'assets/icons/live_map_idle_car_icon.svg';
+  static const String iconsLiveMapInactiveCarIcon = 'assets/icons/live_map_inactive_car_icon.svg';
+  static const String imagesAiLoading = 'assets/images/ai_loading.gif';
   static const String imagesCarImage = 'assets/images/car_image.png';
   static const String imagesCarMarker = 'assets/images/car_marker.png';
+  static const String imagesIcImgTrafficLight = 'assets/images/ic_img_traffic_light.png';
+  static const String imagesIcImgTrafficLightDisabled = 'assets/images/ic_img_traffic_light_disabled.png';
   static const String imagesImgCarLogo = 'assets/images/img_car_logo.png';
+  static const String imagesImgIcFleet = 'assets/images/img_ic_fleet.png';
+  static const String imagesImgIcFleetDisabled = 'assets/images/img_ic_fleet_disabled.png';
+  static const String imagesImgIconLicensePlate = 'assets/images/img_icon_license_plate.png';
+  static const String imagesImgIconNoLicensePlate = 'assets/images/img_icon_no_license_plate.png';
+  static const String imagesImgIconNoSatellite = 'assets/images/img_icon_no_satellite.png';
+  static const String imagesImgIconSatellite = 'assets/images/img_icon_satellite.png';
   static const String mapMapStyle = 'assets/map/map_style.json';
   static const String mapTrip = 'assets/map/trip.json';
-  static const String icStart = 'assets/icons/ic_start.svg';
-  static const String icEnd = 'assets/icons/ic_end.svg';
-  static const String icCar = 'assets/icons/ic_car.svg';
-  static const String icDriver = 'assets/icons/ic_driver.svg';
-  static const String aiLoading = 'assets/images/ai_loading.gif';
+
 }

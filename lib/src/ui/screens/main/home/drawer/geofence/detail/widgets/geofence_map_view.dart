@@ -128,7 +128,7 @@ class _GeofenceMapViewState extends State<GeofenceMapView>
                         return Row(
                           children: [
                             SvgPicture.asset(
-                              Assets.liveMapActiveCarIconNoShadow,
+                              Assets.iconsLiveMapActiveCarIconNoShadow,
                               width: 24,
                               height: 24,
                             ),

@@ -46,9 +46,10 @@ class SusanAIPage extends StatelessWidget {
         ),
         body: Expanded(
           child: SingleChildScrollView(
+            physics: const NeverScrollableScrollPhysics(),
             child: Container(
               height: MediaQuery.of(context).size.height -
-                  56 -
+                  86 -
                   MediaQuery.of(context).padding.top,
               color: appTransparent,
               child: Column(
@@ -101,7 +102,7 @@ class SusanAIPage extends StatelessWidget {
                               invertColors: true,
                             ),
                             child: Image.asset(
-                              Assets.aiLoading,
+                              Assets.imagesAiLoading,
                               width: double.infinity,
                               height: 275,
                             ),

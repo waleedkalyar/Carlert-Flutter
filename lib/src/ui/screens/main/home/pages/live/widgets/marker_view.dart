@@ -9,7 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class MarkerView extends StatelessWidget {
-  const MarkerView({super.key});
+  final String text;
+
+  const MarkerView({super.key, required this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -19,16 +21,12 @@ class MarkerView extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 4,vertical: 2),
+          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
           decoration: BoxDecoration(
-            color: appGray,
-            borderRadius: BorderRadius.circular(6)
-          ),
-          child: Text("AA 1234",
-              style: Theme.of(context)
-                  .primaryTextTheme
-                  .bodySmall
-                  ?.copyWith(fontSize: 9, color: appWhite, fontWeight: FontWeight.bold)),
+              color: appGray, borderRadius: BorderRadius.circular(6)),
+          child: Text(text,
+              style: Theme.of(context).primaryTextTheme.bodySmall?.copyWith(
+                  fontSize: 9, color: appWhite, fontWeight: FontWeight.bold)),
         ),
         2.height,
         SvgPicture.asset(

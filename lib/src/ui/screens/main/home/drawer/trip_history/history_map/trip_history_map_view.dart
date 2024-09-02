@@ -158,7 +158,7 @@ class TripHistoryMapView extends StatelessWidget {
                         visualDensity:
                             const VisualDensity(horizontal: 0, vertical: -4),
                         leading: SvgPicture.asset(
-                          Assets.icCar,
+                          Assets.iconsIcCar,
                           width: 28,
                           height: 28,
                           fit: BoxFit.cover,
@@ -199,7 +199,7 @@ class TripHistoryMapView extends StatelessWidget {
                         visualDensity:
                             const VisualDensity(horizontal: 0, vertical: -4),
                         leading: SvgPicture.asset(
-                          Assets.icDriver,
+                          Assets.iconsIcDriver,
                           width: 28,
                           height: 28,
                           fit: BoxFit.cover,

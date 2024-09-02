@@ -14,6 +14,7 @@ import 'package:carlet_flutter/src/ui/screens/main/home/pages/profile/profile_pa
 import 'package:carlet_flutter/src/ui/screens/main/home/pages/services/services_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -163,6 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         appBar: AppBar(
+          systemOverlayStyle: SystemUiOverlayStyle.dark,
           scrolledUnderElevation: 0,
           automaticallyImplyLeading: _currentIndex != 2,
           backgroundColor: appTransparent,

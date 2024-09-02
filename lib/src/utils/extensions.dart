@@ -12,7 +12,7 @@ extension ToModels on Marker {
     return CarlertMarker(
       markerId: MarkerId(infoWindow.title.toString()),
       position: position,
-      icon: icon,
+      icon: icon, fleetNo: 'Unknown', plateNo: 'Unknown',
     );
   }
 }

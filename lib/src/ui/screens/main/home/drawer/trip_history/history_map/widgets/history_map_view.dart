@@ -84,7 +84,7 @@ class _HistoryMapViewState extends State<HistoryMapView> {
             .moveCamera(CameraUpdate.newLatLngBounds(computeBounds(trip), 48));
       });
       setState(() {
-        markerIcon(Assets.icStart).toBitmapDescriptor().then((icon) {
+        markerIcon(Assets.iconsIcStart).toBitmapDescriptor().then((icon) {
           setState(() {
             _markers.add(Marker(
                 markerId: const MarkerId("start"),
@@ -96,7 +96,7 @@ class _HistoryMapViewState extends State<HistoryMapView> {
 
       _animator.animatePolyline(trip, 'polyline_id', _polylines, (isLast) {
         if (isLast) {
-          markerIcon(Assets.icEnd).toBitmapDescriptor().then((icon) {
+          markerIcon(Assets.iconsIcEnd).toBitmapDescriptor().then((icon) {
             setState(() {
               _markers.add(Marker(
                   markerId: const MarkerId("end"),

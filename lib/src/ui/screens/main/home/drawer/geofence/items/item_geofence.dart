@@ -76,7 +76,7 @@ class ItemGeofence extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.only(left: 0),
                       child: SvgPicture.asset(
-                        Assets.liveMapActiveCarIconNoShadow,
+                        Assets.iconsLiveMapActiveCarIconNoShadow,
                         width: 18,
                         height: 18,
                         fit: BoxFit.cover,
@@ -85,7 +85,7 @@ class ItemGeofence extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.only(left: 10),
                       child: SvgPicture.asset(
-                        Assets.liveMapActiveCarIconNoShadow,
+                        Assets.iconsLiveMapActiveCarIconNoShadow,
                         width: 18,
                         height: 18,
                         fit: BoxFit.cover,
@@ -94,7 +94,7 @@ class ItemGeofence extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.only(left: 20),
                       child: SvgPicture.asset(
-                        Assets.liveMapActiveCarIconNoShadow,
+                        Assets.iconsLiveMapActiveCarIconNoShadow,
                         width: 18,
                         height: 18,
                         fit: BoxFit.cover,

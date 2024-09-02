@@ -30,7 +30,7 @@ class _SelectVehicleItemState extends State<SelectVehicleItem> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             SvgPicture.asset(
-              Assets.liveMapActiveCarIconNoShadow,
+              Assets.iconsLiveMapActiveCarIconNoShadow,
               width: 28,
               height: 28,
               fit: BoxFit.fill,

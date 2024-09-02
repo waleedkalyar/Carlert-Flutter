@@ -16,7 +16,7 @@ class MarkerAnimation {
   MarkerAnimation(TickerProvider vsync, Duration duration) {
     _animationController =
         AnimationController(vsync: vsync, duration: duration);
-    _tween = Tween<double>(begin: 0, end: 1);
+    _tween = Tween<double>(begin: 0, end: 100);
     _animation = CurvedAnimation(
         parent: _animationController,
         curve: Curves.linear); //_tween.animate(_animationController);
