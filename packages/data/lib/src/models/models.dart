@@ -8,3 +8,5 @@ export 'notification/notification_model.dart';
 export 'service/service_model.dart';
 export 'location/service_location.dart';
 export 'slot/time_slot_model.dart';
+export 'socket/socket_chip_model.dart';
+export 'socket/device_info.dart';

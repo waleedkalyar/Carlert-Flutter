@@ -7,3 +7,5 @@ export 'booking/booking_repo.dart';
 //export 'booking/booking_repo_impl.dart';
 export 'vehicles/vehicle_repo.dart';
 //export 'vehicles/vehicle_repo_impl.dart';
+
+//export 'package:pusher_client/pusher_client.dart';

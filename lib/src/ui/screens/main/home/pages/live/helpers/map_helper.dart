@@ -22,7 +22,7 @@ class MapHelper {
             log(cluster.items.toString());
           },
           icon: await getClusterBitmap(cluster.isMultiple ? 125 : 75,
-              text: cluster.isMultiple ? cluster.count.toString() : ""),
+              text: cluster.isMultiple ? cluster.count.toString() : ""), fleetNo: '', plateNo: '',
         );
       };
 

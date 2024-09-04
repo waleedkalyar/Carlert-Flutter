@@ -110,7 +110,7 @@ class MyCarPage extends StatelessWidget {
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 8.0,
-                  childAspectRatio:2.15 / 1,
+                  childAspectRatio:2.5 / 1,
                   mainAxisSpacing: 8.0,
                 ),
                 children: [

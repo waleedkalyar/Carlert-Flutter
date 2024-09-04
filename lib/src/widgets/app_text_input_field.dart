@@ -96,7 +96,7 @@ class _AppTextInputState extends State<AppTextInputField> {
               : _isFocused
                   ? Colors.transparent
                   : widget.filledColor ?? appGrayBackground,
-          borderRadius: BorderRadius.circular(widget.borderRadius ?? 8.0)),
+          borderRadius: BorderRadius.circular(widget.borderRadius ?? 12.0)),
       child: TextFormField(
           autovalidateMode: AutovalidateMode.onUserInteraction,
           validator: (value) {},

@@ -20,14 +20,21 @@ class MarkerView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-          decoration: BoxDecoration(
-              color: appGray, borderRadius: BorderRadius.circular(6)),
-          child: Text(text,
-              style: Theme.of(context).primaryTextTheme.bodySmall?.copyWith(
-                  fontSize: 9, color: appWhite, fontWeight: FontWeight.bold)),
-        ),
+        text.isNotEmpty
+            ? Container(
+                padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+                decoration: BoxDecoration(
+                    color: appGray, borderRadius: BorderRadius.circular(6)),
+                child: Text(text,
+                    style: Theme.of(context)
+                        .primaryTextTheme
+                        .bodySmall
+                        ?.copyWith(
+                            fontSize: 9,
+                            color: appWhite,
+                            fontWeight: FontWeight.bold)),
+              )
+            : const SizedBox(),
         2.height,
         SvgPicture.asset(
           Assets.iconsLiveMapActiveCarIcon,

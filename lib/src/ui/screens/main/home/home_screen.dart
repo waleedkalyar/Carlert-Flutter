@@ -1,3 +1,4 @@
+import 'package:boxicons/boxicons.dart';
 import 'package:carlet_flutter/src/app/views/res/colors.dart';
 import 'package:carlet_flutter/src/app/views/res/strings.dart';
 import 'package:carlet_flutter/src/ui/screens/main/home/drawer/expenses/expenses_page.dart';
@@ -12,6 +13,7 @@ import 'package:carlet_flutter/src/ui/screens/main/home/pages/mycar/my_car_page.
 import 'package:carlet_flutter/src/ui/screens/main/home/pages/notifications/notifications_page.dart';
 import 'package:carlet_flutter/src/ui/screens/main/home/pages/profile/profile_page.dart';
 import 'package:carlet_flutter/src/ui/screens/main/home/pages/services/services_page.dart';
+import 'package:carlet_flutter/src/widgets/app_text_input_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -64,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ?.copyWith(letterSpacing: 4, fontSize: 32)),
                 )),
                 ListTile(
-                  leading: const Icon(Icons.history),
+                  leading: const Icon(Icons.history_outlined),
                   title: Text(
                     tripHistory,
                     style: Theme.of(context).primaryTextTheme.titleMedium,
@@ -78,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
                 ListTile(
-                  leading: const Icon(Icons.my_location),
+                  leading: const Icon(Icons.my_location_outlined),
                   title: Text(
                     geoFencing,
                     style: Theme.of(context).primaryTextTheme.titleMedium,
@@ -92,7 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
                 ListTile(
-                  leading: const Icon(Icons.view_list_rounded),
+                  leading: const Icon(Icons.view_list_outlined),
                   title: Text(
                     serviceRequests,
                     style: Theme.of(context).primaryTextTheme.titleMedium,
@@ -106,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
                 ListTile(
-                  leading: const Icon(Icons.route),
+                  leading: const Icon(Icons.route_outlined),
                   title: Text(
                     kilometers,
                     style: Theme.of(context).primaryTextTheme.titleMedium,
@@ -120,7 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
                 ListTile(
-                  leading: const Icon(Icons.local_gas_station),
+                  leading: const Icon(Icons.local_gas_station_outlined),
                   title: Text(
                     fuel,
                     style: Theme.of(context).primaryTextTheme.titleMedium,
@@ -132,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
                 ListTile(
-                  leading: const Icon(Icons.money),
+                  leading: const Icon(Icons.money_outlined),
                   title: Text(
                     expanses,
                     style: Theme.of(context).primaryTextTheme.titleMedium,
@@ -146,7 +148,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
                 ListTile(
-                  leading: const Icon(Icons.adb),
+                  leading: const Icon(Boxicons.bx_brain),
                   title: Text(
                     susanAI,
                     style: Theme.of(context).primaryTextTheme.titleMedium,
@@ -174,7 +176,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       .primaryTextTheme
                       .headlineLarge
                       ?.copyWith(letterSpacing: 4, fontSize: 28))
-              : null,
+              : AppTextInputField(
+                  hint: "Search here",
+                  floatHint: false,
+                  fieldHeight: 20,
+                  icon: const Icon(CupertinoIcons.search),
+                  borderRadius: 16,
+                ),
           centerTitle: true,
           actions: [
             _currentIndex == 0
@@ -186,10 +194,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 : const SizedBox(),
             _currentIndex == 2
                 ? Padding(
-                    padding: const EdgeInsets.only(right: 12.0, top: 12),
+                    padding: const EdgeInsets.only(
+                      right: 12.0,
+                    ),
                     child: Container(
-                        decoration: const BoxDecoration(
-                            shape: BoxShape.circle, color: appWhite),
+                        decoration: BoxDecoration(
+                            shape: BoxShape.rectangle,
+                            color: appWhite,
+                            borderRadius: BorderRadius.circular(16)),
                         child: IconButton(
                             onPressed: () {
                               scaffoldKey.currentState?.openDrawer();

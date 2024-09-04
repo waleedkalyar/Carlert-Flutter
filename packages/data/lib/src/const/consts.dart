@@ -3,7 +3,11 @@
 
 //BASE & Keys
 const String baseUrl = "calert.servicemytaxi.com";
-const String xAPIKey = "";
+const String xAPIKey = "yJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IllvdXIgVXNlcidzIElEIiwib3RoZXIiOiJTb21lIG90aGVyIGRhdGEiLCJBUElfVElNRSI6MTU5ODQ0NTg0OX0.Q2U7PRkX_z_RSDkTuuHE0mObOXGHoqgkkM05LzMf6zc";
+
+const String PUSHER_APP_KEY = "2yvrxscxsof9rxvsdsoh";
+const String PUSHER_HOST = "ws.carlert.com";
+const String CHANNELS_AUTH_URL = "https://admin.carlert.com/api/broadcasting/auth";
 
 // EndPoints
 const String VERIFY_USER_MOBILE_ENDPOINT = "/api/verifyUserMobile";
@@ -19,3 +23,6 @@ const String SERVICE_BOOKING = "/api/serviceBooking";
 
 //data consts
 const String USER_MODEL = "user-model";
+
+
+

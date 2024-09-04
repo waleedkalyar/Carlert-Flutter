@@ -5,6 +5,14 @@ import 'package:data/src.dart';
 
 abstract class VehicleRepo {
 
+  Stream<String> initPusherClient({required String userToken});
+
+  void disconnect();
+
+
+
+  Stream<SocketChipModel> subscribePrivateChannel({required String privateChannelName});
+
 
   Future<NetworkResult<BaseResponse<List<DeviceModel>>>> fetchAllVehicles();
 

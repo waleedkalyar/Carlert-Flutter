@@ -3,21 +3,18 @@
 
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:ui';
 
-import 'package:boxicons/boxicons.dart';
 import 'package:carlet_flutter/generated/assets.dart';
 import 'package:carlet_flutter/src/app/views/res/colors.dart';
 import 'package:carlet_flutter/src/ui/screens/main/home/pages/live/carlert_marker.dart';
 import 'package:carlet_flutter/src/ui/screens/main/home/pages/live/widgets/marker_view.dart';
 import 'package:carlet_flutter/src/utils/extensions.dart';
 import 'package:carlet_flutter/src/utils/lat_lng_tween.dart';
-import 'package:carlet_flutter/src/utils/marker_animation.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_animarker/flutter_map_marker_animation.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_cluster_manager_2/src/cluster_manager.dart'
     as cluster_manager_2;
 import 'package:google_maps_cluster_manager_2/src/cluster.dart'
@@ -26,11 +23,12 @@ import 'package:google_maps_cluster_manager_2/src/cluster.dart'
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:widget_to_marker/widget_to_marker.dart';
 
+import '../bloc/live_markers_bloc.dart';
+
 //Setting dummies values
 const kStartPosition = LatLng(24.85474, 55.079298);
 const kSantoDomingo = CameraPosition(target: kStartPosition, zoom: 15);
 const kMarkerId = MarkerId('MarkerId1');
-
 
 class LiveMapView extends StatefulWidget {
   const LiveMapView({super.key});
@@ -63,18 +61,10 @@ class _LiveMapViewState extends State<LiveMapView>
   void initState() {
     _clusterManager = _initClusterManager();
     rootBundle.loadString("assets/map/map_style.json").then((value) {
-      // debugPrint("Map style -> $value");
       _mapStyle = value;
     }).catchError((e) {
       debugPrint("Map style -> $e");
     });
-
-    // if (inactiveIcon == BitmapDescriptor.defaultMarker) {
-    //   const MarkerView().toBitmapDescriptor().then((icon) {
-    //     // log("inactive icon from svg fetched");
-    //     inactiveIcon = icon;
-    //   });
-    // }
 
     WidgetsBinding.instance.addObserver(this);
     super.initState();
@@ -89,19 +79,19 @@ class _LiveMapViewState extends State<LiveMapView>
   void _updateMarkers(Set<Marker> markers) {
     // log('ClusterManager: updateMarkers: Updated ${markers.length} markers');
     Set<CarlertMarker> carlertMarkers = {};
-    markers.forEach((marker) {
+    for (var marker in markers) {
       //  log("ClusterManager: marker id -> ${marker.markerId.value}");
       if (marker.markerId.value.contains("-")) {
         var ids = marker.markerId.value.split("-");
-        ids.forEach((id) {
+        for (var id in ids) {
           carlertMarkers.removeWhere((marker) => marker.markerId.value == id);
-        });
+        }
       }
       carlertMarkers.add(marker.toCarlertMarker());
-    });
-    setState(() {
-      this.clusterMarkers = carlertMarkers;
-    });
+    }
+    // setState(() {
+    clusterMarkers = carlertMarkers;
+    //  });
   }
 
   @override
@@ -110,14 +100,17 @@ class _LiveMapViewState extends State<LiveMapView>
     // log("On map created build");
     return Stack(
       children: [
-        Animarker(
-          shouldAnimateCamera: false,
-          useRotation: false,
-          rippleRadius: 0.0,
-          rippleDuration: const Duration(milliseconds: 0),
-          rippleColor: appGreen,
-          mapId: controller.future.then<int>((value) => value.mapId),
-          //Grab Google Map Id
+        BlocListener<LiveMarkersBloc, LiveMarkersState>(
+          listener: (context, state) {
+            if (state is VehiclesChannelConnectedState) {
+              var chip = state.data;
+              newLocationUpdate(
+                  LatLng(double.parse(chip.lat ?? "0"),
+                      double.parse(chip.longi ?? "0")),
+                  MarkerId(chip.deviceID.toString()), chip.fleetNo.toString(), chip.plateNumber.toString());
+              state.data;
+            }
+          },
           child: GoogleMap(
               mapType: satelliteEnabled ? MapType.satellite : MapType.normal,
               zoomControlsEnabled: false,
@@ -130,7 +123,7 @@ class _LiveMapViewState extends State<LiveMapView>
               initialCameraPosition: kSantoDomingo,
               onMapCreated: (gController) {
                 //  log("On map created");
-                loadJsonFromAssets("assets/map/trip.json", "m1");
+                //  loadJsonFromAssets("assets/map/trip.json", "m1");
                 // Future.delayed(const Duration(seconds: 10), () {
                 //   loadJsonFromAssets("assets/map/trip.json", "m2");
                 // });
@@ -250,7 +243,8 @@ class _LiveMapViewState extends State<LiveMapView>
     );
   }
 
-  void newLocationUpdate(LatLng latLng, MarkerId markerId) {
+  void newLocationUpdate(LatLng latLng, MarkerId markerId, String fleetNo, String plateNo) {
+   // debugPrint("newLocationUpdate called with id -> ${markerId.value}");
     var marker = CarlertMarker(
         markerId: markerId,
         position: latLng,
@@ -258,17 +252,20 @@ class _LiveMapViewState extends State<LiveMapView>
         draggable: false,
         icon: inactiveIcon,
         infoWindow: InfoWindow(title: markerId.value),
-        fleetNo: "Fleet test",
-        plateNo: "Plate test",
+        fleetNo: fleetNo,
+        plateNo: plateNo,
         onTap: () {
-          print('Tapped! $latLng');
+          if (kDebugMode) {
+            print('Tapped! $latLng');
+          }
         });
     //marker.setMapId(markerId.value);
     if (markers.containsKey(markerId)) {
-      setState(() {
-        markers[markerId] = marker;
-        _clusterManager.setItems(markers.values.toList());
-      });
+      //locationUpdateWithAnimation(latLng, markers[markerId]!);
+      // setState(() {
+      markers[markerId] = marker;
+      _clusterManager.setItems(markers.values.toList());
+      // });
     } else if (0 == 1) {
       //markers.containsKey(markerId)
       //TODO: here need to setup animation code
@@ -290,30 +287,28 @@ class _LiveMapViewState extends State<LiveMapView>
         });
       }
     } else {
-      setState(() {
-        markers[markerId] = marker;
-        _clusterManager.setItems(markers.values.toList());
-      });
+      if (mounted) {
+        setState(() {
+          markers[markerId] = marker;
+          _clusterManager.setItems(markers.values.toList());
+        });
+      }
     }
   }
 
-  void locationUpdateWithAnimation(LatLng latLng, MarkerId markerId) {
-    AnimationController controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 500));
-    controller.addListener((){
-      // setState(() {
-      //
-      // });
+  void locationUpdateWithAnimation(LatLng latLng, CarlertMarker marker) {
+    AnimationController controller = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 500));
+    Tween<LatLng> tween = LatLngTween(begin: marker.location, end: latLng);
+    Animation<LatLng> animation = tween
+        .animate(CurvedAnimation(parent: controller, curve: Curves.linear));
+
+    controller.forward().then((value) async {
+      setState(() {
+        markers[marker.markerId] = marker.update(animation.value);
+        _clusterManager.setItems(markers.values.toList());
+      });
     });
-    Tween<LatLng> tween =
-        LatLngTween(begin: markers[markerId]!.location, end: latLng);
-    Animation<LatLng> animation = tween.animate(CurvedAnimation(
-        parent: controller, curve: Curves.linear));
-
-    controller.forward().then((value) async{
-
-    });
-
-
   }
 
   void refreshMarkers() {
@@ -323,7 +318,7 @@ class _LiveMapViewState extends State<LiveMapView>
   @override
   void dispose() {
     markers.clear();
-    _clusterManager.setItems([]);
+    // _clusterManager.setItems([]);
     dataSubscription?.cancel();
     super.dispose();
   }
@@ -345,8 +340,8 @@ class _LiveMapViewState extends State<LiveMapView>
           .take(130); //trip.length
 
       dataSubscription = stream.listen((latLang) {
-        newLocationUpdate(latLang, MarkerId(markerId));
-       // locationUpdateWithAnimation(latLang, MarkerId(markerId));
+        newLocationUpdate(latLang, MarkerId(markerId), "test fleet","test plate");
+        // locationUpdateWithAnimation(latLang, MarkerId(markerId));
       });
 
       // stream.forEach((value) {
