@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:carlet_flutter/src/app/views/res/colors.dart';
 import 'package:carlet_flutter/src/ui/dialogs/waiting_dialog.dart';
 import 'package:carlet_flutter/src/ui/screens/main/home/pages/live/carlert_marker.dart';
@@ -54,6 +56,30 @@ extension ToDistancePosition on LatLng {
   }
 
 }
+
+extension LocationsArray on List<LatLng>{
+
+  LatLngBounds computeBounds() {
+    assert(isNotEmpty);
+    var firstLatLng = first;
+    var s = firstLatLng.latitude,
+        n = firstLatLng.latitude,
+        w = firstLatLng.longitude,
+        e = firstLatLng.longitude;
+    for (var i = 1; i < length; i++) {
+      var latlng = this[i];
+      s = min(s, latlng.latitude);
+      n = max(n, latlng.latitude);
+      w = min(w, latlng.longitude);
+      e = max(e, latlng.longitude);
+    }
+    return LatLngBounds(southwest: LatLng(s, w), northeast: LatLng(n, e));
+  }
+}
+
+
+
+
 
 extension EmptySpace on num {
   SizedBox get height => SizedBox(

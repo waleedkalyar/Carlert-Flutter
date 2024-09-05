@@ -25,7 +25,7 @@ final class VehiclesChannelConnectedState extends LiveMarkersState{
 
   @override
   List<Object?> get props => [connectionState,data];
-
-
 }
+
+
 

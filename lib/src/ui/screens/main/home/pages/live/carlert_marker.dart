@@ -3,17 +3,20 @@
 
 import 'package:carlet_flutter/src/ui/screens/main/home/pages/live/models/base_marker.dart';
 import 'package:carlet_flutter/src/utils/marker_animation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_animarker/core/ripple_marker.dart';
 import 'package:google_maps_cluster_manager_2/google_maps_cluster_manager_2.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_flutter_platform_interface/src/types/location.dart';
 
-class CarlertMarker extends RippleMarker with ClusterItem, BaseMarker {
+
+class CarlertMarker extends RippleMarker with ClusterItem {
   CarlertMarker(
       {required super.markerId,
       required this.fleetNo,
       required this.plateNo,
+      this.isActive = false,
       super.position,
       super.draggable,
       super.icon,
@@ -50,6 +53,8 @@ class CarlertMarker extends RippleMarker with ClusterItem, BaseMarker {
 
   String fleetNo;
   String plateNo;
+
+  bool isActive;
 
 
   CarlertMarker update(LatLng position) {

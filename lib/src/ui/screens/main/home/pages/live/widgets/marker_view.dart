@@ -11,7 +11,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 class MarkerView extends StatelessWidget {
   final String text;
 
-  const MarkerView({super.key, required this.text});
+  final bool active;
+
+  const MarkerView({super.key, required this.text, this.active = false});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +39,9 @@ class MarkerView extends StatelessWidget {
             : const SizedBox(),
         2.height,
         SvgPicture.asset(
-          Assets.iconsLiveMapActiveCarIcon,
+          active
+              ? Assets.iconsLiveMapActiveCarIcon
+              : Assets.iconsLiveMapInactiveCarIcon,
           width: 28,
           height: 28,
           fit: BoxFit.cover,

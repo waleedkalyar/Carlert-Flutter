@@ -26,10 +26,10 @@ class LivePage extends StatelessWidget {
         body: BlocListener<LiveMarkersBloc, LiveMarkersState>(
           listener: (ctx, state) {
             if (state is PusherConnectionState) {
-              if (state.state == "connected") {
-                context
-                    .read<LiveMarkersBloc>()
-                    .add(const SubscribeToVehiclesEvent("all-veh-location"));
+              if (state.state.toLowerCase() == "connected") {
+                // context
+                //     .read<LiveMarkersBloc>()
+                //     .add(const SubscribeToVehiclesEvent("all-veh-location"));
               }
             }
           },

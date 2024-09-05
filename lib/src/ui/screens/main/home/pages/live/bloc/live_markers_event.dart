@@ -19,3 +19,18 @@ final class SubscribeToVehiclesEvent extends LiveMarkersEvent{
   @override
   List<Object?> get props => [privateChannelName];
 }
+
+final class UnsubscribeToVehiclesEvent extends LiveMarkersEvent{
+  final String privateChannelName;
+  const UnsubscribeToVehiclesEvent(this.privateChannelName);
+
+  @override
+  List<Object?> get props => [privateChannelName];
+}
+
+final class DisconnectPusherEvent extends LiveMarkersEvent{
+  const DisconnectPusherEvent();
+
+  @override
+  List<Object?> get props => [];
+}

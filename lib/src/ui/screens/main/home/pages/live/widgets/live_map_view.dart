@@ -14,6 +14,7 @@ import 'package:carlet_flutter/src/utils/lat_lng_tween.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_animarker/flutter_map_marker_animation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_cluster_manager_2/src/cluster_manager.dart'
     as cluster_manager_2;
@@ -52,6 +53,10 @@ class _LiveMapViewState extends State<LiveMapView>
 
   StreamSubscription<LatLng>? dataSubscription;
 
+  late LiveMarkersBloc liveMarkersBloc;
+
+  bool isUpdatingMarkers = false;
+
   bool satelliteEnabled = false,
       plateEnabled = true,
       fleetEnabled = false,
@@ -65,6 +70,21 @@ class _LiveMapViewState extends State<LiveMapView>
     }).catchError((e) {
       debugPrint("Map style -> $e");
     });
+
+    if (inactiveIcon == BitmapDescriptor.defaultMarker) {
+      const MarkerView(
+        text: "test",
+      ).toBitmapDescriptor().then((icon) {
+        // log("inactive icon from svg fetched");
+        inactiveIcon = icon;
+      });
+    }
+
+    markers.clear();
+
+    liveMarkersBloc = context.read<LiveMarkersBloc>();
+
+    liveMarkersBloc.add(const SubscribeToVehiclesEvent("all-veh-location"));
 
     WidgetsBinding.instance.addObserver(this);
     super.initState();
@@ -104,43 +124,60 @@ class _LiveMapViewState extends State<LiveMapView>
           listener: (context, state) {
             if (state is VehiclesChannelConnectedState) {
               var chip = state.data;
-              newLocationUpdate(
-                  LatLng(double.parse(chip.lat ?? "0"),
-                      double.parse(chip.longi ?? "0")),
-                  MarkerId(chip.deviceID.toString()), chip.fleetNo.toString(), chip.plateNumber.toString());
-              state.data;
+
+              if (!isUpdatingMarkers) {
+                onLocationUpdate(
+                    LatLng(double.parse(chip.lat ?? "0"),
+                        double.parse(chip.longi ?? "0")),
+                    MarkerId(chip.deviceID.toString()),
+                    chip.fleetNo.toString(),
+                    chip.plateCode != null
+                        ? "${chip.plateCode} - ${chip.plateNumber.toString()}"
+                        : chip.plateNumber.toString(),
+                    chip.isActive == 1);
+              }
             }
           },
-          child: GoogleMap(
-              mapType: satelliteEnabled ? MapType.satellite : MapType.normal,
-              zoomControlsEnabled: false,
-              rotateGesturesEnabled: false,
-              myLocationButtonEnabled: false,
-              myLocationEnabled: false,
-              trafficEnabled: trafficEnabled,
-              markers: clusterMarkers,
-              style: _mapStyle,
-              initialCameraPosition: kSantoDomingo,
-              onMapCreated: (gController) {
-                //  log("On map created");
-                //  loadJsonFromAssets("assets/map/trip.json", "m1");
-                // Future.delayed(const Duration(seconds: 10), () {
-                //   loadJsonFromAssets("assets/map/trip.json", "m2");
-                // });
-                // Future.delayed(Duration(seconds: 15), () {
-                //   loadJsonFromAssets("assets/map/trip.json", "m3");
-                // });
-                // Future.delayed(Duration(seconds: 5), () {
-                //   loadJsonFromAssets("assets/map/trip.json", "m4");
-                // });
-                controller.complete(gController);
+          child: Animarker(
+            shouldAnimateCamera: false,
+            useRotation: false,
+            rippleRadius: 0.0,
+            rippleDuration: const Duration(milliseconds: 0),
+            rippleColor: appGreen,
+            markers: markers.values.toSet(),
+            mapId: controller.future.then<int>((value) => value.mapId),
+            child: GoogleMap(
+                mapType: satelliteEnabled ? MapType.satellite : MapType.normal,
+                zoomControlsEnabled: false,
+                rotateGesturesEnabled: false,
+                myLocationButtonEnabled: false,
+                myLocationEnabled: false,
+                trafficEnabled: trafficEnabled,
+                style: _mapStyle,
+                initialCameraPosition: kSantoDomingo,
+                onMapCreated: (gController) {
+                  //  log("On map created");
+                  //  loadJsonFromAssets("assets/map/trip.json", "m1");
+                  // Future.delayed(const Duration(seconds: 10), () {
+                  //   loadJsonFromAssets("assets/map/trip.json", "m2");
+                  // });
+                  // Future.delayed(Duration(seconds: 15), () {
+                  //   loadJsonFromAssets("assets/map/trip.json", "m3");
+                  // });
+                  // Future.delayed(Duration(seconds: 5), () {
+                  //   loadJsonFromAssets("assets/map/trip.json", "m4");
+                  // });
+                  controller.complete(gController);
 
-                _clusterManager.setMapId(gController.mapId);
+                //  _clusterManager.setMapId(gController.mapId);
 
-                //Complete the future GoogleMapController
-              },
-              onCameraMove: _clusterManager.onCameraMove,
-              onCameraIdle: _clusterManager.updateMap),
+                  //Complete the future GoogleMapController
+                },
+               // onCameraMove: _clusterManager.onCameraMove,
+               // onCameraIdle: _clusterManager.updateMap
+
+            ),
+          ),
         ),
         Positioned(
             right: 16,
@@ -170,11 +207,10 @@ class _LiveMapViewState extends State<LiveMapView>
                 16.height,
                 IconButton(
                   onPressed: () {
-                    setState(() {
-                      plateEnabled = !plateEnabled;
-                      if (plateEnabled) fleetEnabled = false;
-                      refreshMarkers();
-                    });
+                    plateEnabled = !plateEnabled;
+                    if (plateEnabled) fleetEnabled = false;
+                    refreshMarkers();
+                    //setMapCameraInMarkersBound();
                   },
                   icon: ImageIcon(
                     AssetImage(plateEnabled
@@ -193,11 +229,10 @@ class _LiveMapViewState extends State<LiveMapView>
                 16.height,
                 IconButton(
                   onPressed: () {
-                    setState(() {
-                      fleetEnabled = !fleetEnabled;
-                      if (fleetEnabled) plateEnabled = false;
-                      refreshMarkers();
-                    });
+                    fleetEnabled = !fleetEnabled;
+                    if (fleetEnabled) plateEnabled = false;
+                    refreshMarkers();
+                    // setMapCameraInMarkersBound();
                   },
                   icon: ImageIcon(
                     AssetImage(
@@ -243,8 +278,9 @@ class _LiveMapViewState extends State<LiveMapView>
     );
   }
 
-  void newLocationUpdate(LatLng latLng, MarkerId markerId, String fleetNo, String plateNo) {
-   // debugPrint("newLocationUpdate called with id -> ${markerId.value}");
+  void newLocationUpdate(
+      LatLng latLng, MarkerId markerId, String fleetNo, String plateNo) {
+    // debugPrint("newLocationUpdate called with id -> ${markerId.value}");
     var marker = CarlertMarker(
         markerId: markerId,
         position: latLng,
@@ -296,6 +332,55 @@ class _LiveMapViewState extends State<LiveMapView>
     }
   }
 
+  void onLocationUpdate(LatLng latLng, MarkerId markerId, String fleetNo,
+      String plateNo, bool isActive) {
+    if (markers.containsKey(markerId)) {
+      var marker = CarlertMarker(
+          markerId: markerId,
+          position: latLng,
+          ripple: false,
+          draggable: false,
+          isActive: isActive,
+          icon: markers[markerId]?.icon,
+          infoWindow: InfoWindow.noText,
+          fleetNo: fleetNo,
+          plateNo: plateNo,
+          onTap: () {
+            if (kDebugMode) {
+              print('Tapped! $latLng');
+            }
+          });
+      setState(() {
+        markers[markerId] = marker;
+        //_clusterManager.setItems(markers.values.toList());
+      });
+    } else {
+      MarkerView(
+        text: textOnMarker(fleetNo, plateNo),
+        active: isActive,
+      ).toBitmapDescriptor().then((icon) {
+        var marker = CarlertMarker(
+            markerId: markerId,
+            position: latLng,
+            ripple: false,
+            draggable: false,
+            isActive: isActive,
+            icon: icon,
+            infoWindow: InfoWindow.noText,
+            fleetNo: fleetNo,
+            plateNo: plateNo,
+            onTap: () {
+              if (kDebugMode) {
+                print('Tapped! $latLng');
+              }
+            });
+        setState(() {
+          markers[markerId] = marker;
+        });
+      });
+    }
+  }
+
   void locationUpdateWithAnimation(LatLng latLng, CarlertMarker marker) {
     AnimationController controller = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 500));
@@ -312,7 +397,57 @@ class _LiveMapViewState extends State<LiveMapView>
   }
 
   void refreshMarkers() {
-    _clusterManager.setItems(markers.values.toList());
+    // markers.forEach((id, marker) {
+    //   onLocationUpdate(marker.location, id, marker.fleetNo, marker.plateNo, marker.isActive);
+    // });
+    setState(() {
+      isUpdatingMarkers = true;
+    });
+
+    markers.forEach((id, marker) async {
+      var updatedIcon = await MarkerView(
+        text: textOnMarker(marker.fleetNo, marker.plateNo),
+        active: marker.isActive,
+      ).toBitmapDescriptor();
+
+      var newMarker = CarlertMarker(
+          markerId: marker.markerId,
+          position: marker.position,
+          ripple: false,
+          draggable: false,
+          isActive: marker.isActive,
+          icon: updatedIcon,
+          infoWindow: InfoWindow.noText,
+          fleetNo: marker.fleetNo,
+          plateNo: marker.plateNo,
+          onTap: () {
+            if (kDebugMode) {
+              // print('Tapped! $latLng');
+            }
+          });
+      if (markers.containsKey(id)) {
+        setState(() {
+          markers[id] = newMarker;
+        });
+      }
+    });
+
+    setState(() {
+      isUpdatingMarkers = false;
+    });
+
+    // setState(() {});
+
+    //_clusterManager.setItems(markers.values.toList());
+  }
+
+  void setMapCameraInMarkersBound() {
+    controller.future.then((mapController) {
+      List<LatLng> lats =
+          markers.values.map((marker) => marker.position).toList();
+      mapController
+          .moveCamera(CameraUpdate.newLatLngBounds(lats.computeBounds(), 36));
+    });
   }
 
   @override
@@ -320,6 +455,8 @@ class _LiveMapViewState extends State<LiveMapView>
     markers.clear();
     // _clusterManager.setItems([]);
     dataSubscription?.cancel();
+    liveMarkersBloc.add(const UnsubscribeToVehiclesEvent("all-veh-location"));
+
     super.dispose();
   }
 
@@ -340,7 +477,8 @@ class _LiveMapViewState extends State<LiveMapView>
           .take(130); //trip.length
 
       dataSubscription = stream.listen((latLang) {
-        newLocationUpdate(latLang, MarkerId(markerId), "test fleet","test plate");
+        newLocationUpdate(
+            latLang, MarkerId(markerId), "test fleet", "test plate");
         // locationUpdateWithAnimation(latLang, MarkerId(markerId));
       });
 
@@ -451,5 +589,16 @@ class _LiveMapViewState extends State<LiveMapView>
       });
       //});
     }
+  }
+
+  String textOnMarker(String fleetNo, String plateNo) {
+    if (!fleetEnabled && !plateEnabled) {
+      return "";
+    } else if (fleetEnabled)
+      return fleetNo;
+    else if (plateEnabled)
+      return plateNo;
+    else
+      return "";
   }
 }

@@ -96,4 +96,11 @@ class VehicleRepoImpl with BaseRequestHandler implements VehicleRepo {
     });
     yield* streamController.stream;
   }
+
+  @override
+  void unsubscribeToPrivateChannel({required String privateChannelName}) {
+    pusherClient?.cancelEventChannelStream();
+    pusherClient?.unsubscribe("private-$privateChannelName");
+
+  }
 }

@@ -13,6 +13,8 @@ abstract class VehicleRepo {
 
   Stream<SocketChipModel> subscribePrivateChannel({required String privateChannelName});
 
+  void unsubscribeToPrivateChannel({required String privateChannelName});
+
 
   Future<NetworkResult<BaseResponse<List<DeviceModel>>>> fetchAllVehicles();
 

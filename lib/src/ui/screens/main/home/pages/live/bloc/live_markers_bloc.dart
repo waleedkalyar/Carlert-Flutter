@@ -16,6 +16,7 @@ class LiveMarkersBloc extends Bloc<LiveMarkersEvent, LiveMarkersState> {
   LiveMarkersBloc(this._vehicleRepo) : super(LiveMarkersInitial()) {
     on<InitPusherEvent>(_onInitPusher);
      on<SubscribeToVehiclesEvent>(_onSubscribeToVehicles);
+     on<UnsubscribeToVehiclesEvent>(_onUnSubscribeToVehicles);
   }
 
   FutureOr<void> _onInitPusher(
@@ -42,4 +43,9 @@ class LiveMarkersBloc extends Bloc<LiveMarkersEvent, LiveMarkersState> {
       emit(VehiclesChannelConnectedState("connected", data));
     });
 }
+
+  FutureOr<void> _onUnSubscribeToVehicles(UnsubscribeToVehiclesEvent event, Emitter<LiveMarkersState> emit) {
+    _vehicleRepo.unsubscribeToPrivateChannel(privateChannelName: event.privateChannelName);
+    emit(const PusherConnectionState(state: "connected"));
+  }
 }
