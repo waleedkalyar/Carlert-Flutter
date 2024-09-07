@@ -1,114 +1,168 @@
-// Developed By Muhammad Waleed.. Senior Android and Flutter developer..
-// waleedkalyar48@gmail.com/
-import 'dart:developer';
-import 'dart:ui' as ui;
+import 'dart:async';
+import 'dart:io';
+import 'dart:typed_data';
 import 'dart:ui';
 
-
-import 'package:carlet_flutter/src/ui/screens/main/home/pages/live/carlert_marker.dart';
-import 'package:flutter/foundation.dart';
+import 'package:carlet_flutter/src/ui/screens/main/home/pages/live/models/map_marker.dart';
+import 'package:fluster/fluster.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_maps_cluster_manager_2/src/cluster_manager.dart' as cluster_manager_2;
-import 'package:google_maps_cluster_manager_2/src/cluster.dart' as cluster_manager_2;
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+/// In here we are encapsulating all the logic required to get marker icons from url images
+/// and to show clusters using the [Fluster] package.
 class MapHelper {
-  static Future<CarlertMarker> Function(cluster_manager_2.Cluster) get markerBuilder => (cluster) async {
-        return CarlertMarker(
-          markerId: MarkerId(cluster.getId()),
-          position: cluster.location,
-          onTap: () {
-            log(cluster.items.toString());
-          },
-          icon: await getClusterBitmap(cluster.isMultiple ? 125 : 75,
-              text: cluster.isMultiple ? cluster.count.toString() : ""), fleetNo: '', plateNo: '',
-        );
-      };
+  /// If there is a cached file and it's not old returns the cached marker image file
+  /// else it will download the image and save it on the temp dir and return that file.
+  ///
+  /// This mechanism is possible using the [DefaultCacheManager] package and is useful
+  /// to improve load times on the next map loads, the first time will always take more
+  /// time to download the file and set the marker image.
+  ///
+  /// You can resize the marker image by providing a [targetWidth].
+  static Future<BitmapDescriptor> getMarkerImageFromUrl(
+      String url, {
+        int? targetWidth,
+      }) async {
+    final File markerImageFile = await DefaultCacheManager().getSingleFile(url);
 
+    Uint8List markerImageBytes = await markerImageFile.readAsBytes();
 
+    if (targetWidth != null) {
+      markerImageBytes = await _resizeImageBytes(
+        markerImageBytes,
+        targetWidth,
+      );
+    }
 
+    return BitmapDescriptor.fromBytes(markerImageBytes);
+  }
 
-
-  static Future<BitmapDescriptor> getMarkerBitmap(int size, double size2, int typeZeroLength, int typeOneLength, {String? text}) async {
-    if (kIsWeb) size = (size / 2).floor();
-
+  /// Draw a [clusterColor] circle with the [clusterSize] text inside that is [width] wide.
+  ///
+  /// Then it will convert the canvas to an image and generate the [BitmapDescriptor]
+  /// to be used on the cluster marker icons.
+  static Future<BitmapDescriptor> _getClusterMarker(
+      int clusterSize,
+      Color clusterColor,
+      Color textColor,
+      int width,
+      ) async {
     final PictureRecorder pictureRecorder = PictureRecorder();
     final Canvas canvas = Canvas(pictureRecorder);
-    final Paint paint1 = Paint()..color = const Color(0xFF4051B5);
-    final Paint paint2 = Paint()..color = Colors.white;
-    final Paint paint3 = Paint()..color = Colors.red;
+    final Paint paint = Paint()..color = clusterColor;
+    final TextPainter textPainter = TextPainter(
+      textDirection: TextDirection.ltr,
+    );
 
-    double degreesToRads(num deg) {
-      return (deg * 3.14) / 180.0;
-    }
+    final double radius = width / 2;
 
-    int total = typeZeroLength + typeOneLength;
-    var totalRatio = 2.09439666667 * 3;
-    double percentageOfLength = (typeZeroLength / total);
-    var resultRatio = totalRatio * percentageOfLength;
+    canvas.drawCircle(
+      Offset(radius, radius),
+      radius,
+      paint,
+    );
 
-    canvas.drawCircle(Offset(size / 2, size / 2), size / 2.0, paint1);
-    canvas.drawCircle(Offset(size / 2, size / 2), size / 2.8, paint1);
-    canvas.drawCircle(Offset(size / 2, size / 2), size / 3.8, paint3);
-    canvas.drawArc(const Offset(0, 0) & Size(size2, size2), degreesToRads(90.0), resultRatio, true, paint3);
-    canvas.drawCircle(Offset(size / 2, size / 2), size / 3.2, paint2);
-    if (text != null) {
-      TextPainter painter = TextPainter(textDirection: TextDirection.ltr);
-      painter.text = TextSpan(
-        text: text,
-        style: TextStyle(fontSize: size / 3, color: Colors.black, fontWeight: FontWeight.normal),
-      );
-      painter.layout();
-      painter.paint(
-        canvas,
-        Offset(size / 2 - painter.width / 2, size / 2 - painter.height / 2),
-      );
-    }
-    final img = await pictureRecorder.endRecording().toImage(size, size);
-    final data = await img.toByteData(format: ImageByteFormat.png) as ByteData;
-    return BitmapDescriptor.fromBytes(data.buffer.asUint8List());
-  }
-
-  static Future<BitmapDescriptor> bitmapDescriptorFromSvgAsset(
-      BuildContext context,
-      String assetName,
-      double size,
-      ) async {
-    String svgString = await DefaultAssetBundle.of(context).loadString(assetName);
-    var svgDrawableRoot = await vg.loadPicture(SvgStringLoader(svgString), null);
-    ui.Picture picture = svgDrawableRoot.picture;//svgDrawableRoot.toPicture(size: Size(size, size));
-    ui.Image image = await picture.toImage(size.toInt(), size.toInt());
-    ByteData? bytes = await image.toByteData(format: ui.ImageByteFormat.png);
-    return BitmapDescriptor.fromBytes(bytes!.buffer.asUint8List());
-  }
-
-
-  static Future<BitmapDescriptor> getClusterBitmap(int size,
-      {required String text}) async {
-    final ui.PictureRecorder pictureRecorder = PictureRecorder();
-    final Canvas canvas = Canvas(pictureRecorder);
-    final Paint paint1 = Paint()..color = Colors.red;
-
-    canvas.drawCircle(Offset(size / 2, size / 2), size / 2.0, paint1);
-
-    TextPainter painter = TextPainter(textDirection: TextDirection.ltr);
-    painter.text = TextSpan(
-      text: text,
+    textPainter.text = TextSpan(
+      text: clusterSize.toString(),
       style: TextStyle(
-          fontSize: size / 3,
-          color: Colors.white,
-          fontWeight: FontWeight.normal),
-    );
-    painter.layout();
-    painter.paint(
-      canvas,
-      Offset(size / 2 - painter.width / 2, size / 2 - painter.height / 2),
+        fontSize: radius - 5,
+        fontWeight: FontWeight.bold,
+        color: textColor,
+      ),
     );
 
-    final img = await pictureRecorder.endRecording().toImage(size, size);
-    final data = await img.toByteData(format: ImageByteFormat.png);
+    textPainter.layout();
+    textPainter.paint(
+      canvas,
+      Offset(radius - textPainter.width / 2, radius - textPainter.height / 2),
+    );
+
+    final image = await pictureRecorder.endRecording().toImage(
+      radius.toInt() * 2,
+      radius.toInt() * 2,
+    );
+    final data = await image.toByteData(format: ImageByteFormat.png);
 
     return BitmapDescriptor.fromBytes(data!.buffer.asUint8List());
+  }
+
+  /// Resizes the given [imageBytes] with the [targetWidth].
+  ///
+  /// We don't want the marker image to be too big so we might need to resize the image.
+  static Future<Uint8List> _resizeImageBytes(
+      Uint8List imageBytes,
+      int targetWidth,
+      ) async {
+    final Codec imageCodec = await instantiateImageCodec(
+      imageBytes,
+      targetWidth: targetWidth,
+    );
+
+    final FrameInfo frameInfo = await imageCodec.getNextFrame();
+
+    final data = await frameInfo.image.toByteData(format: ImageByteFormat.png);
+
+    return data!.buffer.asUint8List();
+  }
+
+  /// Inits the cluster manager with all the [MapMarker] to be displayed on the map.
+  /// Here we're also setting up the cluster marker itself, also with an [clusterImageUrl].
+  ///
+  /// For more info about customizing your clustering logic check the [Fluster] constructor.
+  static Future<Fluster<MapMarker>> initClusterManager(
+      List<MapMarker> markers,
+      int minZoom,
+      int maxZoom,
+      ) async {
+    return Fluster<MapMarker>(
+      minZoom: minZoom,
+      maxZoom: maxZoom,
+      radius: 150,
+      extent: 2048,
+      nodeSize: 64,
+      points: markers,
+      createCluster: (
+          BaseCluster? cluster,
+          double? lng,
+          double? lat,
+          ) =>
+          MapMarker(
+            id: cluster!.id.toString(),
+            position: LatLng(lat!, lng!),
+            isCluster: cluster.isCluster,
+            clusterId: cluster.id,
+            pointsSize: cluster.pointsSize,
+            childMarkerId: cluster.childMarkerId,
+          ),
+    );
+  }
+
+  /// Gets a list of markers and clusters that reside within the visible bounding box for
+  /// the given [currentZoom]. For more info check [Fluster.clusters].
+  static Future<List<Marker>> getClusterMarkers(
+      Fluster<MapMarker>? clusterManager,
+      double currentZoom,
+      Color clusterColor,
+      Color clusterTextColor,
+      int clusterWidth,
+      ) {
+    if (clusterManager == null) return Future.value([]);
+
+    return Future.wait(clusterManager.clusters(
+      [-180, -85, 180, 85],
+      currentZoom.toInt(),
+    ).map((mapMarker) async {
+      if (mapMarker.isCluster!) {
+        mapMarker.icon = await _getClusterMarker(
+          mapMarker.pointsSize!,
+          clusterColor,
+          clusterTextColor,
+          clusterWidth,
+        );
+      }
+
+      return mapMarker.toMarker();
+    }).toList());
   }
 }

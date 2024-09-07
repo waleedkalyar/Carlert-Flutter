@@ -35,11 +35,11 @@ class LiveMarkersBloc extends Bloc<LiveMarkersEvent, LiveMarkersState> {
   }
 
   FutureOr<void> _onSubscribeToVehicles(SubscribeToVehiclesEvent event, Emitter<LiveMarkersState> emit)  async{
-    debugPrint("LiveMarkersBloc: _onSubscribeToVehicles called");
+   // debugPrint("LiveMarkersBloc: _onSubscribeToVehicles called");
     await emit.onEach(_vehicleRepo.subscribePrivateChannel(privateChannelName: event.privateChannelName), onData: (data)  {
     var loc = LatLng(double.parse(data.lat ?? "0"),
           double.parse(data.longi ?? "0"));
-      debugPrint("LiveMarkersBloc: Event Data of channel -> ${data.make}-${data.model}  -> $loc");
+    //  debugPrint("LiveMarkersBloc: Event Data of channel -> ${data.make}-${data.model}  -> $loc");
       emit(VehiclesChannelConnectedState("connected", data));
     });
 }

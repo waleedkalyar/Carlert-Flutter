@@ -81,10 +81,10 @@ class VehicleRepoImpl with BaseRequestHandler implements VehicleRepo {
     StreamController<SocketChipModel> streamController = StreamController();
     Channel? channel =
         pusherClient?.subscribe("private-$privateChannelName");
-    //debugPrint("LiveMarkersBloc: channel created ${channel?.toString()}");
+    debugPrint("LiveMarkersBloc: channel created ${channel?.toString()}");
 
     channel?.bind("App\\Events\\LiveVehicleLocation", (event) {
-      //debugPrint("LiveMarkersBloc: event received $event");
+      debugPrint("LiveMarkersBloc: event received $event");
 
       if(event!= null && event.data != null) {
         var jsonResponse =

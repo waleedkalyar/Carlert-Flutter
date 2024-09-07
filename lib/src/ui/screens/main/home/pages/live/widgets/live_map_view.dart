@@ -41,6 +41,8 @@ class LiveMapView extends StatefulWidget {
 class _LiveMapViewState extends State<LiveMapView>
     with SingleTickerProviderStateMixin, WidgetsBindingObserver {
   Map<MarkerId, CarlertMarker> markers = {};
+  Map<MarkerId, CarlertMarker> singleMarkers = {};
+
   final controller = Completer<GoogleMapController>();
 
   var _mapStyle = "";
@@ -97,10 +99,11 @@ class _LiveMapViewState extends State<LiveMapView>
   }
 
   void _updateMarkers(Set<Marker> markers) {
-    // log('ClusterManager: updateMarkers: Updated ${markers.length} markers');
+    debugPrint(
+        'ClusterManager: updateMarkers: Updated ${markers.length} markers');
     Set<CarlertMarker> carlertMarkers = {};
     for (var marker in markers) {
-      //  log("ClusterManager: marker id -> ${marker.markerId.value}");
+      debugPrint("ClusterManager: marker id -> ${marker.markerId.value}");
       if (marker.markerId.value.contains("-")) {
         var ids = marker.markerId.value.split("-");
         for (var id in ids) {
@@ -144,7 +147,7 @@ class _LiveMapViewState extends State<LiveMapView>
             rippleRadius: 0.0,
             rippleDuration: const Duration(milliseconds: 0),
             rippleColor: appGreen,
-            markers: markers.values.toSet(),
+            markers: clusterMarkers,
             mapId: controller.future.then<int>((value) => value.mapId),
             child: GoogleMap(
                 mapType: satelliteEnabled ? MapType.satellite : MapType.normal,
@@ -156,27 +159,11 @@ class _LiveMapViewState extends State<LiveMapView>
                 style: _mapStyle,
                 initialCameraPosition: kSantoDomingo,
                 onMapCreated: (gController) {
-                  //  log("On map created");
-                  //  loadJsonFromAssets("assets/map/trip.json", "m1");
-                  // Future.delayed(const Duration(seconds: 10), () {
-                  //   loadJsonFromAssets("assets/map/trip.json", "m2");
-                  // });
-                  // Future.delayed(Duration(seconds: 15), () {
-                  //   loadJsonFromAssets("assets/map/trip.json", "m3");
-                  // });
-                  // Future.delayed(Duration(seconds: 5), () {
-                  //   loadJsonFromAssets("assets/map/trip.json", "m4");
-                  // });
                   controller.complete(gController);
-
-                //  _clusterManager.setMapId(gController.mapId);
-
-                  //Complete the future GoogleMapController
+                  _clusterManager.setMapId(gController.mapId);
                 },
-               // onCameraMove: _clusterManager.onCameraMove,
-               // onCameraIdle: _clusterManager.updateMap
-
-            ),
+                onCameraMove: _clusterManager.onCameraMove,
+                onCameraIdle: _clusterManager.updateMap),
           ),
         ),
         Positioned(
@@ -284,7 +271,6 @@ class _LiveMapViewState extends State<LiveMapView>
     var marker = CarlertMarker(
         markerId: markerId,
         position: latLng,
-        ripple: false,
         draggable: false,
         icon: inactiveIcon,
         infoWindow: InfoWindow(title: markerId.value),
@@ -338,10 +324,9 @@ class _LiveMapViewState extends State<LiveMapView>
       var marker = CarlertMarker(
           markerId: markerId,
           position: latLng,
-          ripple: false,
           draggable: false,
           isActive: isActive,
-          icon: markers[markerId]?.icon,
+          icon: markers[markerId]!.icon,
           infoWindow: InfoWindow.noText,
           fleetNo: fleetNo,
           plateNo: plateNo,
@@ -352,7 +337,7 @@ class _LiveMapViewState extends State<LiveMapView>
           });
       setState(() {
         markers[markerId] = marker;
-        //_clusterManager.setItems(markers.values.toList());
+        _clusterManager.setItems(markers.values.toList());
       });
     } else {
       MarkerView(
@@ -362,7 +347,6 @@ class _LiveMapViewState extends State<LiveMapView>
         var marker = CarlertMarker(
             markerId: markerId,
             position: latLng,
-            ripple: false,
             draggable: false,
             isActive: isActive,
             icon: icon,
@@ -376,6 +360,7 @@ class _LiveMapViewState extends State<LiveMapView>
             });
         setState(() {
           markers[markerId] = marker;
+          _clusterManager.setItems(markers.values.toList());
         });
       });
     }
@@ -413,7 +398,6 @@ class _LiveMapViewState extends State<LiveMapView>
       var newMarker = CarlertMarker(
           markerId: marker.markerId,
           position: marker.position,
-          ripple: false,
           draggable: false,
           isActive: marker.isActive,
           icon: updatedIcon,
