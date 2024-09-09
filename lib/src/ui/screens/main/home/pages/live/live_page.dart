@@ -3,6 +3,7 @@
 
 import 'package:carlet_flutter/src/app/views/carlert_app.dart';
 import 'package:carlet_flutter/src/app/views/res/colors.dart';
+import 'package:carlet_flutter/src/ui/dialogs/select_marker_bottom_sheet.dart';
 import 'package:carlet_flutter/src/ui/screens/main/home/pages/live/bloc/live_markers_bloc.dart';
 import 'package:carlet_flutter/src/ui/screens/main/home/pages/live/widgets/live_map_cluster_view.dart';
 import 'package:carlet_flutter/src/ui/screens/main/home/pages/live/widgets/live_map_view.dart';
@@ -33,7 +34,7 @@ class LivePage extends StatelessWidget {
               }
             }
           },
-          child: Padding(padding: 0.allPadding, child: const LiveMapView()),
+          child: Padding(padding: 0.allPadding, child:  const LiveMapView()),
         ));
   }
 }

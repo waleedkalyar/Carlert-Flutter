@@ -12,14 +12,16 @@ import '../sealed/network_result.dart';
 mixin BaseRequestHandler {
   Stream<NetworkResult<T>> handleApi<T extends Object>({
     required String endPoint,
-    required Future<http.Response> Function(Uri uri) methodFunction,
+    required Future<http.Response> Function(Uri uri, {Map<String, String>? headers}) methodFunction,
     Map<String, dynamic> formData = const {},
   }) async* {
     debugPrint("handle api called");
     yield const NetworkLoading();
     try {
       var url = Uri.https(baseUrl, endPoint, formData);
-      final response = await methodFunction(url);
+      final response = await methodFunction(url, headers: {
+
+      });
 
       var jsonResponse =
           convert.jsonDecode(response.body) as Map<String, dynamic>;
@@ -44,16 +46,23 @@ mixin BaseRequestHandler {
 
   Future<NetworkResult<T>> handleApiFuture<T extends Object>({
     required String endPoint,
-    required Future<http.Response> Function(Uri uri) methodFunction,
+    required Future<http.Response> Function(Uri uri, {Map<String, String>? headers}) methodFunction,
+    String? authorizationToken,
     Map<String, dynamic> formData = const {},
   }) async  {
     debugPrint("handle api called");
     try {
       var url = Uri.https(baseUrl, endPoint, formData);
-      final response = await methodFunction(url);
+      final response = await methodFunction(url, headers: {
+        HttpHeaders.authorizationHeader: 'Bearer $authorizationToken'
+      });
+      debugPrint("HTTP Request resp -> ${response.body}");
+
 
       var jsonResponse =
       convert.jsonDecode(response.body) as Map<String, dynamic>;
+
+
 
       BaseResponse res = BaseResponse.fromJson(jsonResponse);
       if (res.status) {
@@ -68,6 +77,7 @@ mixin BaseRequestHandler {
     } on Exception catch (e) {
       return NetworkError(message: e.toString());
     } catch (e) {
+      debugPrint("HTTP Request error -> $e");
       return const NetworkError(
           message: "Unknown issue found when requesting data"); //
     }

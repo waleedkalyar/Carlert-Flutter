@@ -17,9 +17,9 @@ class VehicleRepoImpl with BaseRequestHandler implements VehicleRepo {
   Future<NetworkResult<BaseResponse<List<DeviceModel>>>>
       fetchAllVehicles() async {
     return handleApiFuture(
-      endPoint: GET_DEVICES_LIST,
-      methodFunction: http.get,
-    );
+        endPoint: GET_DEVICES_LIST,
+        methodFunction: http.get,
+        authorizationToken: PreferenceManager.getInstance().getDummyToken());
   }
 
   @override
@@ -79,16 +79,15 @@ class VehicleRepoImpl with BaseRequestHandler implements VehicleRepo {
   Stream<SocketChipModel> subscribePrivateChannel(
       {required String privateChannelName}) async* {
     StreamController<SocketChipModel> streamController = StreamController();
-    Channel? channel =
-        pusherClient?.subscribe("private-$privateChannelName");
+    Channel? channel = pusherClient?.subscribe("private-$privateChannelName");
     //debugPrint("LiveMarkersBloc: channel created ${channel?.toString()}");
 
     channel?.bind("App\\Events\\LiveVehicleLocation", (event) {
       //debugPrint("LiveMarkersBloc: event received $event");
 
-      if(event!= null && event.data != null) {
+      if (event != null && event.data != null) {
         var jsonResponse =
-        convert.jsonDecode(event.data!) as Map<String, dynamic>;
+            convert.jsonDecode(event.data!) as Map<String, dynamic>;
 
         var jsonChip = jsonResponse["chip"] as Map<String, dynamic>;
         streamController.add(SocketChipModel.fromJson(jsonChip));
@@ -101,6 +100,5 @@ class VehicleRepoImpl with BaseRequestHandler implements VehicleRepo {
   void unsubscribeToPrivateChannel({required String privateChannelName}) {
     pusherClient?.cancelEventChannelStream();
     pusherClient?.unsubscribe("private-$privateChannelName");
-
   }
 }

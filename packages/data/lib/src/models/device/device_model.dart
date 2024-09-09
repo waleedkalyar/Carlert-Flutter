@@ -12,11 +12,11 @@ class DeviceModel extends Equatable{
   @JsonKey(name: 'deviceId')
   int deviceId;
   @JsonKey(name: 'driverId')
-  int driverId;
+  String? driverId;
   @JsonKey(name: 'chasisNumber')
   String chasisNumber;
   @JsonKey(name: 'plateCode')
-  String plateCode;
+  String? plateCode;
   @JsonKey(name: 'plateNumber')
   String plateNumber;
   @JsonKey(name: 'make')
@@ -24,13 +24,13 @@ class DeviceModel extends Equatable{
   @JsonKey(name: 'model')
   String model;
   @JsonKey(name: 'engineSize')
-  String engineSize;
+  String? engineSize;
   @JsonKey(name: 'year')
   String year;
   @JsonKey(name: 'color')
-  String color;
+  String? color;
   @JsonKey(name: 'kilometers')
-  String kilometers;
+  int kilometers;
   @JsonKey(name: 'batteryCurrent')
   String batteryCurrent;
   @JsonKey(name: 'batteryVoltage')

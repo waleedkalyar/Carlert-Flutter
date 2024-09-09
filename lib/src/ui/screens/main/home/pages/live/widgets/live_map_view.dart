@@ -7,8 +7,11 @@ import 'dart:ui';
 
 import 'package:carlet_flutter/generated/assets.dart';
 import 'package:carlet_flutter/src/app/views/res/colors.dart';
+import 'package:carlet_flutter/src/ui/dialogs/select_car_bottom_sheet.dart';
+import 'package:carlet_flutter/src/ui/dialogs/select_marker_bottom_sheet.dart';
 import 'package:carlet_flutter/src/ui/screens/main/home/pages/live/carlert_marker.dart';
 import 'package:carlet_flutter/src/ui/screens/main/home/pages/live/widgets/marker_view.dart';
+import 'package:carlet_flutter/src/ui/screens/main/home/pages/mycar/bloc/my_cars_bloc.dart';
 import 'package:carlet_flutter/src/utils/extensions.dart';
 import 'package:carlet_flutter/src/utils/lat_lng_tween.dart';
 import 'package:flutter/foundation.dart';
@@ -27,8 +30,8 @@ import 'package:widget_to_marker/widget_to_marker.dart';
 import '../bloc/live_markers_bloc.dart';
 
 //Setting dummies values
-const kStartPosition = LatLng(24.85474, 55.079298);
-const kSantoDomingo = CameraPosition(target: kStartPosition, zoom: 15);
+const kStartPosition = LatLng(25.11749953, 55.200332532,);
+const kSantoDomingo = CameraPosition(target: kStartPosition, zoom: 10);
 const kMarkerId = MarkerId('MarkerId1');
 
 class LiveMapView extends StatefulWidget {
@@ -120,6 +123,7 @@ class _LiveMapViewState extends State<LiveMapView>
     // log("On map created build");
     return Stack(
       children: [
+
         BlocListener<LiveMarkersBloc, LiveMarkersState>(
           listener: (context, state) {
             if (state is VehiclesChannelConnectedState) {
@@ -144,7 +148,7 @@ class _LiveMapViewState extends State<LiveMapView>
             rippleRadius: 0.0,
             rippleDuration: const Duration(milliseconds: 0),
             rippleColor: appGreen,
-            markers: markers.values.toSet(),
+           // markers: markers.values.toSet(),
             mapId: controller.future.then<int>((value) => value.mapId),
             child: GoogleMap(
                 mapType: satelliteEnabled ? MapType.satellite : MapType.normal,
@@ -152,7 +156,9 @@ class _LiveMapViewState extends State<LiveMapView>
                 rotateGesturesEnabled: false,
                 myLocationButtonEnabled: false,
                 myLocationEnabled: false,
+                mapToolbarEnabled: false,
                 trafficEnabled: trafficEnabled,
+               markers: markers.values.toSet(),
                // style: _mapStyle,
                 initialCameraPosition: kSantoDomingo,
                 onMapCreated: (gController) {
@@ -274,6 +280,7 @@ class _LiveMapViewState extends State<LiveMapView>
                 ),
               ],
             )),
+
       ],
     );
   }
@@ -291,8 +298,9 @@ class _LiveMapViewState extends State<LiveMapView>
         fleetNo: fleetNo,
         plateNo: plateNo,
         onTap: () {
+          context.showPresistentBottomSheet(bottomSheet: const SelectMarkerBottomSheet(), dismissible: true);
           if (kDebugMode) {
-            print('Tapped! $latLng');
+            print('Tapped! ${markerId.value}');
           }
         });
     //marker.setMapId(markerId.value);
@@ -346,6 +354,7 @@ class _LiveMapViewState extends State<LiveMapView>
           fleetNo: fleetNo,
           plateNo: plateNo,
           onTap: () {
+            context.showPresistentBottomSheet(bottomSheet: const SelectMarkerBottomSheet(), dismissible: true);
             if (kDebugMode) {
               print('Tapped! $latLng');
             }
@@ -370,6 +379,7 @@ class _LiveMapViewState extends State<LiveMapView>
             fleetNo: fleetNo,
             plateNo: plateNo,
             onTap: () {
+              context.showPresistentBottomSheet(bottomSheet: const SelectMarkerBottomSheet(), dismissible: true);
               if (kDebugMode) {
                 print('Tapped! $latLng');
               }
@@ -421,6 +431,7 @@ class _LiveMapViewState extends State<LiveMapView>
           fleetNo: marker.fleetNo,
           plateNo: marker.plateNo,
           onTap: () {
+            context.showPresistentBottomSheet(bottomSheet: const SelectMarkerBottomSheet(), dismissible: true);
             if (kDebugMode) {
               // print('Tapped! $latLng');
             }
@@ -440,6 +451,8 @@ class _LiveMapViewState extends State<LiveMapView>
 
     //_clusterManager.setItems(markers.values.toList());
   }
+
+
 
   void setMapCameraInMarkersBound() {
     controller.future.then((mapController) {

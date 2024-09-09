@@ -8,17 +8,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SelectCarBottomSheet extends StatelessWidget {
-  const SelectCarBottomSheet({Key? key}) : super(key: key);
+  final MyCarsBloc carsBloc;
+
+  const SelectCarBottomSheet({Key? key, required this.carsBloc})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    context.read<MyCarsBloc>().add(const FetchAllCars());
+    carsBloc.add(const FetchAllCars());
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
       height: MediaQuery.of(context).size.height - 80,
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.vertical(top: Radius.circular(16.0)),
-        color: appWhite,
+        color: appGrayBackground,
       ),
       child: Column(
         children: [
@@ -32,43 +35,50 @@ class SelectCarBottomSheet extends StatelessWidget {
             hint: 'Search Car',
             floatHint: false,
             filledFocus: true,
-            filledColor: appGrayBackground,
+            filledColor: appWhite,
             icon: const Icon(CupertinoIcons.search),
             onUpdateInput: (value) {},
           ),
           16.height,
-          Container(
-            height: 120,
-            child: BlocListener<MyCarsBloc, MyCarsState>(
+          Expanded(
+            child: BlocConsumer<MyCarsBloc, MyCarsState>(
+              bloc: carsBloc,
               listener: (ctx, state) {
-                if (state is MyCarsLoading) {
-                  const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                if (state is MyCarsError) {
-                  Center(
-                    child: Text(
-                      state.errorMessage,
-                      style: Theme.of(context).primaryTextTheme.bodySmall,
-                    ),
-                  );
-                }
-                if (state is MyCarsSuccess) {
-                  ListView.separated(
-                    itemBuilder: (ctx, index) {
-                      return ItemSelectCar(
-                        deviceModel: state.devices[index],
-                      );
-                    },
-                    itemCount: state.devices.length,
-                    shrinkWrap: true,
-                    separatorBuilder: (ctx, index) {
-                      return const Divider();
-                    },
-                  );
-                }
-              },
+
+              }, builder: (BuildContext context, MyCarsState state) {
+              if (state is MyCarsLoading) {
+               return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              if (state is MyCarsError) {
+               return Center(
+                  child: Text(
+                    state.errorMessage,
+                    style: Theme.of(context).primaryTextTheme.bodySmall,
+                  ),
+                );
+              }
+              if (state is MyCarsSuccess) {
+               return ListView.builder(
+                 physics: const ClampingScrollPhysics(),
+                  itemBuilder: (ctx, index) {
+                    return ItemSelectCar(
+                      deviceModel: state.devices[index],
+                    );
+                  },
+                  itemCount: state.devices.length,
+                  shrinkWrap: true,
+                );
+              } else {
+                return Center(
+                child: Text(
+                  "undefined state",
+                  style: Theme.of(context).primaryTextTheme.bodySmall,
+                ),
+              );
+              }
+            },
             ),
           )
         ],

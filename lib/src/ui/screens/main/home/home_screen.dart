@@ -1,6 +1,7 @@
 import 'package:boxicons/boxicons.dart';
 import 'package:carlet_flutter/src/app/views/res/colors.dart';
 import 'package:carlet_flutter/src/app/views/res/strings.dart';
+import 'package:carlet_flutter/src/ui/dialogs/select_car_bottom_sheet.dart';
 import 'package:carlet_flutter/src/ui/screens/main/home/drawer/expenses/expenses_page.dart';
 import 'package:carlet_flutter/src/ui/screens/main/home/drawer/fuel/fuel_page.dart';
 import 'package:carlet_flutter/src/ui/screens/main/home/drawer/geofence/geofence_page.dart';
@@ -9,14 +10,17 @@ import 'package:carlet_flutter/src/ui/screens/main/home/drawer/service_requests/
 import 'package:carlet_flutter/src/ui/screens/main/home/drawer/susan_ai/susan_ai.dart';
 import 'package:carlet_flutter/src/ui/screens/main/home/drawer/trip_history/trip_history_page.dart';
 import 'package:carlet_flutter/src/ui/screens/main/home/pages/live/live_page.dart';
+import 'package:carlet_flutter/src/ui/screens/main/home/pages/mycar/bloc/my_cars_bloc.dart';
 import 'package:carlet_flutter/src/ui/screens/main/home/pages/mycar/my_car_page.dart';
 import 'package:carlet_flutter/src/ui/screens/main/home/pages/notifications/notifications_page.dart';
 import 'package:carlet_flutter/src/ui/screens/main/home/pages/profile/profile_page.dart';
 import 'package:carlet_flutter/src/ui/screens/main/home/pages/services/services_page.dart';
+import 'package:carlet_flutter/src/utils/extensions.dart';
 import 'package:carlet_flutter/src/widgets/app_text_input_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -189,7 +193,9 @@ class _HomeScreenState extends State<HomeScreen> {
             _currentIndex == 0
                 ? IconButton(
                     onPressed: () {
-                      // context.showBottomSheet(bottomSheet: const SelectCarBottomSheet());
+                      context.showMyModelBottomSheet(
+                          bottomSheet: SelectCarBottomSheet(carsBloc: context.read<MyCarsBloc>(),));
+                      //context.read<MyCarsBloc>().add(const FetchAllCars());
                     },
                     icon: const Icon(CupertinoIcons.car_detailed))
                 : const SizedBox(),
@@ -222,7 +228,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   overflow: TextOverflow.ellipsis,
                   color: states.contains(WidgetState.selected)
                       ? appBlack
-                      : appGray),
+                      : appGray,
+                  fontWeight: states.contains(WidgetState.selected)
+                      ? FontWeight.bold
+                      : FontWeight.normal,
+              ),
             ),
           ),
           child: NavigationBar(
@@ -232,7 +242,7 @@ class _HomeScreenState extends State<HomeScreen> {
             labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
             selectedIndex: _currentIndex,
             indicatorShape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             indicatorColor: appGrayLight,
             onDestinationSelected: (index) {
               setState(() {

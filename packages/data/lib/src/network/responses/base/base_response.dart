@@ -8,7 +8,7 @@ part 'base_response.g.dart';
 
 
    @JsonKey(fromJson: _dataFromJson)
-    T? data = null;
+    T? data;
     bool status;
     String messages;
     BaseResponse(this.data, this.status, this.messages);

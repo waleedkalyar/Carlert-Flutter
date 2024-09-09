@@ -180,7 +180,7 @@ extension DialogExtension on BuildContext {
     ));
   }
 
-  showBottomSheet({required Widget bottomSheet, bool dismissible = false}) {
+  showMyModelBottomSheet({required Widget bottomSheet, bool dismissible = false}) {
     showModalBottomSheet(
       context: this,
       builder: (context) => bottomSheet,
@@ -189,4 +189,13 @@ extension DialogExtension on BuildContext {
       isDismissible: dismissible,
     );
   }
+
+  showPresistentBottomSheet({required Widget bottomSheet,dismissible = false}){
+    showBottomSheet( context: this,
+      builder: (context) => bottomSheet,
+      enableDrag: dismissible,
+      backgroundColor: Colors.transparent,
+      clipBehavior: Clip.hardEdge);
+  }
+
 }
