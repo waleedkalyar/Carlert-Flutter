@@ -43,7 +43,7 @@ class _LiveMapViewState extends State<LiveMapView>
   Map<MarkerId, CarlertMarker> markers = {};
   final controller = Completer<GoogleMapController>();
 
-  var _mapStyle = "";
+  //var _mapStyle = "";
 
   BitmapDescriptor inactiveIcon = BitmapDescriptor.defaultMarker;
 
@@ -65,11 +65,11 @@ class _LiveMapViewState extends State<LiveMapView>
   @override
   void initState() {
     _clusterManager = _initClusterManager();
-    rootBundle.loadString("assets/map/map_style.json").then((value) {
-      _mapStyle = value;
-    }).catchError((e) {
-      debugPrint("Map style -> $e");
-    });
+    // rootBundle.loadString("assets/map/map_style.json").then((value) {
+    //   _mapStyle = value;
+    // }).catchError((e) {
+    //   debugPrint("Map style -> $e");
+    // });
 
     if (inactiveIcon == BitmapDescriptor.defaultMarker) {
       const MarkerView(
@@ -153,7 +153,7 @@ class _LiveMapViewState extends State<LiveMapView>
                 myLocationButtonEnabled: false,
                 myLocationEnabled: false,
                 trafficEnabled: trafficEnabled,
-                style: _mapStyle,
+               // style: _mapStyle,
                 initialCameraPosition: kSantoDomingo,
                 onMapCreated: (gController) {
                   //  log("On map created");

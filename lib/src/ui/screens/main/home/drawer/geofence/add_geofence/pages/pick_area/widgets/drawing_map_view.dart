@@ -88,13 +88,13 @@ class _DrawingMapViewState extends State<DrawingMapView>  with WidgetsBindingObs
                   },
                   label:  Icon(
                     CupertinoIcons.hexagon,
-                    color: circleMode ? appBlack : appWhite,
+                    color: circleMode ? appBlue : appWhite,
                   ),
                   style: ElevatedButton.styleFrom(
                     elevation: 0,
                       shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.only(topLeft: Radius.circular(2),bottomLeft: Radius.circular(2))),
-                      backgroundColor: circleMode ? appWhite : appGreen),
+                      backgroundColor: circleMode ? appWhite : appBlue),
                 ),
                 ElevatedButton.icon(
                   onPressed: () {
@@ -105,13 +105,13 @@ class _DrawingMapViewState extends State<DrawingMapView>  with WidgetsBindingObs
                   },
                   label:  Icon(
                     CupertinoIcons.circle,
-                    color: circleMode ? appWhite : appBlack,
+                    color: circleMode ? appWhite : appBlue,
                   ),
                   style: ElevatedButton.styleFrom(
                       elevation: 0,
                       shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.only(topRight: Radius.circular(2), bottomRight: Radius.circular(2))),
-                      backgroundColor: circleMode ? appGreen : appWhite),
+                      backgroundColor: circleMode ? appBlue : appWhite),
                 ),
               ],
             )),
@@ -164,8 +164,8 @@ class _DrawingMapViewState extends State<DrawingMapView>  with WidgetsBindingObs
           polygonId: const PolygonId("polygon"),
           points:
               helperMarkers.values.map((marker) => marker.position).toList(),
-          fillColor: appGreen.withOpacity(0.4),
-          strokeColor: appGreen,
+          fillColor: appBlue.withOpacity(0.4),
+          strokeColor: appBlue,
           strokeWidth: 2));
     }
   }
@@ -181,9 +181,9 @@ class _DrawingMapViewState extends State<DrawingMapView>  with WidgetsBindingObs
           circleId: const CircleId("circle"),
           center: center,
           radius: radius,
-          fillColor: appGreen.withOpacity(0.4),
+          fillColor: appBlue.withOpacity(0.4),
           strokeWidth: 2,
-          strokeColor: appGreen));
+          strokeColor: appBlue));
       updateMarker(const MarkerId("center"), center);
       updateMarker(const MarkerId("radius"), latLang);
     } else {
@@ -192,9 +192,9 @@ class _DrawingMapViewState extends State<DrawingMapView>  with WidgetsBindingObs
           circleId: const CircleId("circle"),
           center: latLang,
           radius: defaultRadius,
-          fillColor: appGreen.withOpacity(0.4),
+          fillColor: appBlue.withOpacity(0.4),
           strokeWidth: 2,
-          strokeColor: appGreen));
+          strokeColor: appBlue));
       updateMarker(const MarkerId("center"), latLang);
       updateMarker(const MarkerId("radius"),
           latLang.toEastPosition(defaultRadius / 1000));

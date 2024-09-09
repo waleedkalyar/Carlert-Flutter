@@ -17,6 +17,7 @@ class _HistoryDateItemState extends State<HistoryDateItem> {
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
+      expansionAnimationStyle: AnimationStyle(duration: const Duration(milliseconds: 400), curve: Easing.linear),
       title:  Text(
         "TRIP DATE: THU AUG 22 2024",
         textAlign: TextAlign.start,
@@ -65,7 +66,8 @@ class _HistoryDateItemState extends State<HistoryDateItem> {
       backgroundColor: appBlue,
       collapsedShape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(4)),
-      tilePadding: const EdgeInsets.symmetric(horizontal: 6),
+      tilePadding: const EdgeInsets.symmetric(horizontal: 6, vertical: 0),
+      minTileHeight: 32,
       children: [
         Container(
           color: appGrayBackground,

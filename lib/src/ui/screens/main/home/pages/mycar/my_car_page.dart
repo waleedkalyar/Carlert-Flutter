@@ -1,13 +1,7 @@
-import 'package:boxicons/boxicons.dart';
 import 'package:carlet_flutter/generated/assets.dart';
 import 'package:carlet_flutter/src/app/views/res/colors.dart';
-import 'package:carlet_flutter/src/ui/screens/main/home/pages/mycar/widgets/car_3d_model_view.dart';
-import 'package:carlet_flutter/src/ui/screens/main/home/pages/mycar/widgets/car_service_view.dart';
 import 'package:carlet_flutter/src/utils/extensions.dart';
-import 'package:carlet_flutter/src/widgets/app_switch.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 
 class MyCarPage extends StatelessWidget {
@@ -101,22 +95,16 @@ class MyCarPage extends StatelessWidget {
             ),
           ),
           24.height,
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              child: GridView(
-                shrinkWrap: true,
-                physics: const ClampingScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 8.0,
-                  childAspectRatio:2.5 / 1,
-                  mainAxisSpacing: 8.0,
-                ),
-                children: [
-                  Wrap(
-                    children: [
-                      ListTile(
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: ListTile(
                         contentPadding:
                             const EdgeInsets.symmetric(horizontal: 12),
                         horizontalTitleGap: 8,
@@ -152,13 +140,12 @@ class MyCarPage extends StatelessWidget {
                               ?.copyWith(fontSize: 13, color: appBlack),
                         ),
                       ),
-                    ],
-                  ),
-                  Wrap(
-                    children: [
-                      ListTile(
+                    ),
+                    8.width,
+                    Expanded(
+                      child: ListTile(
                         contentPadding:
-                        const EdgeInsets.symmetric(horizontal: 12),
+                            const EdgeInsets.symmetric(horizontal: 12),
                         horizontalTitleGap: 8,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(4)),
@@ -192,11 +179,14 @@ class MyCarPage extends StatelessWidget {
                               ?.copyWith(fontSize: 13, color: appBlack),
                         ),
                       ),
-                    ],
-                  ),
-                  Wrap(
-                    children: [
-                      ListTile(
+                    ),
+                  ],
+                ),
+                8.height,
+                Row(
+                  children: [
+                    Expanded(
+                      child: ListTile(
                         contentPadding:
                             const EdgeInsets.symmetric(horizontal: 12),
                         horizontalTitleGap: 8,
@@ -232,11 +222,10 @@ class MyCarPage extends StatelessWidget {
                               ?.copyWith(fontSize: 13, color: appBlack),
                         ),
                       ),
-                    ],
-                  ),
-                  Wrap(
-                    children: [
-                      ListTile(
+                    ),
+                    8.width,
+                    Expanded(
+                      child: ListTile(
                         contentPadding:
                             const EdgeInsets.symmetric(horizontal: 12),
                         horizontalTitleGap: 8,
@@ -272,13 +261,16 @@ class MyCarPage extends StatelessWidget {
                               ?.copyWith(fontSize: 13, color: appBlack),
                         ),
                       ),
-                    ],
-                  ),
-                  Wrap(
-                    children: [
-                      ListTile(
+                    ),
+                  ],
+                ),
+                8.height,
+                Row(
+                  children: [
+                    Expanded(
+                      child: ListTile(
                         contentPadding:
-                        const EdgeInsets.symmetric(horizontal: 12),
+                            const EdgeInsets.symmetric(horizontal: 12),
                         horizontalTitleGap: 8,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(4)),
@@ -291,16 +283,16 @@ class MyCarPage extends StatelessWidget {
                           ),
                         ),
                         title: Text(
-                          "85°C ",//u2109 ->F, \u2103 -> C
+                          "85°C ", //u2109 ->F, \u2103 -> C
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context)
                               .primaryTextTheme
                               .titleMedium
                               ?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: appBlack,
-                              fontSize: 18),
+                                  fontWeight: FontWeight.bold,
+                                  color: appBlack,
+                                  fontSize: 18),
                         ),
                         subtitle: Text(
                           maxLines: 1,
@@ -312,13 +304,12 @@ class MyCarPage extends StatelessWidget {
                               ?.copyWith(fontSize: 13, color: appBlack),
                         ),
                       ),
-                    ],
-                  ),
-                  Wrap(
-                    children: [
-                      ListTile(
+                    ),
+                    8.width,
+                    Expanded(
+                      child: ListTile(
                         contentPadding:
-                        const EdgeInsets.symmetric(horizontal: 12),
+                            const EdgeInsets.symmetric(horizontal: 12),
                         horizontalTitleGap: 8,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(4)),
@@ -338,9 +329,9 @@ class MyCarPage extends StatelessWidget {
                               .primaryTextTheme
                               .titleMedium
                               ?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: appBlack,
-                              fontSize: 18),
+                                  fontWeight: FontWeight.bold,
+                                  color: appBlack,
+                                  fontSize: 18),
                         ),
                         subtitle: Text(
                           "Battery Level",
@@ -352,13 +343,16 @@ class MyCarPage extends StatelessWidget {
                               ?.copyWith(fontSize: 13, color: appBlack),
                         ),
                       ),
-                    ],
-                  ),
-                  Wrap(
-                    children: [
-                      ListTile(
+                    ),
+                  ],
+                ),
+                8.height,
+                Row(
+                  children: [
+                    Expanded(
+                      child: ListTile(
                         contentPadding:
-                        const EdgeInsets.symmetric(horizontal: 12),
+                            const EdgeInsets.symmetric(horizontal: 12),
                         horizontalTitleGap: 8,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(4)),
@@ -371,16 +365,16 @@ class MyCarPage extends StatelessWidget {
                           ),
                         ),
                         title: Text(
-                          "0 Faults",//u2109 ->F, \u2103 -> C
+                          "0 Faults", //u2109 ->F, \u2103 -> C
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context)
                               .primaryTextTheme
                               .titleMedium
                               ?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: appBlack,
-                              fontSize: 18),
+                                  fontWeight: FontWeight.bold,
+                                  color: appBlack,
+                                  fontSize: 18),
                         ),
                         subtitle: Text(
                           maxLines: 1,
@@ -392,13 +386,12 @@ class MyCarPage extends StatelessWidget {
                               ?.copyWith(fontSize: 13, color: appBlack),
                         ),
                       ),
-                    ],
-                  ),
-                  Wrap(
-                    children: [
-                      ListTile(
+                    ),
+                    8.width,
+                    Expanded(
+                      child: ListTile(
                         contentPadding:
-                        const EdgeInsets.symmetric(horizontal: 12),
+                            const EdgeInsets.symmetric(horizontal: 12),
                         horizontalTitleGap: 8,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(4)),
@@ -418,9 +411,9 @@ class MyCarPage extends StatelessWidget {
                               .primaryTextTheme
                               .titleMedium
                               ?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: appBlack,
-                              fontSize: 18),
+                                  fontWeight: FontWeight.bold,
+                                  color: appBlack,
+                                  fontSize: 18),
                         ),
                         subtitle: Text(
                           "P.S Voltage",
@@ -432,13 +425,16 @@ class MyCarPage extends StatelessWidget {
                               ?.copyWith(fontSize: 13, color: appBlack),
                         ),
                       ),
-                    ],
-                  ),
-                  Wrap(
-                    children: [
-                      ListTile(
+                    ),
+                  ],
+                ),
+                8.height,
+                Row(
+                  children: [
+                    Expanded(
+                      child: ListTile(
                         contentPadding:
-                        const EdgeInsets.symmetric(horizontal: 12),
+                            const EdgeInsets.symmetric(horizontal: 12),
                         horizontalTitleGap: 8,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(4)),
@@ -451,16 +447,16 @@ class MyCarPage extends StatelessWidget {
                           ),
                         ),
                         title: Text(
-                          "0",//u2109 ->F, \u2103 -> C
+                          "0", //u2109 ->F, \u2103 -> C
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context)
                               .primaryTextTheme
                               .titleMedium
                               ?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: appBlack,
-                              fontSize: 18),
+                                  fontWeight: FontWeight.bold,
+                                  color: appBlack,
+                                  fontSize: 18),
                         ),
                         subtitle: Text(
                           maxLines: 1,
@@ -472,13 +468,12 @@ class MyCarPage extends StatelessWidget {
                               ?.copyWith(fontSize: 13, color: appBlack),
                         ),
                       ),
-                    ],
-                  ),
-                  Wrap(
-                    children: [
-                      ListTile(
+                    ),
+                    8.width,
+                    Expanded(
+                      child: ListTile(
                         contentPadding:
-                        const EdgeInsets.symmetric(horizontal: 12),
+                            const EdgeInsets.symmetric(horizontal: 12),
                         horizontalTitleGap: 8,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(4)),
@@ -498,9 +493,9 @@ class MyCarPage extends StatelessWidget {
                               .primaryTextTheme
                               .titleMedium
                               ?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: appBlack,
-                              fontSize: 18),
+                                  fontWeight: FontWeight.bold,
+                                  color: appBlack,
+                                  fontSize: 18),
                         ),
                         subtitle: Text(
                           "Doors Status",
@@ -512,10 +507,10 @@ class MyCarPage extends StatelessWidget {
                               ?.copyWith(fontSize: 13, color: appBlack),
                         ),
                       ),
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                  ],
+                )
+              ],
             ),
           )
         ],

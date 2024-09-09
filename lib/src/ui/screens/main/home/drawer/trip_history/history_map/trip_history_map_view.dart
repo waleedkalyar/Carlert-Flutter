@@ -36,6 +36,7 @@ class TripHistoryMapView extends StatelessWidget {
               left: 16,
               right: 16,
               child: ExpansionTile(
+                expansionAnimationStyle: AnimationStyle(duration: const Duration(milliseconds: 500), curve: Easing.linear),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(6)),
                 collapsedShape: RoundedRectangleBorder(
@@ -43,7 +44,7 @@ class TripHistoryMapView extends StatelessWidget {
                 title: Container(
                   padding: const EdgeInsets.all(6),
                   decoration: BoxDecoration(
-                      color: appBlue, borderRadius: BorderRadius.circular(16)),
+                      color: appBlue, borderRadius: BorderRadius.circular(4)),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.center,

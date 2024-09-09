@@ -26,7 +26,7 @@ class _ChipsNotificationState extends State<ChipsNotification> {
                 showCheckmark: false,
                 backgroundColor: _value == index ? appBlack : appWhite,
                 selectedColor: appBlack,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
                 label: Text(_chips[index], style: TextStyle(color: _value == index ? appWhite : appBlack,),),
                 selected: _value == index,
                 onSelected: (bool selected) {

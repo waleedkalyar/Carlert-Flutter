@@ -56,7 +56,7 @@ class _AddGeofenceContainerBodyState extends State<AddGeofenceContainerBody> {
               curStep: _currentIndex,
               titles: pages.keys.toList(),
               width: MediaQuery.of(context).size.width,
-              color: appGreen),
+              color: appBlue),
         ),
         Expanded(
           child: PageView.builder(

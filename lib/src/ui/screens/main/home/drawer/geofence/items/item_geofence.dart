@@ -180,7 +180,7 @@ class ItemGeofence extends StatelessWidget {
                     shape: BoxShape.rectangle,
                     color: appTransparent,
                     borderRadius: const BorderRadius.all(Radius.circular(6)),
-                    border: Border.all(color: appGreen, width: 2)),
+                    border: Border.all(color: appBlueDark, width: 2)),
                 child: Text(
                   "View In Map",
                   style: Theme.of(context)

@@ -47,6 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final scaffoldKey = GlobalKey<ScaffoldState>();
     return SafeArea(
       top: false,
+      bottom: false,
       child: Scaffold(
         key: scaffoldKey,
         extendBodyBehindAppBar: _currentIndex == 2,
@@ -213,74 +214,69 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         backgroundColor: appGrayBackground,
         body: _pages[_currentIndex],
-        bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: appWhite,
-          selectedItemColor: appBlack,
-          unselectedItemColor: appGray,
-          showUnselectedLabels: true,
-          showSelectedLabels: true,
-          selectedFontSize: 12,
-          unselectedFontSize: 11,
-          elevation: 0,
-          type: BottomNavigationBarType.fixed,
-          currentIndex: _currentIndex,
-          onTap: (index) {
-            setState(() {
-              _currentIndex = index;
-            });
-          },
-          items: [
-            BottomNavigationBarItem(
-                icon: const Icon(Icons.car_crash_outlined),
-                label: "My Car",
-                activeIcon: Container(
-                    decoration: const BoxDecoration(
-                      color: appGrayLight,
-                      shape: BoxShape.circle,
-                    ),
-                    padding: const EdgeInsets.all(8),
-                    child: const Icon(Icons.car_crash_rounded))),
-            BottomNavigationBarItem(
-                icon: const Icon(Icons.settings_outlined),
-                label: "Services",
-                activeIcon: Container(
-                    decoration: const BoxDecoration(
-                      color: appGrayLight,
-                      shape: BoxShape.circle,
-                    ),
-                    padding: const EdgeInsets.all(8),
-                    child: const Icon(Icons.settings))),
-            BottomNavigationBarItem(
-                icon: const Icon(Icons.map_outlined),
-                label: "Live",
-                activeIcon: Container(
-                    decoration: const BoxDecoration(
-                      color: appGrayLight,
-                      shape: BoxShape.circle,
-                    ),
-                    padding: const EdgeInsets.all(8),
-                    child: const Icon(Icons.map))),
-            BottomNavigationBarItem(
-                icon: const Icon(Icons.notifications_outlined),
-                label: "Notifications",
-                activeIcon: Container(
-                    decoration: const BoxDecoration(
-                      color: appGrayLight,
-                      shape: BoxShape.circle,
-                    ),
-                    padding: const EdgeInsets.all(8),
-                    child: const Icon(Icons.notifications))),
-            BottomNavigationBarItem(
-                icon: const Icon(Icons.person_2_outlined),
-                label: "Profile",
-                activeIcon: Container(
-                    decoration: const BoxDecoration(
-                      color: appGrayLight,
-                      shape: BoxShape.circle,
-                    ),
-                    padding: const EdgeInsets.all(8),
-                    child: const Icon(Icons.person_2))),
-          ],
+        bottomNavigationBar: NavigationBarTheme(
+          data: NavigationBarThemeData(
+            labelTextStyle: WidgetStateProperty.resolveWith<TextStyle>(
+              (Set<WidgetState> states) => TextStyle(
+                  fontSize: 12,
+                  overflow: TextOverflow.ellipsis,
+                  color: states.contains(WidgetState.selected)
+                      ? appBlack
+                      : appGray),
+            ),
+          ),
+          child: NavigationBar(
+            backgroundColor: appWhite,
+            height: 65,
+            elevation: 0,
+            labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+            selectedIndex: _currentIndex,
+            indicatorShape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            indicatorColor: appGrayLight,
+            onDestinationSelected: (index) {
+              setState(() {
+                _currentIndex = index;
+              });
+            },
+            destinations: const [
+              NavigationDestination(
+                  icon: Icon(
+                    Icons.car_crash_outlined,
+                    color: appGray,
+                  ),
+                  label: "My Car",
+                  selectedIcon: Icon(Icons.car_crash_rounded)),
+              NavigationDestination(
+                  icon: Icon(
+                    Icons.settings_outlined,
+                    color: appGray,
+                  ),
+                  label: "Services",
+                  selectedIcon: Icon(Icons.settings)),
+              NavigationDestination(
+                  icon: Icon(
+                    Icons.map_outlined,
+                    color: appGray,
+                  ),
+                  label: "Live",
+                  selectedIcon: Icon(Icons.map)),
+              NavigationDestination(
+                  icon: Icon(
+                    Icons.notifications_outlined,
+                    color: appGray,
+                  ),
+                  label: "Notifications",
+                  selectedIcon: Icon(Icons.notifications)),
+              NavigationDestination(
+                  icon: Icon(
+                    Icons.person_2_outlined,
+                    color: appGray,
+                  ),
+                  label: "Profile",
+                  selectedIcon: Icon(Icons.person_2)),
+            ],
+          ),
         ),
       ),
     );
