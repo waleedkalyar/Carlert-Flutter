@@ -16,7 +16,9 @@ import 'package:carlet_flutter/src/ui/screens/main/home/pages/notifications/noti
 import 'package:carlet_flutter/src/ui/screens/main/home/pages/profile/profile_page.dart';
 import 'package:carlet_flutter/src/ui/screens/main/home/pages/services/services_page.dart';
 import 'package:carlet_flutter/src/utils/extensions.dart';
+import 'package:carlet_flutter/src/ui/screens/main/home/pages/live/widgets/search/app_autocomplete_text_input_field.dart';
 import 'package:carlet_flutter/src/widgets/app_text_input_field.dart';
+import 'package:data/src.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -34,6 +36,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 2;
 
+  Function(DeviceModel onSearchDevice)? onSearchDevice;
+
   final List<Widget> _pages = [
     const MyCarPage(),
     //const InfoPage(),
@@ -47,7 +51,13 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    context.read<MyCarsBloc>().add(const FetchAllCars());
     final scaffoldKey = GlobalKey<ScaffoldState>();
     return SafeArea(
       top: false,
@@ -181,20 +191,34 @@ class _HomeScreenState extends State<HomeScreen> {
                       .primaryTextTheme
                       .headlineLarge
                       ?.copyWith(letterSpacing: 4, fontSize: 28))
-              : AppTextInputField(
-                  hint: "Search here",
-                  floatHint: false,
-                  fieldHeight: 20,
-                  icon: const Icon(CupertinoIcons.search),
-                  borderRadius: 16,
-                ),
+              : BlocConsumer<MyCarsBloc, MyCarsState>(
+                  listenWhen: (ctx, state) => state is MyCarsSuccess,
+                  buildWhen: (ctx, state) => state is MyCarsSuccess,
+                  builder: (ctx, state) {
+                    if (state is MyCarsSuccess) {
+                      return AppAutocompleteTextInputField(
+                        searchableList: (state).devices,
+                      );
+                    } else {
+                      return AppTextInputField(
+                        hint: "Search here",
+                        floatHint: false,
+                        fieldHeight: 20,
+                        icon: const Icon(CupertinoIcons.search),
+                        borderRadius: 8,
+                      );
+                    }
+                  },
+                  listener: (ctx, state) {}),
           centerTitle: true,
           actions: [
             _currentIndex == 0
                 ? IconButton(
                     onPressed: () {
                       context.showMyModelBottomSheet(
-                          bottomSheet: SelectCarBottomSheet(carsBloc: context.read<MyCarsBloc>(),));
+                          bottomSheet: SelectCarBottomSheet(
+                        carsBloc: context.read<MyCarsBloc>(),
+                      ));
                       //context.read<MyCarsBloc>().add(const FetchAllCars());
                     },
                     icon: const Icon(CupertinoIcons.car_detailed))
@@ -224,14 +248,13 @@ class _HomeScreenState extends State<HomeScreen> {
           data: NavigationBarThemeData(
             labelTextStyle: WidgetStateProperty.resolveWith<TextStyle>(
               (Set<WidgetState> states) => TextStyle(
-                  fontSize: 12,
-                  overflow: TextOverflow.ellipsis,
-                  color: states.contains(WidgetState.selected)
-                      ? appBlack
-                      : appGray,
-                  fontWeight: states.contains(WidgetState.selected)
-                      ? FontWeight.bold
-                      : FontWeight.normal,
+                fontSize: 12,
+                overflow: TextOverflow.ellipsis,
+                color:
+                    states.contains(WidgetState.selected) ? appBlack : appGray,
+                fontWeight: states.contains(WidgetState.selected)
+                    ? FontWeight.bold
+                    : FontWeight.normal,
               ),
             ),
           ),

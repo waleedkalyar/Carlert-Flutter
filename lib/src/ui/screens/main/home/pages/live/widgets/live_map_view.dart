@@ -11,9 +11,11 @@ import 'package:carlet_flutter/src/ui/dialogs/select_car_bottom_sheet.dart';
 import 'package:carlet_flutter/src/ui/dialogs/select_marker_bottom_sheet.dart';
 import 'package:carlet_flutter/src/ui/screens/main/home/pages/live/carlert_marker.dart';
 import 'package:carlet_flutter/src/ui/screens/main/home/pages/live/widgets/marker_view.dart';
+import 'package:carlet_flutter/src/ui/screens/main/home/pages/live/widgets/search/bloc/search_vehicles_bloc.dart';
 import 'package:carlet_flutter/src/ui/screens/main/home/pages/mycar/bloc/my_cars_bloc.dart';
 import 'package:carlet_flutter/src/utils/extensions.dart';
 import 'package:carlet_flutter/src/utils/lat_lng_tween.dart';
+import 'package:data/src.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -30,7 +32,10 @@ import 'package:widget_to_marker/widget_to_marker.dart';
 import '../bloc/live_markers_bloc.dart';
 
 //Setting dummies values
-const kStartPosition = LatLng(25.11749953, 55.200332532,);
+const kStartPosition = LatLng(
+  25.11749953,
+  55.200332532,
+);
 const kSantoDomingo = CameraPosition(target: kStartPosition, zoom: 10);
 const kMarkerId = MarkerId('MarkerId1');
 
@@ -54,7 +59,6 @@ class _LiveMapViewState extends State<LiveMapView>
 
   Set<CarlertMarker> clusterMarkers = Set();
 
-  StreamSubscription<LatLng>? dataSubscription;
 
   late LiveMarkersBloc liveMarkersBloc;
 
@@ -68,17 +72,11 @@ class _LiveMapViewState extends State<LiveMapView>
   @override
   void initState() {
     _clusterManager = _initClusterManager();
-    // rootBundle.loadString("assets/map/map_style.json").then((value) {
-    //   _mapStyle = value;
-    // }).catchError((e) {
-    //   debugPrint("Map style -> $e");
-    // });
 
     if (inactiveIcon == BitmapDescriptor.defaultMarker) {
       const MarkerView(
         text: "test",
       ).toBitmapDescriptor().then((icon) {
-        // log("inactive icon from svg fetched");
         inactiveIcon = icon;
       });
     }
@@ -123,7 +121,6 @@ class _LiveMapViewState extends State<LiveMapView>
     // log("On map created build");
     return Stack(
       children: [
-
         BlocListener<LiveMarkersBloc, LiveMarkersState>(
           listener: (context, state) {
             if (state is VehiclesChannelConnectedState) {
@@ -148,40 +145,30 @@ class _LiveMapViewState extends State<LiveMapView>
             rippleRadius: 0.0,
             rippleDuration: const Duration(milliseconds: 0),
             rippleColor: appGreen,
-           // markers: markers.values.toSet(),
+            // markers: markers.values.toSet(),
             mapId: controller.future.then<int>((value) => value.mapId),
             child: GoogleMap(
-                mapType: satelliteEnabled ? MapType.satellite : MapType.normal,
-                zoomControlsEnabled: false,
-                rotateGesturesEnabled: false,
-                myLocationButtonEnabled: false,
-                myLocationEnabled: false,
-                mapToolbarEnabled: false,
-                trafficEnabled: trafficEnabled,
-               markers: markers.values.toSet(),
-               // style: _mapStyle,
-                initialCameraPosition: kSantoDomingo,
-                onMapCreated: (gController) {
-                  //  log("On map created");
-                  //  loadJsonFromAssets("assets/map/trip.json", "m1");
-                  // Future.delayed(const Duration(seconds: 10), () {
-                  //   loadJsonFromAssets("assets/map/trip.json", "m2");
-                  // });
-                  // Future.delayed(Duration(seconds: 15), () {
-                  //   loadJsonFromAssets("assets/map/trip.json", "m3");
-                  // });
-                  // Future.delayed(Duration(seconds: 5), () {
-                  //   loadJsonFromAssets("assets/map/trip.json", "m4");
-                  // });
-                  controller.complete(gController);
+              mapType: satelliteEnabled ? MapType.satellite : MapType.normal,
+              zoomControlsEnabled: false,
+              rotateGesturesEnabled: false,
+              myLocationButtonEnabled: false,
+              myLocationEnabled: false,
+              mapToolbarEnabled: false,
+              trafficEnabled: trafficEnabled,
+              markers: markers.values.toSet(),
+              initialCameraPosition: kSantoDomingo,
+              onMapCreated: (gController) {
+
+                controller.complete(gController);
 
                 //  _clusterManager.setMapId(gController.mapId);
 
-                  //Complete the future GoogleMapController
-                },
-               // onCameraMove: _clusterManager.onCameraMove,
-               // onCameraIdle: _clusterManager.updateMap
-
+              },
+              onTap: (loc) {
+                FocusManager.instance.primaryFocus?.unfocus();
+              },
+              // onCameraMove: _clusterManager.onCameraMove,
+              // onCameraIdle: _clusterManager.updateMap
             ),
           ),
         ),
@@ -280,7 +267,22 @@ class _LiveMapViewState extends State<LiveMapView>
                 ),
               ],
             )),
-
+        BlocListener<SearchVehiclesBloc, SearchVehiclesState>(
+          listener: (ctx, state) {
+            if (state is SearchVehiclesSelectedState) {
+              debugPrint("Selected vehicle is -> ${state.selected.deviceId}");
+              var markerId = MarkerId(state.selected.deviceId.toString());
+              if (markers.containsKey(markerId)) {
+                //TODO: zoom and center camera on this marker
+                controller.future.then((mapController) {
+                  mapController.animateCamera(CameraUpdate.newLatLngZoom(
+                      markers[markerId]!.position, 14));
+                });
+              }
+            }
+          },
+          child: SizedBox.fromSize(),
+        ),
       ],
     );
   }
@@ -298,7 +300,8 @@ class _LiveMapViewState extends State<LiveMapView>
         fleetNo: fleetNo,
         plateNo: plateNo,
         onTap: () {
-          context.showPresistentBottomSheet(bottomSheet: const SelectMarkerBottomSheet(), dismissible: true);
+          context.showPresistentBottomSheet(
+              bottomSheet: const SelectMarkerBottomSheet(), dismissible: true);
           if (kDebugMode) {
             print('Tapped! ${markerId.value}');
           }
@@ -354,7 +357,9 @@ class _LiveMapViewState extends State<LiveMapView>
           fleetNo: fleetNo,
           plateNo: plateNo,
           onTap: () {
-            context.showPresistentBottomSheet(bottomSheet: const SelectMarkerBottomSheet(), dismissible: true);
+            context.showPresistentBottomSheet(
+                bottomSheet: const SelectMarkerBottomSheet(),
+                dismissible: true);
             if (kDebugMode) {
               print('Tapped! $latLng');
             }
@@ -379,7 +384,9 @@ class _LiveMapViewState extends State<LiveMapView>
             fleetNo: fleetNo,
             plateNo: plateNo,
             onTap: () {
-              context.showPresistentBottomSheet(bottomSheet: const SelectMarkerBottomSheet(), dismissible: true);
+              context.showPresistentBottomSheet(
+                  bottomSheet: const SelectMarkerBottomSheet(),
+                  dismissible: true);
               if (kDebugMode) {
                 print('Tapped! $latLng');
               }
@@ -431,7 +438,9 @@ class _LiveMapViewState extends State<LiveMapView>
           fleetNo: marker.fleetNo,
           plateNo: marker.plateNo,
           onTap: () {
-            context.showPresistentBottomSheet(bottomSheet: const SelectMarkerBottomSheet(), dismissible: true);
+            context.showPresistentBottomSheet(
+                bottomSheet: const SelectMarkerBottomSheet(),
+                dismissible: true);
             if (kDebugMode) {
               // print('Tapped! $latLng');
             }
@@ -452,8 +461,6 @@ class _LiveMapViewState extends State<LiveMapView>
     //_clusterManager.setItems(markers.values.toList());
   }
 
-
-
   void setMapCameraInMarkersBound() {
     controller.future.then((mapController) {
       List<LatLng> lats =
@@ -467,43 +474,9 @@ class _LiveMapViewState extends State<LiveMapView>
   void dispose() {
     markers.clear();
     // _clusterManager.setItems([]);
-    dataSubscription?.cancel();
     liveMarkersBloc.add(const UnsubscribeToVehiclesEvent("all-veh-location"));
 
     super.dispose();
-  }
-
-  void loadJsonFromAssets(String filePath, String markerId) {
-    List<LatLng> trip = [];
-    // log("TripData : loadJsonFromAssets() ");
-    rootBundle.loadString(filePath).then((value) {
-      //log("TripData : String data -> $value ");
-      var jsonTrip = jsonDecode(value) as List<dynamic>;
-      for (var modelValue in jsonTrip) {
-        var model = modelValue as Map<String, dynamic>;
-        // log("TripData : lat -> ${model["lat"]}, lng -> ${model["lng"]}");
-        trip.add(LatLng(model["lat"], model["lng"]));
-      }
-
-      var stream = Stream.periodic(
-              const Duration(milliseconds: 700), (count) => trip[count])
-          .take(130); //trip.length
-
-      dataSubscription = stream.listen((latLang) {
-        newLocationUpdate(
-            latLang, MarkerId(markerId), "test fleet", "test plate");
-        // locationUpdateWithAnimation(latLang, MarkerId(markerId));
-      });
-
-      // stream.forEach((value) {
-      //   newLocationUpdate(value, MarkerId(markerId));
-      // });
-      // Future.delayed(const Duration(seconds: 5),(){
-      // stream.forEach((value) => newLocationUpdate(value, const MarkerId("m2")));
-      // });
-    }).catchError((e) {
-      // log("TripData : error ${e.toString()}");
-    });
   }
 
   @override
@@ -585,24 +558,6 @@ class _LiveMapViewState extends State<LiveMapView>
     }
   }
 
-  void moveMarker(CarlertMarker carlertMarker, LatLng newPosition) {
-    int numDeltas = 50; //number of delta to devide total distance
-    int delay = 50; //milliseconds of delay to pass each delta
-    var i = 0;
-    double? deltaLat;
-    double? deltaLng;
-    var position = carlertMarker.position;
-
-    for (i = 0; i < numDeltas; i++) {
-      deltaLat = (newPosition.latitude - position.latitude) / numDeltas;
-      deltaLng = (newPosition.longitude - position.longitude) / numDeltas;
-      // Future.delayed(Duration(milliseconds: delay), () {
-      setState(() {
-        carlertMarker.update(LatLng(deltaLat!, deltaLng!));
-      });
-      //});
-    }
-  }
 
   String textOnMarker(String fleetNo, String plateNo) {
     if (!fleetEnabled && !plateEnabled) {

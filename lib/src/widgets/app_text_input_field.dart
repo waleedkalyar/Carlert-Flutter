@@ -28,6 +28,9 @@ class AppTextInputField extends StatefulWidget {
 
   TextInputType? keyboardType;
 
+  Function(String value)? onFieldSubmitted;
+  FocusNode? focusNode;
+
   AppTextInputField(
       {super.key,
       required this.hint,
@@ -46,7 +49,9 @@ class AppTextInputField extends StatefulWidget {
       this.textEditingController,
       this.errorText,
       this.suffixText,
-      this.initialValue});
+      this.initialValue,
+      this.onFieldSubmitted,
+      this.focusNode});
 
   @override
   State<AppTextInputField> createState() => _AppTextInputState();
@@ -77,8 +82,15 @@ class _AppTextInputState extends State<AppTextInputField> {
 
   @override
   void dispose() {
-    _focusNode.dispose();
-    _editingController.dispose();
+    if (widget.focusNode == null) {
+      _focusNode.dispose();
+    }
+    if (widget.textEditingController == null) {
+      _editingController.dispose();
+    }
+
+    widget.focusNode?.dispose();
+    widget.textEditingController?.dispose();
     _controller.dispose();
     super.dispose();
   }
@@ -102,14 +114,17 @@ class _AppTextInputState extends State<AppTextInputField> {
           validator: (value) {},
           keyboardType: widget.keyboardType,
           textAlignVertical: TextAlignVertical.center,
-          focusNode: _focusNode,
+          focusNode: widget.focusNode ?? _focusNode,
           minLines: widget.minLines ?? 1,
           maxLines: widget.minLines ?? 1,
           controller: _editingController,
           onChanged: (value) {
             // var value = _editingController.value.text;
-            widget.onUpdateInput!(_editingController.value.text);
+            if (widget.onUpdateInput != null) {
+              widget.onUpdateInput!(_editingController.value.text);
+            }
           },
+          onFieldSubmitted: widget.onFieldSubmitted,
           decoration: InputDecoration(
             isDense: true,
             contentPadding: !widget.floatHint ? const EdgeInsets.all(14) : null,
@@ -131,7 +146,10 @@ class _AppTextInputState extends State<AppTextInputField> {
             labelText: widget.floatHint ? widget.hint : null,
             hintText: !widget.floatHint ? widget.hint : null,
             labelStyle: Theme.of(context).primaryTextTheme.labelMedium,
-            hintStyle:  TextStyle(color: appGray.withOpacity(0.8), fontSize: 14, fontWeight: FontWeight.normal),
+            hintStyle: TextStyle(
+                color: appGray.withOpacity(0.8),
+                fontSize: 14,
+                fontWeight: FontWeight.normal),
             focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.all(
                     Radius.circular(widget.borderRadius ?? 8.0)),

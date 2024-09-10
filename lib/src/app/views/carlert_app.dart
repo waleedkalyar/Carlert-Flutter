@@ -3,6 +3,7 @@ import 'package:carlet_flutter/src/app/views/carlert_app_view.dart';
 import 'package:carlet_flutter/src/ui/screens/auth/signin/bloc/sign_in_phone_bloc.dart';
 import 'package:carlet_flutter/src/ui/screens/auth/verify/bloc/verify_otp_bloc.dart';
 import 'package:carlet_flutter/src/ui/screens/main/home/pages/live/bloc/live_markers_bloc.dart';
+import 'package:carlet_flutter/src/ui/screens/main/home/pages/live/widgets/search/bloc/search_vehicles_bloc.dart';
 import 'package:carlet_flutter/src/ui/screens/main/home/pages/mycar/bloc/my_cars_bloc.dart';
 import 'package:data/src.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,9 @@ class CarlertApp extends StatelessWidget {
         create: (context) => MyCarsBloc(context.read<VehicleRepo>()),
       ),
       BlocProvider<LiveMarkersBloc>(
-          create: (context) => LiveMarkersBloc(context.read<VehicleRepo>()))
+          create: (context) => LiveMarkersBloc(context.read<VehicleRepo>())),
+      BlocProvider<SearchVehiclesBloc>(
+          create: (context) => SearchVehiclesBloc()),
     ], child: const CarlertAppView());
   }
 }

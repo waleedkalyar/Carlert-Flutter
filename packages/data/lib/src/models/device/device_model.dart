@@ -76,7 +76,14 @@ class DeviceModel extends Equatable{
 
   @override
   List<Object?> get props => [uuid,vehicleId,driverId,deviceId,chasisNumber,plateCode,plateNumber,make,model,engineSize,color,year,location];
+
+  @override
+  String toString() {
+    return "$make $model $year";
+  }
+
 }
+
 
 @JsonSerializable(ignoreUnannotated: false)
 class Location extends Equatable{
@@ -93,5 +100,9 @@ class Location extends Equatable{
 
   @override
   List<Object?> get props => [lat,long];
+
+
+
+
 }
 
