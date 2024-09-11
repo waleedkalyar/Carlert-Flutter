@@ -68,6 +68,11 @@ SocketChipModel _$SocketChipModelFromJson(Map<String, dynamic> json) =>
       seatCapacity: json['Seat_Capacity'] as String?,
       sentDate: json['Sent_Date'] as String?,
       signalStrength: (json['signalStrength'] as num?)?.toInt(),
+      year: json['year'] as String?,
+      uuid: json['uuid'] as String?,
+      speed: json['speed'] as String?,
+      temperature: json['temperature'] as String?,
+      totalCapacity: (json['totalCapacity'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$SocketChipModelToJson(SocketChipModel instance) =>
@@ -130,4 +135,9 @@ Map<String, dynamic> _$SocketChipModelToJson(SocketChipModel instance) =>
       'Seat_Capacity': instance.seatCapacity,
       'Sent_Date': instance.sentDate,
       'signalStrength': instance.signalStrength,
+      'year': instance.year,
+      'uuid': instance.uuid,
+      'speed': instance.speed,
+      'temperature': instance.temperature,
+      'totalCapacity': instance.totalCapacity,
     };

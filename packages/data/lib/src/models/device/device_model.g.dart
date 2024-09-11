@@ -38,6 +38,12 @@ DeviceModel _$DeviceModelFromJson(Map<String, dynamic> json) => DeviceModel(
       batteryPercentage: (json['batteryPercentage'] as num).toInt(),
       logo: json['logo'] as String,
       carImage: json['carImage'] as String,
+      driverInfo: json['driverInfo'] == null
+          ? null
+          : DriverInfo.fromJson(json['driverInfo'] as Map<String, dynamic>),
+      fleetNo: json['Fleet_No'] as String?,
+      aStatus: json['A_Status'] as String?,
+      doorStatus: (json['doorStatus'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$DeviceModelToJson(DeviceModel instance) =>
@@ -46,6 +52,7 @@ Map<String, dynamic> _$DeviceModelToJson(DeviceModel instance) =>
       'vehicleId': instance.vehicleId,
       'deviceId': instance.deviceId,
       'driverId': instance.driverId,
+      'driverInfo': instance.driverInfo,
       'chasisNumber': instance.chasisNumber,
       'plateCode': instance.plateCode,
       'plateNumber': instance.plateNumber,
@@ -73,6 +80,9 @@ Map<String, dynamic> _$DeviceModelToJson(DeviceModel instance) =>
       'batteryPercentage': instance.batteryPercentage,
       'logo': instance.logo,
       'carImage': instance.carImage,
+      'Fleet_No': instance.fleetNo,
+      'A_Status': instance.aStatus,
+      'doorStatus': instance.doorStatus,
     };
 
 Location _$LocationFromJson(Map<String, dynamic> json) => Location(
@@ -83,4 +93,23 @@ Location _$LocationFromJson(Map<String, dynamic> json) => Location(
 Map<String, dynamic> _$LocationToJson(Location instance) => <String, dynamic>{
       'lat': instance.lat,
       'long': instance.long,
+    };
+
+DriverInfo _$DriverInfoFromJson(Map<String, dynamic> json) => DriverInfo(
+      json['address'] as String?,
+      json['code'] as String?,
+      json['email'] as String?,
+      json['name'] as String?,
+      json['mobile'] as String?,
+      json['uuid'] as String?,
+    );
+
+Map<String, dynamic> _$DriverInfoToJson(DriverInfo instance) =>
+    <String, dynamic>{
+      'address': instance.address,
+      'code': instance.code,
+      'email': instance.email,
+      'mobile': instance.mobile,
+      'name': instance.name,
+      'uuid': instance.uuid,
     };

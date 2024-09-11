@@ -1,6 +1,6 @@
 import 'package:carlet_flutter/src/app/views/res/colors.dart';
 import 'package:carlet_flutter/src/app/views/res/strings.dart';
-import 'package:carlet_flutter/src/ui/dialogs/select_car_bottom_sheet.dart';
+import 'package:carlet_flutter/src/ui/dialogs/select_car/select_car_bottom_sheet.dart';
 import 'package:carlet_flutter/src/utils/extensions.dart';
 import 'package:carlet_flutter/src/widgets/app_text_input_field.dart';
 import 'package:flutter/cupertino.dart';

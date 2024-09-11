@@ -1,7 +1,8 @@
 import 'package:boxicons/boxicons.dart';
 import 'package:carlet_flutter/src/app/views/res/colors.dart';
 import 'package:carlet_flutter/src/app/views/res/strings.dart';
-import 'package:carlet_flutter/src/ui/dialogs/select_car_bottom_sheet.dart';
+import 'package:carlet_flutter/src/ui/dialogs/select_car/bloc/my_cars_bloc.dart';
+import 'package:carlet_flutter/src/ui/dialogs/select_car/select_car_bottom_sheet.dart';
 import 'package:carlet_flutter/src/ui/screens/main/home/drawer/expenses/expenses_page.dart';
 import 'package:carlet_flutter/src/ui/screens/main/home/drawer/fuel/fuel_page.dart';
 import 'package:carlet_flutter/src/ui/screens/main/home/drawer/geofence/geofence_page.dart';
@@ -10,7 +11,6 @@ import 'package:carlet_flutter/src/ui/screens/main/home/drawer/service_requests/
 import 'package:carlet_flutter/src/ui/screens/main/home/drawer/susan_ai/susan_ai.dart';
 import 'package:carlet_flutter/src/ui/screens/main/home/drawer/trip_history/trip_history_page.dart';
 import 'package:carlet_flutter/src/ui/screens/main/home/pages/live/live_page.dart';
-import 'package:carlet_flutter/src/ui/screens/main/home/pages/mycar/bloc/my_cars_bloc.dart';
 import 'package:carlet_flutter/src/ui/screens/main/home/pages/mycar/my_car_page.dart';
 import 'package:carlet_flutter/src/ui/screens/main/home/pages/notifications/notifications_page.dart';
 import 'package:carlet_flutter/src/ui/screens/main/home/pages/profile/profile_page.dart';

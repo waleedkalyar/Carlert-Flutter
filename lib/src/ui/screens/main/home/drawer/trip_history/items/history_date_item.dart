@@ -1,5 +1,5 @@
 import 'package:carlet_flutter/src/app/views/res/colors.dart';
-import 'package:carlet_flutter/src/ui/dialogs/select_car_bottom_sheet.dart';
+import 'package:carlet_flutter/src/ui/dialogs/select_car/select_car_bottom_sheet.dart';
 import 'package:carlet_flutter/src/ui/screens/auth/verify/verify_otp_screen.dart';
 import 'package:carlet_flutter/src/ui/screens/main/home/drawer/trip_history/items/history_trip_item.dart';
 import 'package:carlet_flutter/src/utils/extensions.dart';

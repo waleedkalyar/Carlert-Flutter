@@ -50,13 +50,13 @@ mixin BaseRequestHandler {
     String? authorizationToken,
     Map<String, dynamic> formData = const {},
   }) async  {
-    debugPrint("handle api called");
+    //debugPrint("handle api called");
     try {
       var url = Uri.https(baseUrl, endPoint, formData);
       final response = await methodFunction(url, headers: {
         HttpHeaders.authorizationHeader: 'Bearer $authorizationToken'
       });
-      debugPrint("HTTP Request resp -> ${response.body}");
+      //debugPrint("HTTP Request resp -> ${response.body}");
 
 
       var jsonResponse =

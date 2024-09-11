@@ -23,6 +23,7 @@ const String SERVICE_BOOKING = "/api/serviceBooking";
 
 //data consts
 const String USER_MODEL = "user-model";
+const String SELECTED_VEHICLE = "selected-vehicle";
 
 
 

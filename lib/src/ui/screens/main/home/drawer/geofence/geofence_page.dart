@@ -1,6 +1,6 @@
 import 'package:carlet_flutter/src/app/views/res/colors.dart';
 import 'package:carlet_flutter/src/app/views/res/strings.dart';
-import 'package:carlet_flutter/src/ui/dialogs/select_car_bottom_sheet.dart';
+import 'package:carlet_flutter/src/ui/dialogs/select_car/select_car_bottom_sheet.dart';
 import 'package:carlet_flutter/src/ui/screens/main/home/drawer/geofence/add_geofence/add_geofence_container_page.dart';
 import 'package:carlet_flutter/src/ui/screens/main/home/drawer/geofence/items/item_geofence.dart';
 import 'package:carlet_flutter/src/utils/extensions.dart';

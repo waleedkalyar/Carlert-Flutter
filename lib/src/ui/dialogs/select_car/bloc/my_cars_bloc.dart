@@ -29,7 +29,7 @@ class MyCarsBloc extends Bloc<MyCarsEvent, MyCarsState> {
       emit(MyCarsError(errorMessage: (result as NetworkError).message));
       debugPrint("MyCarsBloc: error -> ${(result as NetworkError).message}");
     } else if (result is NetworkSuccess) {
-      debugPrint("MyCarsBloc: success -> ");
+     // debugPrint("MyCarsBloc: success -> ");
       var dataList = (((result as NetworkSuccess).data as BaseResponse).data)
       as List<dynamic>?;
       List<DeviceModel> devices =[];

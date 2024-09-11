@@ -1,15 +1,18 @@
 import 'package:carlet_flutter/generated/assets.dart';
 import 'package:carlet_flutter/src/app/views/res/colors.dart';
-import 'package:carlet_flutter/src/ui/dialogs/select_car_bottom_sheet.dart';
+import 'package:carlet_flutter/src/ui/dialogs/select_car/select_car_bottom_sheet.dart';
 import 'package:carlet_flutter/src/utils/extensions.dart';
 import 'package:data/src.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class ItemSelectCar extends StatelessWidget {
+  final Function(DeviceModel deviceModel) onDeviceSelect;
   final DeviceModel deviceModel;
 
-  const ItemSelectCar({Key? key, required this.deviceModel}) : super(key: key);
+  const ItemSelectCar(
+      {Key? key, required this.deviceModel, required this.onDeviceSelect})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +26,9 @@ class ItemSelectCar extends StatelessWidget {
         tileColor: appWhite,
         selectedTileColor: appWhite,
         contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
-        onTap: () {},
+        onTap: () {
+          onDeviceSelect(deviceModel);
+        },
         leading: SvgPicture.asset(deviceModel.ignitionStatus == 1
             ? Assets.iconsLiveMapActiveCarIcon
             : Assets.iconsLiveMapInactiveCarIcon),
