@@ -9,23 +9,24 @@ final class LiveMarkersInitial extends LiveMarkersState {
   List<Object> get props => [];
 }
 
-final class PusherConnectionState extends LiveMarkersState{
+final class PusherConnectionState extends LiveMarkersState {
   final String state;
+
   const PusherConnectionState({required this.state});
 
   @override
   List<Object?> get props => [state];
 }
 
-final class VehiclesChannelConnectedState extends LiveMarkersState{
+final class VehiclesChannelConnectedState extends LiveMarkersState {
   final String connectionState;
   final SocketChipModel data;
 
-  const VehiclesChannelConnectedState(this.connectionState,this.data);
+  final List<DeviceModel> devicesList;
+
+  const VehiclesChannelConnectedState(
+      this.connectionState, this.data, this.devicesList);
 
   @override
-  List<Object?> get props => [connectionState,data];
+  List<Object?> get props => [connectionState, data];
 }
-
-
-

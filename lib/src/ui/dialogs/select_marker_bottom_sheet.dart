@@ -13,7 +13,7 @@ class SelectMarkerBottomSheet extends StatelessWidget {
     return Wrap(
       children: [
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 24),
+          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.vertical(top: Radius.circular(16.0)),
             color: appWhite,
@@ -39,7 +39,7 @@ class SelectMarkerBottomSheet extends StatelessWidget {
                   style: Theme.of(context)
                       .primaryTextTheme
                       .bodyMedium
-                      ?.copyWith(fontSize: 18, fontWeight: FontWeight.bold),
+                      ?.copyWith(fontSize: 14, fontWeight: FontWeight.bold),
                 ),
                 subtitle: Row(
                   children: [
@@ -59,7 +59,7 @@ class SelectMarkerBottomSheet extends StatelessWidget {
                             .bodySmall
                             ?.copyWith(
                                 color: appBlack,
-                                fontSize: 11,
+                                fontSize: 10,
                                 fontWeight: FontWeight.bold),
                       ),
                     ),
@@ -83,7 +83,7 @@ class SelectMarkerBottomSheet extends StatelessWidget {
                             .bodySmall
                             ?.copyWith(
                                 color: appBlack,
-                                fontSize: 11,
+                                fontSize: 10,
                                 fontWeight: FontWeight.bold),
                       ),
                     ),
@@ -95,16 +95,17 @@ class SelectMarkerBottomSheet extends StatelessWidget {
                       const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                   decoration: BoxDecoration(
                     shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.circular(12),
-                    color: appBlueDark.withOpacity(0.8),
+                    borderRadius: BorderRadius.circular(4),
+
+                    color: appGrayBackground,
                   ),
                   child: RichText(
                       text: TextSpan(children: [
                     const WidgetSpan(
                         child: Icon(
                           Icons.speed_rounded,
-                          size: 18,
-                          color: appWhite,
+                          size: 16,
+                          color: appBlueDark,
                         ),
                         alignment: PlaceholderAlignment.middle),
                     WidgetSpan(child: 2.width),
@@ -114,13 +115,13 @@ class SelectMarkerBottomSheet extends StatelessWidget {
                             .primaryTextTheme
                             .bodySmall
                             ?.copyWith(
-                                color: appWhite,
+                                color: appBlueDark,
                                 fontSize: 11,
                                 fontWeight: FontWeight.bold))
                   ])),
                 ),
               ),
-              10.height,
+              5.height,
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 12.0, vertical: 16),
@@ -152,13 +153,13 @@ class SelectMarkerBottomSheet extends StatelessWidget {
                               style: Theme.of(context)
                                   .primaryTextTheme
                                   .titleMedium
-                                  ?.copyWith(color: appBlueDark),
+                                  ?.copyWith(color: appBlueDark,fontSize: 13, fontWeight: FontWeight.w500),
                             )),
                           ),
                         ),
                       ),
                     ),
-                    30.width,
+                    10.width,
                     Expanded(
                       child: Material(
                         color: appTransparent,
@@ -179,7 +180,7 @@ class SelectMarkerBottomSheet extends StatelessWidget {
                               style: Theme.of(context)
                                   .primaryTextTheme
                                   .titleMedium
-                                  ?.copyWith(color: appWhite),
+                                  ?.copyWith(color: appWhite, fontSize: 13, fontWeight: FontWeight.w500),
                             )),
                           ),
                         ),

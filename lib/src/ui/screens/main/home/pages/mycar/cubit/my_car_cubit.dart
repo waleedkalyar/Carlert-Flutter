@@ -45,4 +45,5 @@ class MyCarCubit extends Cubit<DeviceModel?> {
     currentDeviceStream.cancel();
     return super.close();
   }
+
 }

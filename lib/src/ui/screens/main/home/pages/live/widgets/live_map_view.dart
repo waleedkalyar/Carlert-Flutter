@@ -58,7 +58,6 @@ class _LiveMapViewState extends State<LiveMapView>
 
   Set<CarlertMarker> clusterMarkers = Set();
 
-
   late LiveMarkersBloc liveMarkersBloc;
 
   bool isUpdatingMarkers = false;
@@ -125,6 +124,20 @@ class _LiveMapViewState extends State<LiveMapView>
             if (state is VehiclesChannelConnectedState) {
               var chip = state.data;
 
+              if (markers.isEmpty) {
+                state.devicesList.forEach((device) {
+                  onLocationUpdate(
+                      LatLng(double.parse(device.location.lat ?? "0"),
+                          double.parse(device.location.long ?? "0")),
+                      MarkerId(device.deviceId.toString()),
+                      device.fleetNo.toString(),
+                      device.plateCode != null
+                          ? "${device.plateCode} - ${device.plateNumber.toString()}"
+                          : device.plateNumber.toString(),
+                      device.movementStatus() == MovementState.active);
+                });
+              }
+
               if (!isUpdatingMarkers) {
                 onLocationUpdate(
                     LatLng(double.parse(chip.lat ?? "0"),
@@ -157,11 +170,9 @@ class _LiveMapViewState extends State<LiveMapView>
               markers: markers.values.toSet(),
               initialCameraPosition: kSantoDomingo,
               onMapCreated: (gController) {
-
                 controller.complete(gController);
 
                 //  _clusterManager.setMapId(gController.mapId);
-
               },
               onTap: (loc) {
                 FocusManager.instance.primaryFocus?.unfocus();
@@ -556,7 +567,6 @@ class _LiveMapViewState extends State<LiveMapView>
       ).toBitmapDescriptor();
     }
   }
-
 
   String textOnMarker(String fleetNo, String plateNo) {
     if (!fleetEnabled && !plateEnabled) {

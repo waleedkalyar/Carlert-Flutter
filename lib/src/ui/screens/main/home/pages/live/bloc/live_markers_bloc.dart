@@ -15,8 +15,8 @@ class LiveMarkersBloc extends Bloc<LiveMarkersEvent, LiveMarkersState> {
 
   LiveMarkersBloc(this._vehicleRepo) : super(LiveMarkersInitial()) {
     on<InitPusherEvent>(_onInitPusher);
-     on<SubscribeToVehiclesEvent>(_onSubscribeToVehicles);
-     on<UnsubscribeToVehiclesEvent>(_onUnSubscribeToVehicles);
+    on<SubscribeToVehiclesEvent>(_onSubscribeToVehicles);
+    on<UnsubscribeToVehiclesEvent>(_onUnSubscribeToVehicles);
   }
 
   FutureOr<void> _onInitPusher(
@@ -34,18 +34,39 @@ class LiveMarkersBloc extends Bloc<LiveMarkersEvent, LiveMarkersState> {
     return super.close();
   }
 
-  FutureOr<void> _onSubscribeToVehicles(SubscribeToVehiclesEvent event, Emitter<LiveMarkersState> emit)  async{
+  FutureOr<void> _onSubscribeToVehicles(
+      SubscribeToVehiclesEvent event, Emitter<LiveMarkersState> emit) async {
     debugPrint("LiveMarkersBloc: _onSubscribeToVehicles called");
-    await emit.onEach(_vehicleRepo.subscribePrivateChannel(privateChannelName: event.privateChannelName), onData: (data)  {
-    var loc = LatLng(double.parse(data.lat ?? "0"),
-          double.parse(data.longi ?? "0"));
-      debugPrint("LiveMarkersBloc: Event Data of channel -> ${data.make}-${data.model}  -> $loc");
-      emit(VehiclesChannelConnectedState("connected", data));
-    });
-}
 
-  FutureOr<void> _onUnSubscribeToVehicles(UnsubscribeToVehiclesEvent event, Emitter<LiveMarkersState> emit) {
-    _vehicleRepo.unsubscribeToPrivateChannel(privateChannelName: event.privateChannelName);
+    var vehiclesResponse = await _vehicleRepo.fetchAllVehicles();
+    if (vehiclesResponse is NetworkSuccess<BaseResponse<List<DeviceModel>>>) {
+      List<dynamic> dataList =
+          (((vehiclesResponse as NetworkSuccess).data as BaseResponse).data);
+
+      List<DeviceModel> devices =[];
+      for (var entry in dataList) {
+        devices.add(DeviceModel.fromJson(entry));
+      }
+
+      await emit.onEach(
+          _vehicleRepo.subscribePrivateChannel(
+              privateChannelName: event.privateChannelName), onData: (data) {
+        var loc = LatLng(
+            double.parse(data.lat ?? "0"), double.parse(data.longi ?? "0"));
+        debugPrint(
+            "LiveMarkersBloc: Event Data of channel -> ${data.make}-${data.model}  -> $loc");
+        var exists = devices.any((device) => device.deviceId == data.deviceID);
+        if (exists) {
+          emit(VehiclesChannelConnectedState("connected", data, devices));
+        }
+      });
+    }
+  }
+
+  FutureOr<void> _onUnSubscribeToVehicles(
+      UnsubscribeToVehiclesEvent event, Emitter<LiveMarkersState> emit) {
+    _vehicleRepo.unsubscribeToPrivateChannel(
+        privateChannelName: event.privateChannelName);
     emit(const PusherConnectionState(state: "connected"));
   }
 }
